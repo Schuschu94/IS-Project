@@ -18,25 +18,108 @@
 
 namespace org.oshealthrec.network
 
-participant SampleParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+abstract participant Person identified by personID {
+o String personID
+o DateTime birthday
+o String email
+o String givenname
+o String sex
+o String surname
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+participant Patient extends Person {
+  --> Doctor[] doctors
+  o Report reports
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+participant Employee extends Person {
+ --> Doctor[] doctors
 }
 
-event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+participant Doctor extends Person {
+o String city
+o String street
+o Integer postcode
+--> Patient[] patients
+--> Employee[] employees
+
 }
+
+asset Report identified by reportID{
+o String reportID
+o DateTime date
+o String description
+--> Patient[] patients
+o String ref_location
+o String title
+--> Person uploadedby 
+}
+
+transaction patient_add_doctor {
+--> Patient patient
+--> Doctor doctor
+} 
+
+transaction patient_delete_doctor {
+--> Patient patient
+--> Doctor doctor
+}
+
+
+transaction get_all_reports {
+--> Report[] reports
+--> Patient patients
+}
+
+/* 
+transaction get_report {
+  --> Report report
+}
+*/
+
+transaction employee_add_doctor {
+  --> Employee employee
+  --> Doctor doctor
+}
+
+transaction employee_delete_doctor {
+  --> Doctor doctor
+  --> Employee employee
+}
+
+transaction add_report_for_patient {
+  --> Patient patient
+  --> Report report
+}
+
+transaction get_reports_from_patient {
+  --> Patient patient
+  --> Report[] reports
+}
+
+transaction employee_get_patients_from_doctor {
+  --> Doctor doctor
+  --> Patient[] patients
+}
+
+transaction add_employee {
+  --> Employee employee
+  --> Doctor doctor
+}
+
+transaction add_patient {
+  --> Patient patient
+  --> Doctor doctor
+}
+
+transaction delete_employee {
+  --> Employee employee
+  --> Doctor doctor
+}
+
+transaction delete_patient {
+  --> Patient patient
+  --> Doctor doctor
+}
+
+
