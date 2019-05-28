@@ -17,7 +17,7 @@
  */
 rule EverybodyCanReadEverything {
     description: "Allow all participants read access to all resources"
-    participant: "org.oshealthrec.network.SampleParticipant"
+    participant: "org.oshealthrec.network.Person"
     operation: READ
     resource: "org.oshealthrec.network.*"
     action: ALLOW
@@ -25,17 +25,20 @@ rule EverybodyCanReadEverything {
 
 rule EverybodyCanSubmitTransactions {
     description: "Allow all participants to submit transactions"
-    participant: "org.oshealthrec.network.SampleParticipant"
+    participant: "org.oshealthrec.network.Person"
     operation: CREATE
-    resource: "org.oshealthrec.network.SampleTransaction"
+    resource: "org.oshealthrec.network.patient_add_doctor"
     action: ALLOW
 }
 
+/*
+
+
 rule OwnerHasFullAccessToTheirAssets {
     description: "Allow all participants full access to their assets"
-    participant(p): "org.oshealthrec.network.SampleParticipant"
+    participant(p): "org.oshealthrec.network.Person"
     operation: ALL
-    resource(r): "org.oshealthrec.network.SampleAsset"
+    resource(r): "org.oshealthrec.network."
     condition: (r.owner.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
@@ -63,3 +66,4 @@ rule NetworkAdminSystem {
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW
 }
+*/
