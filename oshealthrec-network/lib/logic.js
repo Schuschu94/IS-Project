@@ -48,3 +48,82 @@ async function patient_delete_doctor(patient_delete_doctor) {
     await participantRegistry.update(patient_delete_doctor.patient);    
 }
     
+
+/**
+  * 
+  * @param {org.oshealthrec.network.get_all_reports} get_all_reports 
+  * @transaction
+  * ERST MONTAG
+  * 
+  *  
+  */
+
+
+/**
+  * 
+  * @param {org.oshealthrec.network.employee_add_doctor} employee_add_doctor 
+  * @transaction
+  * Jan
+  * 
+  */
+
+ 
+/**
+  * 
+  * @param {org.oshealthrec.network.employee_delete_doctor} employee_delete_doctor
+  * @transaction
+  * Shafig
+  */
+
+
+/**
+  * 
+  * @param {org.oshealthrec.network.add_report_for_patient} add_report_for_patient
+  * @transaction
+  * ERST MONTAG
+  */
+
+
+
+/**
+  * 
+  * @param {org.oshealthrec.network.get_reports_from_patient} get_reports_from_patient
+  * @transaction
+  * ERST MONTAG
+  */
+
+/**
+  * 
+  * @param {org.oshealthrec.network.employee_get_patients_from_doctor} employee_get_patients_from_doctor
+  * @transaction
+  * Feipeng
+  */
+
+/**
+  * 
+  * @param {org.oshealthrec.network.add_employee} add_employee
+  * @transaction
+  * Linshan
+  */
+ 
+/**
+  * 
+  * @param {org.oshealthrec.network.add_patient} add_patient
+  * @transaction
+  * Timo
+  */
+
+/**
+  * 
+  * @param {org.oshealthrec.network.delete.employee} delete_employee
+  * @transaction
+  * Feipeng
+  */
+
+/**
+  * 
+  * @param {org.oshealthrec.network.delete.patient} delete_patient
+  * @transaction
+  * Jan
+  */
+
