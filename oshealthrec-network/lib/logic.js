@@ -117,7 +117,7 @@ async function patient_delete_doctor(patient_delete_doctor) {
   * 
   * @param {org.oshealthrec.network.delete.employee} delete_employee
   * @transaction
-  * Feipeng
+  * Feipeng  noch nicht machen
   */
 
 /**
