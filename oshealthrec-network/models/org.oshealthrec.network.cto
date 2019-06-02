@@ -18,46 +18,118 @@
 
 namespace org.oshealthrec.network
 
+/**
+ * participant
+ */
+
+// abstract Person
 abstract participant Person identified by personID {
 o String personID
-o DateTime birthday
+o String birthday
 o String email
 o String givenname
-o String sex
 o String surname
+o String sex
 }
 
+// Patient
 participant Patient extends Person {
   --> Doctor[] doctors
-  o Report reports
+  --> Report[] reports
 }
 
+// Doctor
+participant Doctor extends Person {
+ o String street
+  o String city 
+  o String country
+  o String zipcode
+--> Patient[] patients
+--> Employee[] employees
+ 
+
+}
+
+// Employee
 participant Employee extends Person {
  --> Doctor[] doctors
 }
 
-participant Doctor extends Person {
-o String city
-o String street
-o Integer postcode
---> Patient[] patients
---> Employee[] employees
 
+/**
+ * concept Address {
+  o String street
+  o String city 
+  o String country
+  o String zipcode
+ // o Integer[] counts optional
 }
+ */
 
+
+
+  
+ 
+ /**
+ * asset Report
+ */
+  
 asset Report identified by reportID{
 o String reportID
 o DateTime date
 o String description
---> Patient[] patients
 o String ref_location
 o String title
+--> Patient owner
 --> Person uploadedby 
 }
+  
+  
+/**
+ * transaction
+ */
+
+transaction createPatient{
+o String personID
+o String birthday
+o String email
+o String givenname
+o String surname
+o String sex
+--> Doctor[] doctors
+--> Report[] reports
+}
+
+transaction createEmployee{
+o String personID
+o String birthday
+o String email
+o String givenname
+o String surname
+o String sex
+--> Doctor[] doctors
+}
+
+transaction createDoctor{
+o String personID
+o String birthday
+o String email
+o String givenname
+o String surname
+o String sex
+o String street
+o String city default ="Osnabrueck"
+o String country default = "DE"
+o String zipcode
+--> Patient[] patients
+--> Employee[] employees
+}
+
+
 
 transaction patient_add_doctor {
---> Patient patient
---> Doctor doctor
+  --> Doctor doctor
+  --> Patient patient
 } 
 
 transaction patient_delete_doctor {
@@ -65,17 +137,6 @@ transaction patient_delete_doctor {
 --> Doctor doctor
 }
 
-
-transaction get_all_reports {
---> Report[] reports
---> Patient patients
-}
-
-/* 
-transaction get_report {
-  --> Report report
-}
-*/
 
 transaction employee_add_doctor {
   --> Employee employee
@@ -87,39 +148,68 @@ transaction employee_delete_doctor {
   --> Employee employee
 }
 
-transaction add_report_for_patient {
-  --> Patient patient
-  --> Report report
+
+transaction doctor_add_employee {
+  --> Employee employee
+  --> Doctor doctor
 }
 
-transaction get_reports_from_patient {
+transaction doctor_add_patient {
   --> Patient patient
-  --> Report[] reports
+  --> Doctor doctor
 }
+
+transaction doctor_delete_employee {
+  --> Employee employee
+  --> Doctor doctor
+}
+
+transaction doctor_delete_patient {
+  --> Patient patient
+  --> Doctor doctor
+}
+
 
 transaction employee_get_patients_from_doctor {
   --> Doctor doctor
   --> Patient[] patients
 }
 
-transaction add_employee {
+
+
+transaction employee_add_report {
+  o String reportID
+  o DateTime date
+  o String description
+  o String ref_location
+  o String title
+  --> Patient patient 
   --> Employee employee
-  --> Doctor doctor
 }
-
-transaction add_patient {
+  
+ transaction add_report_for_patient{
+  --> Report report
   --> Patient patient
-  --> Doctor doctor
+  
 }
+ 
 
-transaction delete_employee {
-  --> Employee employee
-  --> Doctor doctor
-}
-
-transaction delete_patient {
+transaction get_reports_from_patient {
   --> Patient patient
-  --> Doctor doctor
+  --> Report[] reports
 }
+
+ 
+transaction get_report {
+  o String reportID
+}
+
+
+
+transaction get_all_reports {
+
+}
+
+
 
 
