@@ -66,6 +66,15 @@ async function patient_delete_doctor(patient_delete_doctor) {
   * Jan
   * 
   */
+ async function employee_add_doctor(employee_add_doctor) {
+   // Füge den übergebenen Doctor dem doctors-Array des Employees zu
+   employee_add_doctor.employee.doctors.push(employee_add_doctor.doctor);
+
+   // Schreibe Änderungen in die Registry
+   let participantRegistry = await                                         
+       getParticipantRegistry('org.oshealthrec.network.Employee');        
+        await participantRegistry.update(employee_add_doctor.employee);
+ }
 
  
 /**
@@ -126,4 +135,17 @@ async function patient_delete_doctor(patient_delete_doctor) {
   * @transaction
   * Jan
   */
+ async function delete_patient(delete_patient) {
+  // Entferne den übergebenen Patienten aus dem patients-Array des Doctors
+  let patientarray = delete_patient.doctor.patients;
+  let index = patientarray.indexOf(delete_patient.patient);       
+  if(index >-1){
+      patientarray.splice(index, 1);
+  }
+
+  // Schreibe Änderungen in die Registry
+  let participantRegistry = await
+  getParticipantRegistry('org.oshealthrec.network.doctor');
+  await participantRegistry.update(delete_patient.doctor); 
+ }
 
