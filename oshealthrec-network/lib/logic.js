@@ -127,10 +127,7 @@ async function patient_delete_doctor(patient_delete_doctor) {
   * @transaction
   * Linshan
   */
-participant Person identified by personId {
-  o String personID 
-  o String firstName
-  o String lastName
+
 }
 async funktion add_employee (add_employee) {
    // Anlege den übergebenen employee aus dem Employees-Array des Doctors 
@@ -140,7 +137,7 @@ async funktion add_employee (add_employee) {
         let participantRegistry = await employeeray.getParticipantRegistry('org.oshealthrec.network.doctor');
         let factory = employeearray.getFactory();
         let participant = factory.nameReasource();
-        participant.firstname = "";
+        participant.surname = "";
         participant.lastname = "";
         await participantRegistry.add(participant);
         await employeearray.disconnetcion();
