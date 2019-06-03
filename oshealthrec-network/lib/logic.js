@@ -83,6 +83,19 @@ async function patient_delete_doctor(patient_delete_doctor) {
   * @transaction
   * Shafig
   */
+ async function employee_delete_doctor(employee_delete_doctor) {
+  //Suche und lösche den Arzt aus dem Array employee.doctors
+  let doctorarray = employee_delete_doctor.employee.doctors;
+  let index = doctorarray.indexOf(employee_delete_doctor);
+  if(index >-1) {
+    doctorarray.splice(index,1);
+  }
+  
+  // Schreibe Änderungen in die Registry
+  let participantRegistry = await                                         
+      getParticipantRegistry('org.oshealthrec.network.Employee');        
+       await participantRegistry.update(employee_add_doctor.employee);
+
 
 
 /**
