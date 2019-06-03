@@ -138,7 +138,7 @@ async funktion add_employee (add_employee) {
         let factory = employeearray.getFactory();
         let participant = factory.nameReasource();
         participant.surname = "";
-        participant.lastname = "";
+        participant.givenname = "";
         await participantRegistry.add(participant);
         await employeearray.disconnetcion();
     }catch(error){
