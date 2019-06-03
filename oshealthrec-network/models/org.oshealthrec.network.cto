@@ -191,7 +191,7 @@ transaction add_report {
 
 transaction get_reports_from_patient {
   --> Patient patient
-  --> Report[] reports
+  
 }
 
  
