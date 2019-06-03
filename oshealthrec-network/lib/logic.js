@@ -366,6 +366,7 @@ async function get_report(gr){
 */
 async function employee_get_patients_from_doctor(egpfd){
   
+   
   let patientArray = egpfd.doctor.patients;
   
   if(patientArray!=0){
@@ -377,7 +378,6 @@ async function employee_get_patients_from_doctor(egpfd){
      console.log('the Doctor do not have a patient!');
   }
  }
-
 
 /**
 *
