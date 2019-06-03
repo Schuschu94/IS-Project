@@ -100,6 +100,15 @@
   * @transaction
   * 
   */
+ async function employee_add_doctor(employee_add_doctor) {
+   // Füge den übergebenen Doctor dem doctors-Array des Employees zu
+   employee_add_doctor.employee.doctors.push(employee_add_doctor.doctor);
+
+   // Schreibe Änderungen in die Registry
+   let participantRegistry = await                                         
+       getParticipantRegistry('org.oshealthrec.network.Employee');        
+        await participantRegistry.update(employee_add_doctor.employee);
+ }
 
  async function patient_add_doctor(pad) {
 
@@ -119,26 +128,25 @@
 }
 
 
+
 /**
-* 
-* @param {org.oshealthrec.network.patient_delete_doctor} patient_delete_doctor 
-* @transaction
-* 
-*/
-
-async function patient_delete_doctor(pdd) {
-
-  let doctorArray = pdd.patient.doctors;
-  let index = doctorArray.indexOf(pdd.doctor);
-
-  if (index > -1) {
-    doctorArray.splice(index, 1);
-  } 
-
-  let participantRegistry = await
-    getParticipantRegistry('org.oshealthrec.network.Patient');
-  await participantRegistry.update(pdd.patient);
-}
+  * 
+  * @param {org.oshealthrec.network.employee_delete_doctor} employee_delete_doctor
+  * @transaction
+  * Shafig
+  */
+ async function employee_delete_doctor(employee_delete_doctor) {
+  //Suche und lösche den Arzt aus dem Array employee.doctors
+  let doctorarray = employee_delete_doctor.employee.doctors;
+  let index = doctorarray.indexOf(employee_delete_doctor);
+  if(index >-1) {
+    doctorarray.splice(index,1);
+  }
+  
+  // Schreibe Änderungen in die Registry
+  let participantRegistry = await                                         
+      getParticipantRegistry('org.oshealthrec.network.Employee');        
+       await participantRegistry.update(employee_add_doctor.employee);
 
 
 /**
@@ -210,25 +218,35 @@ async function doctor_add_employee(dae){
 
 
 /**
-* 
-* @param {org.oshealthrec.network.doctor_add_patient} doctor_add_patient
-* @transaction
-* Timo
-*/
-async function doctor_add_patient(dap){
-  let patientArray = dap.doctor.patients;
-  let index = patientArray.indexOf(dap.patient);
-
-  if (index > -1) {
-    alert('You have added this patient!');
-  }
-  else {
-
-    dap.doctor.patients.push(dap.patient);
-    let participantRegistry = await getParticipantRegistry('org.oshealthrec.network.Doctor');
-    await participantRegistry.update(dap.doctor);
-  }
+  * 
+  * @param {org.oshealthrec.network.add_employee} add_employee
+  * @transaction
+  * Linshan
+  */
+participant Person identified by personId {
+  o String personID 
+  o String firstName
+  o String lastName
 }
+async funktion add_employee (add_employee) {
+   // Anlege den übergebenen employee aus dem Employees-Array des Doctors 
+    let employeearray = new employee (add_employee);
+    try {
+        await employeearray.connection();
+        let participantRegistry = await employeeray.getParticipantRegistry('org.oshealthrec.network.doctor');
+        let factory = employeearray.getFactory();
+        let participant = factory.nameReasource();
+        participant.firstname = "";
+        participant.lastname = "";
+        await participantRegistry.add(participant);
+        await employeearray.disconnetcion();
+    }catch(error){
+        console.error (error);
+        process.exit(1):
+    }
+}
+addParticipant();
+
 
 /**
 * 
@@ -269,31 +287,7 @@ async function doctor_delete_patient(ddp){
 }
 
 
-/**
-*
-* @param {org.oshealthrec.network.add_report} add_report
-* @transaction
-* ERST MONTAG
-*/
-async function add_report(ear){
-  
-  return getAssetRegistry('org.oshealthrec.network.Report')
-  .then(function(reportRegistry) {
-    var factory = getFactory();
-    var newReport = factory.newResource(
-      'org.oshealthrec.network',
-      'Report',
-      ear.reportID);
-      newReport.description = ear.description
-      newReport.ref_location = ear.ref_location
-      newReport.date = ear.date
-      newReport.title = ear.title
-      newReport.owner = ear.patient
-      newReport.uploadedby = ear.uploadedby
 
-      return reportRegistry.add(newReport);
-    });
-}
 
 /**
 *
@@ -389,5 +383,25 @@ async function employee_get_patients_from_doctor(egpfd){
 
 
 
+
+/**
+  * 
+  * @param {org.oshealthrec.network.delete.patient} delete_patient
+  * @transaction
+  * Jan
+  */
+ async function delete_patient(delete_patient) {
+  // Entferne den übergebenen Patienten aus dem patients-Array des Doctors
+  let patientarray = delete_patient.doctor.patients;
+  let index = patientarray.indexOf(delete_patient.patient);       
+  if(index >-1){
+      patientarray.splice(index, 1);
+  }
+
+  // Schreibe Änderungen in die Registry
+  let participantRegistry = await
+  getParticipantRegistry('org.oshealthrec.network.doctor');
+  await participantRegistry.update(delete_patient.doctor); 
+ }
 
 
