@@ -172,7 +172,7 @@ transaction employee_get_patients_from_doctor {
 
 
 
-transaction add_report {
+transaction create_report {
   o String reportID
   o DateTime date
   o String description
