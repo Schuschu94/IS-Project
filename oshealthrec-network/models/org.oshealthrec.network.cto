@@ -66,10 +66,6 @@ participant Employee extends Person {
 }
  */
 
-
-
-  
- 
  /**
  * asset Report
  */
@@ -172,19 +168,18 @@ transaction doctor_delete_patient {
 
 transaction employee_get_patients_from_doctor {
   --> Doctor doctor
-  --> Patient[] patients
 }
 
 
 
-transaction employee_add_report {
+transaction add_report {
   o String reportID
   o DateTime date
   o String description
   o String ref_location
   o String title
   --> Patient patient 
-  --> Employee employee
+  --> Person uploadedby
 }
   
  transaction add_report_for_patient{

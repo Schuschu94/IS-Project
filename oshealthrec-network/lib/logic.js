@@ -68,7 +68,7 @@
   */
    async function createDoctor(createDoctor){
 
-    return getParticipantRegistry('org.oshealthrec.network.Doctor')
+  return getParticipantRegistry('org.oshealthrec.network.Doctor')
   .then(function(userRegistry){
     var factory = getFactory();
     var newDoctor = factory.newResource(
@@ -271,11 +271,11 @@ async function doctor_delete_patient(ddp){
 
 /**
 *
-* @param {org.oshealthrec.network.employee_add_report} employee_add_report
+* @param {org.oshealthrec.network.add_report} add_report
 * @transaction
 * ERST MONTAG
 */
-async function employee_add_report(ear){
+async function add_report(ear){
   
   return getAssetRegistry('org.oshealthrec.network.Report')
   .then(function(reportRegistry) {
@@ -358,6 +358,26 @@ async function get_report(gr){
   });
 }
 
+/**
+*
+* @param {org.oshealthrec.network.employee_get_patients_from_doctor} employee_get_patients_from_doctor
+* @transaction
+* Feipeng
+*/
+async function employee_get_patients_from_doctor(egpfd){
+  
+  let patientArray = egpfd.doctor.patients;
+  
+  if(patientArray!=0){
+   for(patient in patientArray ){
+       console.log(patient.personID);
+     }
+     return patientArray;
+   }else{
+     console.log('the Doctor do not have a patient!');
+  }
+ }
+
 
 /**
 *
@@ -370,9 +390,4 @@ async function get_report(gr){
 
 
 
-/**
-*
-* @param {org.oshealthrec.network.employee_get_patients_from_doctor} employee_get_patients_from_doctor
-* @transaction
-* Feipeng
-*/
+
