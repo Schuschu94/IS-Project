@@ -81,7 +81,7 @@
       newDoctor.surname = createDoctor.surname;
       newDoctor.sex = createDoctor.sex;
       newDoctor.employees = createDoctor.employees;
-      newDoctor.patients = createDoctor.patiens;
+      newDoctor.patients = createDoctor.patients;
 
       newDoctor.street = createDoctor.street;
       newDoctor.city = createDoctor.city;
