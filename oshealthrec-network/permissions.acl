@@ -190,6 +190,53 @@ rule DoctorReadEmployee {
     action: ALLOW
 }
 
+
+
+rule EmployeeAddDoctor {
+    description: "Allow employee to create employee_add_doctor transaction."
+    participant: "org.oshealthrec.network.Employee"
+    operation: CREATE
+    resource: "org.oshealthrec.network.employee_add_doctor"
+    action: ALLOW
+}
+
+rule EmployeeAddDoctorToArray{
+    description: "Allow employee to write doctor into the employee´s doctor array."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Employee"
+    transaction(tx): "org.oshealthrec.network.employee_add_doctor"
+    condition: (tx.employee.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule EmployeeReadDoctor{
+    description: "Allow employee to read doctor."
+    participant: "org.oshealthrec.network.Employee"
+    operation: READ
+    resource: "org.oshealthrec.network.Doctor"
+    action: ALLOW
+}
+
+rule EmployeeDeleteDoctor {
+    description: "Allow employee to create employee_delete_doctor transaction."
+    participant: "org.oshealthrec.network.Employee"
+    operation: CREATE
+    resource: "org.oshealthrec.network.employee_delete_doctor"
+    action: ALLOW
+}
+
+rule EmployeeDeleteDoctorToArray{
+    description: "Allow employee to delete doctor from the employee´s doctor array."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Employee"
+    transaction(tx): "org.oshealthrec.network.employee_delete_doctor"
+    condition: (tx.employee.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
 rule AllSystem {
     description: "Grant all members full access to system resources"
     participant: "org.oshealthrec.network.*"
