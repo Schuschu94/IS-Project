@@ -139,11 +139,54 @@ rule PatientDeleteDoctor {
 }
 
 rule PatientReadDoctor {
-    description: "Allow patient to read doctor to add himself to doctor's patient array."
+    description: "Allow patient to read doctor."
     participant: "org.oshealthrec.network.Patient"
     operation: READ
     resource: "org.oshealthrec.network.Doctor"
-    transaction: "org.oshealthrec.network.doctor_add_patient"
+    action: ALLOW
+}
+
+rule DoctorAddEmployee {
+    description: "Allow doctor to create doctor_add_employee transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_add_employee"
+    action: ALLOW
+}
+
+rule DoctorAddEmployeeToArray{
+    description: "Allow doctor to write employee into the doctors´s employee array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_add_employee"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule DoctorDeleteEmployee {
+    description: "Allow doctor to create doctor_delete_employee transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_delete_employee"
+    action: ALLOW
+}
+
+rule DoctorDeleteEmployeeFromArray{
+    description: "Allow doctor to delete employee from the doctors´s employee array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_delete_employee"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule DoctorReadEmployee {
+    description: "Allow doctor to read employee."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource: "org.oshealthrec.network.Employee"
     action: ALLOW
 }
 
