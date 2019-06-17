@@ -12,43 +12,156 @@
  * limitations under the License.
  */
 
-/**
- * Sample access control list.
- */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.oshealthrec.network.Person"
+
+rule PatientReadOwn {
+  description: "Grant Patient READ access to own profil."
+    participant(p): "org.oshealthrec.network.Patient"
     operation: READ
-    resource: "org.oshealthrec.network.*"
+    resource(v): "org.oshealthrec.network.Patient"
+      condition: (v.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.oshealthrec.network.Person"
+rule DoctorReadOwn {
+  description: "Grant Doctor READ access to own profil."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Doctor"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule EmployeeReadOwn {
+  description: "Grant Patient READ access to own profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Employee"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule DoctorReadHisPatients {
+  description: "Grant Doctor READ access to his patients profil."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Patient"
+      // Suche im doctors Array des Patienten nach dem Doctor
+      condition: (
+        v.doctors.some(function (doctor) {
+            return doctor.getIdentifier() === p.getIdentifier();
+        })
+      )
+    action: ALLOW
+}
+
+rule EmployeeReadHisDoctors {
+  description: "Grant Employee READ access to his doctors profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Doctor"
+      // Suche im employees Array des doctors nach dem employee
+      condition: (
+        v.employees.some(function (employee) {
+            return employee.getIdentifier() === p.getIdentifier();
+        })
+      )
+    action: ALLOW
+}
+
+rule EmployeeReadHisPatients {
+  description: "Grant Employee READ access to his doctors patients profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Patient"
+      // Suche im doctors Array des Patienten nach dem Doctor
+      condition: (
+        v.doctors.some(function (doctor) {
+          return doctor.employees.some(function (employee) {
+            return employee.getIdentifier() === p.getIdentifier();
+          })
+        })
+      )
+    action: ALLOW
+}
+
+rule PatientAddHimself {
+    description: "Allow patient to write himself into the doctor's patient array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_add_patient"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule PatientDeleteDoctorFromArray{
+    description: "Allow patient to delete Doctor from the patient´s doctor array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Patient"
+    transaction(tx): "org.oshealthrec.network.patient_delete_doctor"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule PatientAddDoctorToArray{
+    description: "Allow patient to write Doctor into the patient´s doctor array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Patient"
+    transaction(tx): "org.oshealthrec.network.patient_add_doctor"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule DoctorAddPatient {
+    description: "Allow patient create doctor_add_patient transaction."
+    participant: "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_add_patient"
+    action: ALLOW
+}
+
+rule PatientAddDoctor {
+    description: "Allow patient create patient_add_doctor transaction."
+    participant: "org.oshealthrec.network.Patient"
     operation: CREATE
     resource: "org.oshealthrec.network.patient_add_doctor"
     action: ALLOW
 }
 
-/*
-
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.oshealthrec.network.Person"
-    operation: ALL
-    resource(r): "org.oshealthrec.network."
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+rule PatientDeleteDoctor {
+    description: "Allow patient create patient_delete_doctor transaction."
+    participant: "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource: "org.oshealthrec.network.patient_delete_doctor"
     action: ALLOW
 }
 
-rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
+rule PatientReadDoctor {
+    description: "Allow patient to read doctor to add himself to doctor's patient array."
+    participant: "org.oshealthrec.network.Patient"
+    operation: READ
+    resource: "org.oshealthrec.network.Doctor"
+    transaction: "org.oshealthrec.network.doctor_add_patient"
+    action: ALLOW
+}
+
+rule AllSystem {
+    description: "Grant all members full access to system resources"
+    participant: "org.oshealthrec.network.*"
+    operation: READ
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+
+rule HistorianRecord {
+    description: "Grant all members full create access to HistorianRecords"
+    participant: "org.oshealthrec.network.*"
+    operation: CREATE
+    resource: "org.hyperledger.composer.system.HistorianRecord"
+    action: ALLOW
 }
 
 rule NetworkAdminUser {
@@ -66,4 +179,7 @@ rule NetworkAdminSystem {
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW
 }
-*/
+
+
+
+
