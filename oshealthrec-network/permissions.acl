@@ -110,7 +110,7 @@ rule DoctorReadEmployee {
 rule EmployeeManageHisDoctors {
   description: "Grant Employee READ,UPDATE access to his doctors profil."
     participant(p): "org.oshealthrec.network.Employee"
-    operation: READ,UPDATE
+    operation: READ
     resource(v): "org.oshealthrec.network.Doctor"
       // Suche im employees Array des doctors nach dem employee
       condition: (
@@ -124,7 +124,7 @@ rule EmployeeManageHisDoctors {
 rule EmployeeReadHisPatients {
   description: "Grant Employee READ access to his doctors patients profil."
     participant(p): "org.oshealthrec.network.Employee"
-    operation: READ
+    operation: READ,UPDATE
     resource(v): "org.oshealthrec.network.Patient"
       // Suche im doctors Array des Patienten nach dem Doctor
       condition: (
