@@ -122,7 +122,7 @@ rule EmployeeManageHisDoctors {
 }
 
 rule EmployeeReadHisPatients {
-  description: "Grant Employee READ access to his doctors patients profil."
+  description: "Grant Employee READ,UPDATE access to his doctors patients profil."
     participant(p): "org.oshealthrec.network.Employee"
     operation: READ,UPDATE
     resource(v): "org.oshealthrec.network.Patient"
@@ -134,6 +134,15 @@ rule EmployeeReadHisPatients {
           })
         })
       )
+    action: ALLOW
+}
+
+rule PatientReadHisReports{
+    description: "Allow patient to read his reports."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Report"
+    condition:(v.owner.getIdentifier() = p.getIdentifier())
     action: ALLOW
 }
 
@@ -393,6 +402,8 @@ rule EmployeeManageReport{
     resource: "org.oshealthrec.network.Report"
     action: ALLOW
 }
+
+
 
 
 // rule about transaction get_reports_from_patient
