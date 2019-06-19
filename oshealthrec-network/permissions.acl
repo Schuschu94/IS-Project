@@ -12,46 +12,27 @@
  * limitations under the License.
  */
 
-/**
- * Sample access control list.
- */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.oshealthrec.network.Person"
+
+// rules for all members
+ rule AllSystem {
+    description: "Grant all members full access to system resources"
+    participant: "org.oshealthrec.network.*"
     operation: READ
-    resource: "org.oshealthrec.network.*"
+    resource: "org.hyperledger.composer.system.**"
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.oshealthrec.network.Person"
+rule HistorianRecord {
+    description: "Grant all members full create access to HistorianRecords"
+    participant: "org.oshealthrec.network.*"
     operation: CREATE
-    resource: "org.oshealthrec.network.patient_add_doctor"
+    resource: "org.hyperledger.composer.system.HistorianRecord"
     action: ALLOW
 }
 
-/*
 
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.oshealthrec.network.Person"
-    operation: ALL
-    resource(r): "org.oshealthrec.network."
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
-}
-
-rule NetworkAdminUser {
+//rules for AdminUser
+ rule NetworkAdminUser {
     description: "Grant business network administrators full access to user resources"
     participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
@@ -66,4 +47,374 @@ rule NetworkAdminSystem {
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW
 }
-*/
+
+
+//rules for normal User
+rule PatientReadOwn {
+  description: "Grant Patient READ access to own profil."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Patient"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule DoctorReadOwn {
+  description: "Grant Doctor READ access to own profil."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Doctor"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule EmployeeReadOwn {
+  description: "Grant Patient READ access to own profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Employee"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule PatientReadDoctor {
+    description: "Allow patient to read doctor."
+    participant: "org.oshealthrec.network.Patient"
+    operation: READ
+    resource: "org.oshealthrec.network.Doctor"
+    action: ALLOW
+}
+
+rule DoctorManageHisPatients {
+  description: "Grant Doctor READ,UPDATE access to his patients profil."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: READ,UPDATE
+    resource(v): "org.oshealthrec.network.Patient"
+      // Suche im doctors Array des Patienten nach dem Doctor
+      condition: (
+        v.doctors.some(function (doctor) {
+            return doctor.getIdentifier() === p.getIdentifier();
+        })
+      )
+    action: ALLOW
+}
+
+rule DoctorReadEmployee {
+    description: "Allow doctor to read employee."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource: "org.oshealthrec.network.Employee"
+    action: ALLOW
+}
+
+rule EmployeeManageHisDoctors {
+  description: "Grant Employee READ,UPDATE access to his doctors profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ,UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+      // Suche im employees Array des doctors nach dem employee
+      condition: (
+        v.employees.some(function (employee) {
+            return employee.getIdentifier() === p.getIdentifier();
+        })
+      )
+    action: ALLOW
+}
+
+rule EmployeeReadHisPatients {
+  description: "Grant Employee READ access to his doctors patients profil."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Patient"
+      // Suche im doctors Array des Patienten nach dem Doctor
+      condition: (
+        v.doctors.some(function (doctor) {
+          return doctor.employees.some(function (employee) {
+            return employee.getIdentifier() === p.getIdentifier();
+          })
+        })
+      )
+    action: ALLOW
+}
+
+
+
+// rule about transaction doctor_add_patient
+rule DoctorAddPatient {
+    description: "Allow patient create doctor_add_patient transaction."
+    participant: "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_add_patient"
+    action: ALLOW
+}
+
+rule PatientAddHimself {
+    description: "Allow patient to write himself into the doctor's patient array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_add_patient"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction patient_add_doctor
+rule PatientAddDoctor {
+    description: "Allow patient create patient_add_doctor transaction."
+    participant: "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource: "org.oshealthrec.network.patient_add_doctor"
+    action: ALLOW
+}
+
+rule PatientAddDoctorToArray{
+    description: "Allow patient to write Doctor into the patient´s doctor array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Patient"
+    transaction(tx): "org.oshealthrec.network.patient_add_doctor"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction doctor_delete_patient
+rule DoctorDeletePatient {
+    description: "Allow doctor to create doctor_delete_patient transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_delete_patient"
+    action: ALLOW
+}
+
+rule DoctorDeletePatientFromArray{
+    description: "Allow doctor to delete patient from the doctors´s patient array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_delete_patient"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction patient_delete_doctor
+rule PatientDeleteDoctor {
+    description: "Allow patient create patient_delete_doctor transaction."
+    participant: "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource: "org.oshealthrec.network.patient_delete_doctor"
+    action: ALLOW
+}
+
+rule PatientDeleteDoctorFromArray{
+    description: "Allow patient to delete Doctor from the patient´s doctor array."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Patient"
+    transaction(tx): "org.oshealthrec.network.patient_delete_doctor"
+    condition: (tx.patient.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction doctor_add_employee
+rule DoctorAddEmployee {
+    description: "Allow doctor to create doctor_add_employee transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_add_employee"
+    action: ALLOW
+}
+
+rule DoctorAddEmployeeToArray{
+    description: "Allow doctor to write employee into the doctors´s employee array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_add_employee"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction employee_add_doctor
+rule EmployeeAddDoctor {
+    description: "Allow doctor create employee_add_doctor transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.employee_add_doctor"
+    action: ALLOW
+}
+
+rule DoctorAddHimself {
+    description: "Allow doctor to write himself into the employee's doctor array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Employee"
+    transaction(tx): "org.oshealthrec.network.employee_add_doctor"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction doctor_delete_employee
+rule DoctorDeleteEmployee {
+    description: "Allow doctor to create doctor_delete_employee transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.doctor_delete_employee"
+    action: ALLOW
+}
+
+rule DoctorDeleteEmployeeFromArray{
+    description: "Allow doctor to delete employee from the doctors´s employee array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Doctor"
+    transaction(tx): "org.oshealthrec.network.doctor_delete_employee"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction employee_delete_doctor
+rule EmployeeDeleteDoctor {
+    description: "Allow doctor create employee_delete_doctor transaction."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE
+    resource: "org.oshealthrec.network.employee_delete_doctor"
+    action: ALLOW
+}
+
+rule DoctorDeleteHimself {
+    description: "Allow doctor to remove himself into the employee's doctor array."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: UPDATE
+    resource(v): "org.oshealthrec.network.Employee"
+    transaction(tx): "org.oshealthrec.network.employee_delete_doctor"
+    condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+// rule about transaction create_report for Doctor
+rule TXDoctorCreateReport{
+description: "Allow doctor to upload report for his patient."
+participant: "org.oshealthrec.network.Doctor"
+operation: CREATE
+resource:"org.oshealthrec.network.create_report"
+action: ALLOW
+}
+
+rule DoctorUploadReport{
+description: "Allow doctor to upload report for his patient."
+participant(p): "org.oshealthrec.network.Doctor"
+operation: UPDATE
+resource(R):"org.oshealthrec.network.Report"
+transaction(tx):"org.oshealthrec.network.create_report"
+condition: (tx.doctor.getIdentifier() == p.getIdentifier())
+action: ALLOW
+}
+
+// rule about transaction create_report for Doctor
+rule TXEmployeeCreateReport{
+description: "Allow employee to upload report for his patient."
+participant: "org.oshealthrec.network.Employee"
+operation: CREATE
+resource:"org.oshealthrec.network.create_report"
+action: ALLOW
+}
+
+rule EmployeeUploadReport{
+description: "Allow doctor to upload report for his patient."
+participant(p): "org.oshealthrec.network.Employee"
+operation: UPDATE
+resource(R):"org.oshealthrec.network.Report"
+transaction(tx):"org.oshealthrec.network.create_report"
+condition: (tx.employee.getIdentifier() == p.getIdentifier())
+action: ALLOW
+}
+
+
+// rule about transaction add_report_for_patient
+rule TXDoctorAddReportForHisPatient{
+description: "Allow doctor to upload report for his patient."
+participant: "org.oshealthrec.network.Doctor"
+operation: CREATE
+resource:"org.oshealthrec.network.add_report_for_patient"
+action: ALLOW
+}
+
+rule DoctorAddReportForHisPatient{
+description: "Allow doctor to upload report for his patient."
+participant: "org.oshealthrec.network.Doctor"
+operation: UPDATE
+resource:"org.oshealthrec.network.Report"
+transaction(tx):"org.oshealthrec.network.add_report_for_patient"
+condition: (tx.patient.getIdentifier()=tx.report.patient.getIdentifier())
+action: ALLOW
+}
+
+
+// rules about manage report
+rule DoctorManageReport{
+  description: "Allow doctor to manage report."
+    participant: "org.oshealthrec.network.Doctor"
+    operation: CREATE, READ, UPDATE, DELETE
+    resource: "org.oshealthrec.network.Report"
+    action: ALLOW
+}
+
+rule EmployeeManageReport{
+  description: "Allow doctor to manage report."
+    participant: "org.oshealthrec.network.Employee"
+    operation: CREATE, READ, UPDATE, DELETE
+    resource: "org.oshealthrec.network.Report"
+    action: ALLOW
+}
+
+
+// rule about transaction get_reports_from_patient
+rule TXDoctorGetReportsFromPatient{
+  description: "Allow doctor to access reports from his patient."
+   participant: "org.oshealthrec.network.Doctor"
+   operation: CREATE
+    resource: "org.oshealthrec.network.get_reports_from_patient"
+    action: ALLOW
+}
+
+rule DoctorGetReportsFromPatient{
+  description: "Allow doctor to access reports from his patient."
+   participant(p): "org.oshealthrec.network.Doctor"
+   operation: READ
+   resource(v): "org.oshealthrec.network.Report"
+   transaction(tx): "org.oshealthrec.network.get_reports_from_patient"
+   condition: (p.patients.some(function (patient) 
+   { return patient.getIdentifier() === tx.patient.getIdentifier();}))
+   action: ALLOW
+}
+
+rule TXEmployeeGetReportsFromPatient{
+  description: "Allow Employee to access reports from his patient."
+   participant: "org.oshealthrec.network.Employee"
+   operation: CREATE
+    resource: "org.oshealthrec.network.get_reports_from_patient"
+    action: ALLOW
+}
+
+rule EmployeeGetReportsFromPatient{
+  description: "Allow Employee to access reports from his patient."
+   participant(p): "org.oshealthrec.network.Employee"
+   operation: READ
+   resource(v): "org.oshealthrec.network.Report"
+   transaction(tx): "org.oshealthrec.network.get_reports_from_patient"
+   condition: (p.patients.some(function (patient) 
+   { return patient.getIdentifier() === tx.patient.getIdentifier();}))
+   action: ALLOW
+}
+
+
+
+
