@@ -358,6 +358,25 @@ action: ALLOW
 }
 
 
+rule TXEmployeeAddReportForHisPatient{
+description: "Allow Employee to upload report for his patient."
+participant: "org.oshealthrec.network.Employee"
+operation: CREATE
+resource:"org.oshealthrec.network.add_report_for_patient"
+action: ALLOW
+}
+
+rule EmployeeAddReportForHisPatient{
+description: "Allow Employee to upload report for his patient."
+participant: "org.oshealthrec.network.Employee"
+operation: UPDATE
+resource:"org.oshealthrec.network.Report"
+transaction(tx):"org.oshealthrec.network.add_report_for_patient"
+condition: (tx.patient.getIdentifier()=tx.report.patient.getIdentifier())
+action: ALLOW
+}
+
+
 // rules about manage report
 rule DoctorManageReport{
   description: "Allow doctor to manage report."
