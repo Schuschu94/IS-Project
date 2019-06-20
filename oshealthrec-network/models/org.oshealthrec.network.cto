@@ -1,26 +1,26 @@
 /*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 /**
- * Write your model definitions here
- */
+* Write your model definitions here
+*/
 
 namespace org.oshealthrec.network
 
 /**
- * participant
- */
+* participant
+*/
 
 // abstract Person
 abstract participant Person identified by personID {
@@ -34,42 +34,44 @@ o String sex
 
 // Patient
 participant Patient extends Person {
-  --> Doctor[] doctors
-  --> Report[] reports
+  o String bloodType
+  o String[] intolerances
+--> Doctor[] doctors
+--> Report[] reports
 }
 
 // Doctor
 participant Doctor extends Person {
- o String street
-  o String city 
-  o String country
-  o String zipcode
+o String street
+o String city
+o String country
+o String zipcode
 --> Patient[] patients
 --> Employee[] employees
- 
+
 
 }
 
 // Employee
 participant Employee extends Person {
- --> Doctor[] doctors
+--> Doctor[] doctors
 }
 
 
 /**
- * concept Address {
-  o String street
-  o String city 
-  o String country
-  o String zipcode
- // o Integer[] counts optional
+* concept Address {
+o String street
+o String city
+o String country
+o String zipcode
+// o Integer[] counts optional
 }
- */
+*/
 
- /**
- * asset Report
- */
-  
+/**
+* asset Report
+*/
+
 asset Report identified by reportID{
 o String reportID
 o DateTime date
@@ -77,13 +79,13 @@ o String description
 o String ref_location
 o String title
 --> Patient owner
---> Person uploadedby 
+--> Person uploadedby
 }
-  
-  
+
+
 /**
- * transaction
- */
+* transaction
+*/
 
 transaction createPatient{
 o String personID
@@ -92,6 +94,8 @@ o String email
 o String givenname
 o String surname
 o String sex
+o String bloodType
+o String[] intolerances
 --> Doctor[] doctors
 --> Report[] reports
 }
@@ -121,12 +125,44 @@ o String zipcode
 --> Employee[] employees
 }
 
+transaction patient_update_profile {
+  o String birthday
+  o String email
+  o String givenname
+  o String surname
+  o String sex
+  o String[] intolerances
+  o String bloodType
+  --> Patient patient
+}
+
+transaction employee_update_profile {
+  o String birthday
+  o String email
+  o String givenname
+  o String surname
+  o String sex
+  --> Employee employee
+}
+
+transaction doctor_update_profile {
+  o String birthday
+  o String email
+  o String givenname
+  o String surname
+  o String sex
+  o String city
+  o String country
+  o String zipcode
+  --> Doctor doctor
+}
+
 
 
 transaction patient_add_doctor {
-  --> Doctor doctor
-  --> Patient patient
-} 
+--> Doctor doctor
+--> Patient patient
+}
 
 transaction patient_delete_doctor {
 --> Patient patient
@@ -135,68 +171,68 @@ transaction patient_delete_doctor {
 
 
 transaction employee_add_doctor {
-  --> Employee employee
-  --> Doctor doctor
+--> Employee employee
+--> Doctor doctor
 }
 
 transaction employee_delete_doctor {
-  --> Doctor doctor
-  --> Employee employee
+--> Doctor doctor
+--> Employee employee
 }
 
 
 transaction doctor_add_employee {
-  --> Employee employee
-  --> Doctor doctor
+--> Employee employee
+--> Doctor doctor
 }
 
 transaction doctor_add_patient {
-  --> Patient patient
-  --> Doctor doctor
+--> Patient patient
+--> Doctor doctor
 }
 
 transaction doctor_delete_employee {
-  --> Employee employee
-  --> Doctor doctor
+--> Employee employee
+--> Doctor doctor
 }
 
 transaction doctor_delete_patient {
-  --> Patient patient
-  --> Doctor doctor
+--> Patient patient
+--> Doctor doctor
 }
 
 
 transaction employee_get_patients_from_doctor {
-  --> Doctor doctor
+--> Doctor doctor
 }
 
 
 
 transaction create_report {
-  o String reportID
-  o DateTime date
-  o String description
-  o String ref_location
-  o String title
-  --> Patient patient 
-  --> Person uploadedby
+o String reportID
+o DateTime date
+o String description
+o String ref_location
+o String title
+--> Patient patient
+--> Person uploadedby
 }
-  
- transaction add_report_for_patient{
-  --> Report report
-  --> Patient patient
-  
+
+transaction add_report_for_patient{
+--> Report report
+--> Patient patient
+
 }
- 
+
 
 transaction get_reports_from_patient {
-  --> Patient patient
-  
+--> Patient patient
+
 }
 
- 
+
 transaction get_report {
-  o String reportID
+o String reportID
 }
 
 
@@ -204,7 +240,5 @@ transaction get_report {
 transaction get_all_reports {
 
 }
-
-
 
 
