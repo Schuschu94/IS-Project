@@ -16,11 +16,22 @@
 rule PatientReadOwn {
   description: "Grant Patient READ access to own profil."
     participant(p): "org.oshealthrec.network.Patient"
-    operation: READ
+    operation: READ, UPDATE, CREATE
     resource(v): "org.oshealthrec.network.Patient"
       condition: (v.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
+
+/*
+rule PatientCreateOwn {
+  description: "Grant Patient CREATE access to own profil."
+    participant(p): "org.oshealthrec.network.Patient"
+    operation: CREATE
+    resource(v): "org.oshealthrec.network.Patient"
+      condition: (v.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+*/
 
 rule DoctorReadOwn {
   description: "Grant Doctor READ access to own profil."
@@ -270,6 +281,58 @@ rule NetworkAdminSystem {
     action: ALLOW
 }
 
+rule PatientCreateProfilUpdateTransaction {    
+description: "Allow patient to create patient_update_profile transaction."    
+participant: "org.oshealthrec.network.Patient"    
+operation: CREATE    
+resource: "org.oshealthrec.network.patient_update_profile"    
+action: ALLOW
+}
+
+rule PatientUpdateProfile {
+description: "Allow patient to update his profile."    
+participant(p): "org.oshealthrec.network.Patient"    
+operation: UPDATE   
+resource: "org.oshealthrec.network.Patient"    
+transaction(tx): "org.oshealthrec.network.patient_update_profile"
+condition: (tx.patient.getIdentifier() == p.getIdentifier())
+action: ALLOW
+}
+
+rule EmployeeCreateProfilUpdateTransaction {    
+description: "Allow employee to create employee_update_profile transaction."    
+participant: "org.oshealthrec.network.Employee"    
+operation: CREATE    
+resource: "org.oshealthrec.network.employee_update_profile"    
+action: ALLOW
+}
+
+rule EmployeeUpdateProfile {
+description: "Allow employee to update his profile."    
+participant(p): "org.oshealthrec.network.Employee"    
+operation: UPDATE    
+resource: "org.oshealthrec.network.Employee"    
+transaction(tx): "org.oshealthrec.network.employee_update_profile"
+condition: (tx.employee.getIdentifier() == p.getIdentifier())
+action: ALLOW
+}
 
 
+rule DoctorCreateProfilUpdateTransaction {    
+description: "Allow doctor to create doctor_update_profile transaction."    
+participant: "org.oshealthrec.network.Doctor"    
+operation: CREATE    
+resource: "org.oshealthrec.network.doctor_update_profile"    
+action: ALLOW
+}
+
+rule DoctorUpdateProfile {
+description: "Allow doctor to update his profile."    
+participant(p): "org.oshealthrec.network.Doctor"    
+operation: UPDATE    
+resource: "org.oshealthrec.network.Doctor"    
+transaction(tx): "org.oshealthrec.network.Doctor_update_profile"
+condition: (tx.Doctor.getIdentifier() == p.getIdentifier())
+action: ALLOW
+}
 
