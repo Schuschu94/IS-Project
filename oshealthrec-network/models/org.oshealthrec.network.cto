@@ -241,5 +241,3 @@ o String reportID
 transaction get_all_reports {
 
 }
-
-
