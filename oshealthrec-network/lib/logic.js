@@ -93,6 +93,116 @@
 }
 
   
+/**
+ * 
+ * @param {org.oshealthrec.network.patient_update_profile} patient_update_profile
+ * @transaction 
+ */
+async function patient_update_profile(pup) {
+  let birthday = pup.birthday;
+  let email = pup.email;
+  let givenname = pup.givenname;
+  let surname = pup.surname;
+  let sex = pup.sex;
+  let bloodType = pup.bloodType;
+  let intolerances = pup.intolerances;
+
+  if (birthday != "") {
+    pup.patient.birthday = birthday;
+  }
+  if (email != "") {
+    pup.patient.email = email;
+  }
+  if (givenname != "") {
+    pup.patient.givenname = givenname;
+  }
+  if (surname != "") {
+    pup.patient.surname = surname;
+  }
+  if (sex != "") {
+    pup.patient.sex = sex;
+  }
+  if (bloodType != "") {
+    pup.patient.bloodType = bloodType;
+  }
+  if (intolerances.length > 1){
+    pup.patient.intolerances = intolerances;
+  } 
+}
+
+/**
+ * 
+ * @param {org.oshealthrec.network.employee_update_profile} employee_update_profile
+ * @transaction 
+ */
+async function employee_update_profile(eup) {
+  let birthday = eup.birthday;
+  let email = eup.email;
+  let givenname = eup.givenname;
+  let surname = eup.surname;
+  let sex = eup.sex;
+
+  if (birthday != "") {
+    eup.employee.birthday = birthday;
+  }
+  if (email != "") {
+    eup.employee.email = email;
+  }
+  if (givenname != "") {
+    eup.employee.givenname = givenname;
+  }
+  if (surname != "") {
+    eup.employee.surname = surname;
+  }
+  if (sex != "") {
+    eup.employee.sex = sex;
+  }
+}
+
+/**
+ * 
+ * @param {org.oshealthrec.network.doctor_update_profile} doctor_update_profile
+ * @transaction 
+ */
+async function doctor_update_profile(dup) {
+  let birthday = dup.birthday;
+  let email = dup.email;
+  let givenname = dup.givenname;
+  let surname = dup.surname;
+  let sex = dup.sex;
+  let street = dup.street;
+  let city = dup.city;
+  let country = dup.country;
+  let zipcode = dup.zipcode;
+
+  if (birthday != "") {
+    dup.doctor.birthday = birthday;
+  }
+  if (email != "") {
+    dup.doctor.email = email;
+  }
+  if (givenname != "") {
+    dup.doctor.givenname = givenname;
+  }
+  if (surname != "") {
+    dup.doctor.surname = surname;
+  }
+  if (sex != "") {
+    dup.doctor.sex = sex;
+  }
+  if (street != "") {
+    dup.doctor.street = street;
+  }
+  if (city != "") {
+    dup.doctor.city = city;
+  }
+  if (country != "") {
+    dup.doctor.country = country;
+  }
+  if (zipcode != "") {
+    dup.doctor.zipcode = zipcode;
+  }
+}
 
 /**
   * 
