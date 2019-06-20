@@ -331,7 +331,7 @@ description: "Allow doctor to update his profile."
 participant(p): "org.oshealthrec.network.Doctor"    
 operation: UPDATE    
 resource: "org.oshealthrec.network.Doctor"    
-transaction(tx): "org.oshealthrec.network.Doctor_update_profile"
+transaction(tx): "org.oshealthrec.network.doctor_update_profile"
 condition: (tx.Doctor.getIdentifier() == p.getIdentifier())
 action: ALLOW
 }
