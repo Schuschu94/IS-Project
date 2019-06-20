@@ -523,9 +523,3 @@ async function get_reports_from_patient(grfp){
 
 
 }
-  
-
-
-
-
-
