@@ -336,3 +336,121 @@ condition: (tx.Doctor.getIdentifier() == p.getIdentifier())
 action: ALLOW
 }
 
+rule EmployeeCreateReportTransaction {    
+description: "Allow employee to create create_report transaction."    
+participant: "org.oshealthrec.network.Employee"    
+operation: CREATE    
+resource: "org.oshealthrec.network.create_report"    
+action: ALLOW
+}
+
+
+
+rule EmployeeCreateReport {    
+description: "Allow employee to create report"    
+participant: "org.oshealthrec.network.Employee"    
+operation: CREATE    
+resource: "org.oshealthrec.network.Report"    
+action: ALLOW
+}
+
+
+
+rule EmployeeAddReportforPatientTransaction {    
+description: "Allow employee to create add_report_for_patient transaction."   
+participant: "org.oshealthrec.network.Employee"    
+operation: CREATE    
+resource: "org.oshealthrec.network.add_report_for_patient"    
+action: ALLOW
+}
+
+
+
+rule EmployeeAddReportforPatient {    
+description: "Allow employee to write report into his doctor's patient´s reports array."    
+participant(p): "org.oshealthrec.network.Employee"    
+operation: UPDATE    
+resource(v): "org.oshealthrec.network.Patient"    
+transaction(tx): "org.oshealthrec.network.add_report_for_patient"    
+// Suche im doctors Array des Patienten nach dem Doctor      
+condition: (
+        v.doctors.some(function (doctor) {
+          return doctor.employees.some(function (employee) {
+            return employee.getIdentifier() === p.getIdentifier();
+          })
+        })
+      )
+action: ALLOW
+}
+
+
+rule DoctorCreateReportTransaction {    
+description: "Allow doctor to create create_report transaction."    
+participant: "org.oshealthrec.network.Doctor"    
+operation: CREATE    
+resource: "org.oshealthrec.network.create_report"    
+action: ALLOW
+}
+
+rule DoctorCreateReport {    
+description: "Allow doctor to create report"    
+participant: "org.oshealthrec.network.Doctor"    
+operation: CREATE    
+resource: "org.oshealthrec.network.Report"    
+action: ALLOW
+}
+
+rule DoctorAddReportforPatientTransaction {    
+description: "Allow doctor to create add_report_for_patient transaction."    
+participant: "org.oshealthrec.network.Doctor"    
+operation: CREATE    
+resource: "org.oshealthrec.network.add_report_for_patient"    
+action: ALLOW
+}
+
+rule DoctorAddReportforPatient{    
+description: "Allow doctor to write report into his patient´s reports array."    
+participant(p): "org.oshealthrec.network.Doctor"    
+operation: UPDATE    
+resource(v): "org.oshealthrec.network.Patient"    
+transaction(tx): "org.oshealthrec.network.add_report_for_patient" 
+// Suche im doctors Array des Patienten nach dem Doctor      
+condition: (        
+    v.doctors.some(function (doctor) {            
+        return doctor.getIdentifier() === p.getIdentifier();        
+    })      
+)    
+action: ALLOW
+}
+
+rule DoctorManageReport{
+  description: "Allow doctor to manage report."
+    participant(p): "org.oshealthrec.network.Doctor"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Report"
+// Suche im Doctors Array des Patienten nach dem Doktor
+condition: (        
+    v.owner.doctors.some(function (doctor) {            
+        return doctor.getIdentifier() === p.getIdentifier();        
+    })      
+)   
+action: ALLOW
+}
+
+rule EmployeeManageReport{
+  description: "Allow doctor to manage report."
+    participant(p): "org.oshealthrec.network.Employee"
+    operation: READ
+    resource(v): "org.oshealthrec.network.Report"
+// Suche im doctors Array des Patienten nach dem Doctor      
+condition: (
+        v.owner.doctors.some(function (doctor) {
+              return doctor.employees.some(function (employee) {
+                    return employee.getIdentifier() === p.getIdentifier();
+              })
+        })
+  )
+action: ALLOW
+}
+
+
