@@ -148,11 +148,11 @@ transaction employee_update_profile {
 transaction doctor_update_profile {
   o String birthday
   o String email
+  o String street
   o String givenname
   o String surname
   o String sex
   o String city
-  o String street
   o String country
   o String zipcode
   --> Doctor doctor
