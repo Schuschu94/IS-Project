@@ -127,7 +127,10 @@ async function patient_update_profile(pup) {
   }
   if (intolerances.length > 1){
     pup.patient.intolerances = intolerances;
-  } 
+  }
+  
+    let participantRegistry = await getParticipantRegistry('org.oshealthrec.network.Patient');
+    await participantRegistry.update(pup.patient);
 }
 
 /**
@@ -157,6 +160,10 @@ async function employee_update_profile(eup) {
   if (sex != "") {
     eup.employee.sex = sex;
   }
+
+  let participantRegistry = await getParticipantRegistry('org.oshealthrec.network.Employee');
+  await participantRegistry.update(eup.employee);
+
 }
 
 /**
@@ -202,6 +209,8 @@ async function doctor_update_profile(dup) {
   if (zipcode != "") {
     dup.doctor.zipcode = zipcode;
   }
+  let participantRegistry = await getParticipantRegistry('org.oshealthrec.network.Doctor');
+  await participantRegistry.update(dup.doctor);
 }
 
 /**
