@@ -16,7 +16,7 @@
 rule PatientReadOwn {
   description: "Grant Patient READ access to own profil."
     participant(p): "org.oshealthrec.network.Patient"
-    operation: READ, UPDATE, CREATE
+    operation: READ, UPDATE
     resource(v): "org.oshealthrec.network.Patient"
       condition: (v.getIdentifier() == p.getIdentifier())
     action: ALLOW
@@ -36,7 +36,7 @@ rule PatientCreateOwn {
 rule DoctorReadOwn {
   description: "Grant Doctor READ access to own profil."
     participant(p): "org.oshealthrec.network.Doctor"
-    operation: READ
+    operation: READ, UPDATE
     resource(v): "org.oshealthrec.network.Doctor"
       condition: (v.getIdentifier() == p.getIdentifier())
     action: ALLOW
@@ -45,7 +45,7 @@ rule DoctorReadOwn {
 rule EmployeeReadOwn {
   description: "Grant Patient READ access to own profil."
     participant(p): "org.oshealthrec.network.Employee"
-    operation: READ
+    operation: READ, UPDATE
     resource(v): "org.oshealthrec.network.Employee"
       condition: (v.getIdentifier() == p.getIdentifier())
     action: ALLOW
