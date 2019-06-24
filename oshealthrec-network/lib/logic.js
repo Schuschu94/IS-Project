@@ -1,14 +1,9 @@
-/**
- * 
- * Die Logik hinter den Transaktionen implementieren
- */
-
+// Funktionen zum Erstellen der participants und assets.
 
 /**
-  * 
+  * Erstellt einen Patienten
   *  @param {org.oshealthrec.network.createPatient} createPatient
   * @transaction
-  * 
   */
  async function createPatient(createPatient){
 
@@ -28,15 +23,13 @@
       newPatient.reports = createPatient.reports;
 
       return userRegistry.add(newPatient);
-
   });  
 }
 
 /**
-  * 
-  *  @param {org.oshealthrec.network.createEmployee} createEmployee
+  * Erstellt einen Employee
+  * @param {org.oshealthrec.network.createEmployee} createEmployee
   * @transaction
-  * 
   */
  async function createEmployee(createEmployee){
 
@@ -55,9 +48,7 @@
       newEmployee.doctors = createEmployee.doctors;
 
       return userRegistry.add(newEmployee);
-
   });  
-
  }
 
  /**

@@ -12,15 +12,10 @@
 * limitations under the License.
 */
 
-/**
-* Write your model definitions here
-*/
-
 namespace org.oshealthrec.network
 
-/**
-* participant
-*/
+
+// Definition der participants
 
 // abstract Person
 abstract participant Person identified by personID {
@@ -58,10 +53,9 @@ participant Employee extends Person {
 }
 
 
-/**
-* asset Report
-*/
+// Definition der Assets
 
+// Report
 asset Report identified by reportID{
 o String reportID
 o DateTime date
@@ -73,10 +67,12 @@ o String title
 }
 
 
-/**
-* transaction
-*/
+// Defintion der transactions
 
+// Transactions zum Erstellen der participants und Assets
+/**
+ * Erstellt einen neuen Patienten
+ */
 transaction createPatient{
 o String personID
 o String birthday
@@ -90,6 +86,9 @@ o String[] intolerances
 --> Report[] reports
 }
 
+/**
+ * Erstellt einen neuen Employee
+ */
 transaction createEmployee{
 o String personID
 o String birthday
@@ -100,6 +99,9 @@ o String sex
 --> Doctor[] doctors
 }
 
+/**
+ * Erstellt einen neuen Doctor
+ */
 transaction createDoctor{
 o String personID
 o String birthday
@@ -115,6 +117,24 @@ o String zipcode
 --> Employee[] employees
 }
 
+/**
+ * Erstellt einen neuen Report
+ */
+transaction create_report {
+o String reportID
+o DateTime date
+o String description
+o String ref_location
+o String title
+--> Patient patient
+--> Person uploadedby
+}
+
+
+// transactions zum Updaten der Profile der participants
+/**
+ * Aktualisiert das Profil des patients
+ */
 transaction patient_update_profile {
   o String birthday
   o String email
@@ -126,6 +146,9 @@ transaction patient_update_profile {
   --> Patient patient
 }
 
+/**
+ * Aktualisiert das Profil des employees
+ */
 transaction employee_update_profile {
   o String birthday
   o String email
@@ -135,6 +158,9 @@ transaction employee_update_profile {
   --> Employee employee
 }
 
+/**
+ * Aktualisiert das Profil des doctors
+ */
 transaction doctor_update_profile {
   o String birthday
   o String email
@@ -148,86 +174,107 @@ transaction doctor_update_profile {
   --> Doctor doctor
 }
 
-
-
+// transactions um die Freigabe eines Patienten für einen Doctor zu erteilen
+/**
+ * Fügt den Doctor zu dem Doctors-Array des Patienten hinzu
+ */
 transaction patient_add_doctor {
 --> Doctor doctor
 --> Patient patient
 }
 
-transaction patient_delete_doctor {
---> Patient patient
---> Doctor doctor
-}
-
-
-transaction employee_add_doctor {
---> Employee employee
---> Doctor doctor
-}
-
-transaction employee_delete_doctor {
---> Doctor doctor
---> Employee employee
-}
-
-
-transaction doctor_add_employee {
---> Employee employee
---> Doctor doctor
-}
-
+/**
+ * Fügt den Patienten zu dem Patienten-Array des Doctors hinzu
+ */
 transaction doctor_add_patient {
 --> Patient patient
 --> Doctor doctor
 }
 
-transaction doctor_delete_employee {
---> Employee employee
+// transactions um die Freigabe eines Patienten für einen Doctor zu entfernen
+/**
+ * Löscht den Doctor aus dem Doctors-Array des Patienten
+ */
+transaction patient_delete_doctor {
+--> Patient patient
 --> Doctor doctor
 }
 
+/**
+ * Löscht den Patienten aus dem Patienten-Array des Doctors
+ */
 transaction doctor_delete_patient {
 --> Patient patient
 --> Doctor doctor
 }
 
+// transactions um einen employee einem Doctor zuzuordnen
+/**
+ * Fügt den Doctor zu dem Doctors-Array des Employees hinzu
+ */
+transaction employee_add_doctor {
+--> Employee employee
+--> Doctor doctor
+}
 
-transaction employee_get_patients_from_doctor {
+/**
+ * Fügt den Employee zu dem Employee-Array des Doctors hinzu
+ */
+transaction doctor_add_employee {
+--> Employee employee
+--> Doctor doctor
+}
+
+// transactions um die Zuordnung eines Employees zu einem Doctor zu entfernen
+/**
+ * Löscht den Doctor aus dem Doctors-Array des Employees
+ */
+transaction employee_delete_doctor {
+--> Doctor doctor
+--> Employee employee
+}
+
+/**
+ * Löscht den Employee aus dem Employee-Array des Doctors
+ */
+transaction doctor_delete_employee {
+--> Employee employee
 --> Doctor doctor
 }
 
 
-
-transaction create_report {
-o String reportID
-o DateTime date
-o String description
-o String ref_location
-o String title
---> Patient patient
---> Person uploadedby
-}
-
+// transactions zum Management der Reports
+/**
+ * Fügt einen Report dem Reports-Array des Patienten hinzu
+ */
 transaction add_report_for_patient{
 --> Report report
 --> Patient patient
-
 }
 
-
+/**
+ * Gibt die Reports eines Patienten zurück.
+ */
 transaction get_reports_from_patient {
 --> Patient patient
-
 }
 
-
+/**
+ * Gibt den Report mit der reportID zurück.
+ */
 transaction get_report {
 o String reportID
 }
 
-
-
+/**
+ * Gibt alle Reports zurück.
+ */
 transaction get_all_reports {
+}
 
+/**
+ * Gibt die Patienten zurück, die dem übergebenen Doctor eine Freigabe erteilt haben.
+ */
+transaction employee_get_patients_from_doctor {
+--> Doctor doctor
 }
