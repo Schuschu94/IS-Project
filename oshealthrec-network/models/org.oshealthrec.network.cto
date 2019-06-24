@@ -59,16 +59,6 @@ participant Employee extends Person {
 
 
 /**
-* concept Address {
-o String street
-o String city
-o String country
-o String zipcode
-// o Integer[] counts optional
-}
-*/
-
-/**
 * asset Report
 */
 
