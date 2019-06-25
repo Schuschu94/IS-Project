@@ -356,10 +356,10 @@ rule EmployeeAddDoctor {
 
 rule EmployeeAddDoctorToArray{
     description: "Allow Doctor to write himself into the employee´s doctor array."
-    participant(p): "org.oshealthrec.network.Doctor"
+    participant: "org.oshealthrec.network.Doctor"
     operation: UPDATE
-    resource(v): "org.oshealthrec.network.Employee"
-    transaction(tx): "org.oshealthrec.network.employee_add_doctor"
+    resource: "org.oshealthrec.network.Employee"
+    transaction: "org.oshealthrec.network.employee_add_doctor"
     action: ALLOW
 }
 
@@ -374,10 +374,10 @@ rule EmployeeDeleteDoctor {
 
 rule EmployeeDeleteDoctorFromArray{
     description: "Allow Doctor to delete himself from the employee´s doctor array."
-    participant(p): "org.oshealthrec.network.Doctor"
+    participant: "org.oshealthrec.network.Doctor"
     operation: UPDATE
-    resource(v): "org.oshealthrec.network.Employee"
-    transaction(tx): "org.oshealthrec.network.employee_delete_doctor"
+    resource: "org.oshealthrec.network.Employee"
+    transaction: "org.oshealthrec.network.employee_delete_doctor"
     action: ALLOW
 }
 
