@@ -224,7 +224,7 @@ participant(p): "org.oshealthrec.network.Doctor"
 operation: CREATE    
 resource(v): "org.oshealthrec.network.create_report"
 transaction(tx): "org.oshealthrec.network.create_report"
-condition: (p.getIdentifier() === tx.uploadedBy.getIdentifier())
+condition: (p.getIdentifier() === tx.uploadedby.getIdentifier())
 action: ALLOW
 }
 
