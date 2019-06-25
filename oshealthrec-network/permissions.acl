@@ -347,39 +347,37 @@ action: ALLOW
 
 // Regeln zum Hinzufügen des Doctors zum Doctors-Array des Employees
 rule EmployeeAddDoctor {
-    description: "Allow employee to create employee_add_doctor transaction."
-    participant: "org.oshealthrec.network.Employee"
+    description: "Allow Doctor to create employee_add_doctor transaction."
+    participant: "org.oshealthrec.network.Doctor"
     operation: CREATE
     resource: "org.oshealthrec.network.employee_add_doctor"
     action: ALLOW
 }
 
 rule EmployeeAddDoctorToArray{
-    description: "Allow employee to write doctor into the employee´s doctor array."
-    participant(p): "org.oshealthrec.network.Employee"
+    description: "Allow Doctor to write himself into the employee´s doctor array."
+    participant(p): "org.oshealthrec.network.Doctor"
     operation: UPDATE
     resource(v): "org.oshealthrec.network.Employee"
     transaction(tx): "org.oshealthrec.network.employee_add_doctor"
-    condition: (tx.employee.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
 // Regeln zum Entfernen des Doctors aus dem Doctors-Array des Employees
 rule EmployeeDeleteDoctor {
-    description: "Allow employee to create employee_delete_doctor transaction."
-    participant: "org.oshealthrec.network.Employee"
+    description: "Allow Doctor to create employee_delete_doctor transaction."
+    participant: "org.oshealthrec.network.Doctor"
     operation: CREATE
     resource: "org.oshealthrec.network.employee_delete_doctor"
     action: ALLOW
 }
 
-rule EmployeeDeleteDoctorToArray{
-    description: "Allow employee to delete doctor from the employee´s doctor array."
-    participant(p): "org.oshealthrec.network.Employee"
+rule EmployeeDeleteDoctorFromArray{
+    description: "Allow Doctor to delete himself from the employee´s doctor array."
+    participant(p): "org.oshealthrec.network.Doctor"
     operation: UPDATE
     resource(v): "org.oshealthrec.network.Employee"
     transaction(tx): "org.oshealthrec.network.employee_delete_doctor"
-    condition: (tx.employee.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
