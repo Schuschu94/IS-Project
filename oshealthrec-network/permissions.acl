@@ -220,9 +220,11 @@ rule DoctorDeleteEmployeeFromArray{
 // Regeln um dem Doctor zu erlauben einen Report zu erstellen
 rule DoctorCreateReportTransaction {    
 description: "Allow doctor to create create_report transaction."    
-participant: "org.oshealthrec.network.Doctor"    
+participant(p): "org.oshealthrec.network.Doctor"    
 operation: CREATE    
-resource: "org.oshealthrec.network.create_report"    
+resource(v): "org.oshealthrec.network.create_report"
+transaction(tx): "org.oshealthrec.network.create_report"
+condition: (p.getIdentifier() === tx.uploadedBy.getIdentifier())
 action: ALLOW
 }
 
