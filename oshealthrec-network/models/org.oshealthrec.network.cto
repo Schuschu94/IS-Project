@@ -64,6 +64,7 @@ o String ref_location
 o String title
 --> Patient owner
 --> Person uploadedby
+--> Person uploadedForDr
 }
 
 
@@ -128,6 +129,7 @@ o String ref_location
 o String title
 --> Patient patient
 --> Person uploadedby
+--> Person uploadedForDr
 }
 
 

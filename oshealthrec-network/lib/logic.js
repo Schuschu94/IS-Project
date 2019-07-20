@@ -121,6 +121,7 @@ async function create_report(cr){
       newReport.title = cr.title
       newReport.owner = cr.patient
       newReport.uploadedby = cr.uploadedby
+      newReport.uploadedForDr = cr.uploadedForDr
 
       // Füge Report der Registry hinzu
       return reportRegistry.add(newReport);
