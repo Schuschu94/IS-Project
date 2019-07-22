@@ -224,7 +224,14 @@ rule DoctorCreateReportTransaction {
   operation: CREATE    
   resource(v): "org.oshealthrec.network.create_report"
   transaction(tx): "org.oshealthrec.network.create_report"
-  condition: (p.getIdentifier() === tx.uploadedby.getIdentifier())
+  condition: (
+    // Prüfe, ob der Arzt sich selber als "uploadedby" eingetragen hat
+    p.getIdentifier() === tx.uploadedby.getIdentifier() &&
+    // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
+    p.patients.some(function (patient){
+      return patient.getIdentifier() === tx.patient;
+    })
+  )
   action: ALLOW
 }
 
