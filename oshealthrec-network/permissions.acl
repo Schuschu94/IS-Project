@@ -229,7 +229,7 @@ rule DoctorCreateReportTransaction {
     p.getIdentifier() === tx.uploadedby.getIdentifier() &&
     // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
     p.patients.some(function (patient){
-      return patient.getIdentifier() === tx.patient;
+      return patient.getIdentifier() === tx.patient.getIdentifier();
     })
   )
   action: ALLOW
