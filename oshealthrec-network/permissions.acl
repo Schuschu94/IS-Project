@@ -404,8 +404,8 @@ rule EmployeeCreateReportTransaction {
     p.getIdentifier() === tx.uploadedby.getIdentifier() &&
     // Prüfe, ob der Mitarbeiter die Berechtigung für den eingetragenen Arzt hat
     p.doctors.some(function (doctor){
-      return doctor.getIdentifier() === tx.uploadedForDr.getIdentifier() &&
-    })
+      return doctor.getIdentifier() === tx.uploadedForDr.getIdentifier();
+    }) &&
     // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
     p.doctors.some(function (doctor){
       return doctor.patients.some(function (patient){
