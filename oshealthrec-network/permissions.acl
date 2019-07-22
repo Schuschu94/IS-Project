@@ -225,8 +225,10 @@ rule DoctorCreateReportTransaction {
   resource(v): "org.oshealthrec.network.create_report"
   transaction(tx): "org.oshealthrec.network.create_report"
   condition: (
-    // Prüfe, ob der Arzt sich selber als "uploadedby" eingetragen hat
+    // Prüfe, ob der Arzt sich selbst als "uploadedby" eingetragen hat
     p.getIdentifier() === tx.uploadedby.getIdentifier() &&
+    // Prüfe, ob der Arzt sich selbst als "uploadedForDr" eingetragen hat
+    p.getIdentifier() === tx.uploadedForDr.getIdentifier &&
     // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
     p.patients.some(function (patient){
       return patient.getIdentifier() === tx.patient.getIdentifier();
@@ -393,9 +395,24 @@ rule EmployeeDeleteDoctorFromArray {
 // Regeln zum Erstellen eines Reports
 rule EmployeeCreateReportTransaction {    
   description: "Allow employee to create create_report transaction."    
-  participant: "org.oshealthrec.network.Employee"    
+  participant(p): "org.oshealthrec.network.Employee"    
   operation: CREATE    
-  resource: "org.oshealthrec.network.create_report"    
+  resource(v): "org.oshealthrec.network.create_report"  
+  transaction(tx): "org.oshealthrec.network.create_report"
+  condition: (
+    // Prüfe, ob der Employee sich selbst als "uploadedby" eingetragen hat
+    p.getIdentifier() === tx.uploadedby.getIdentifier() &&
+    // Prüfe, ob der Mitarbeiter die Berechtigung für den eingetragenen Arzt hat
+    p.doctors.some(function (doctor){
+      return doctor.getIdentifier() === tx.uploadedForDr.getIdentifier() &&
+    })
+    // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
+    p.doctors.some(function (doctor){
+      return doctor.patients.some(function (patient){
+        return patient.getIdentifier() === tx.patient.getIdentifier();
+      })
+    })
+  )  
   action: ALLOW
 }
 
