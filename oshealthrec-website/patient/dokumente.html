@@ -22,10 +22,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active ml-5">
+            <li class="nav-item ml-5">
                 <a class="nav-link" href="profil.html">Profil <span class="sr-only">(current)</span> </a>
             </li>
-            <li class="nav-item ml-5">
+            <li class="nav-item active ml-5">
                 <a class="nav-link" href="dokumente.html">Dokumente</a>
             </li>
             <li class="nav-item ml-5">
@@ -40,7 +40,34 @@
 
 <div class="container">
     <div class="row">
-
+        <div class="col-sm-6">
+            <form class="form-group form-inline">
+                <input type="text" class="form-control mr-3" id="suche" placeholder="Suchebgriff" style="width: 400px">
+                <button type="submit" class="btn btn-primary">Suche</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Titel</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Blutanalyse</td>
+                        <td>voll die krasse Blutanalyse</td>
+                        <td>25.07.2019</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

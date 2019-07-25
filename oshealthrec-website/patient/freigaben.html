@@ -22,13 +22,13 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active ml-5">
+            <li class="nav-item ml-5">
                 <a class="nav-link" href="profil.html">Profil <span class="sr-only">(current)</span> </a>
             </li>
             <li class="nav-item ml-5">
                 <a class="nav-link" href="dokumente.html">Dokumente</a>
             </li>
-            <li class="nav-item ml-5">
+            <li class="nav-item ml-5 active">
                 <a class="nav-link" href="freigaben.html">Freigaben</a>
             </li>
         </ul>
@@ -40,7 +40,39 @@
 
 <div class="container">
     <div class="row">
-
+        <div class="col-sm-12">
+            <h3>Liste aller berechtigten Ärzte</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <table class="table table-hover mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Anschrift</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Dr. Li-Ming Yu</td>
+                    <td>
+                        Musterstraße 42 <br />
+                        49074 Osnabrück <br />
+                        Deutschland <br />
+                    </td>
+                    <td><input type="checkbox" class="form-check-input bigger-checkbox"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-3">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary mt-2 btn-block freigaben-button">Berechtigung <br />entziehen</button> <br />
+                <button type="button" class="btn btn-primary btn-block freigaben-button">Arzt suchen</button>
+            </form>
+        </div>
     </div>
 </div>
 

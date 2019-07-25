@@ -22,14 +22,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active ml-5">
+            <li class="nav-item ml-5">
                 <a class="nav-link" href="profil.html">Profil <span class="sr-only">(current)</span> </a>
             </li>
-            <li class="nav-item ml-5">
-                <a class="nav-link" href="dokumente.html">Dokumente</a>
+            <li class="nav-item active ml-5">
+                <a class="nav-link" href="mitarbeiter.html">Mitarbeiter</a>
             </li>
             <li class="nav-item ml-5">
-                <a class="nav-link" href="freigaben.html">Freigaben</a>
+                <a class="nav-link" href="patienten.html">Patienten</a>
             </li>
         </ul>
         <button type="button" class="btn btn-secondary btn-sm ml-5">
@@ -40,10 +40,44 @@
 
 <div class="container">
     <div class="row">
-
+        <div class="col-sm-12">
+            <h3>Mitarbeitersuche</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <form>
+                <input type="text" class="form-control mb-2" id="vorname" placeholder="Vorname">
+                <input type="text" class="form-control mb-2" id="nachname" placeholder="Nachname">
+                <input type="text" class="form-control mb-2" id="geburtsdatum" placeholder="Gebutsdatum">
+                <button type="button" class="btn btn-primary">Suchen</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+            <table class="table table-hover mt-5">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Geburtsdatum</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Sebastian Kamp</td>
+                    <td>01.02.1991</td>
+                    <td><input type="checkbox" class="form-check-input bigger-checkbox"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-block mt-5">Hinzufügen</button>
+        </div>
     </div>
 </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

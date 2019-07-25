@@ -1,0 +1,7 @@
+.freigaben-button {
+    height: 60px;
+}
+
+input.bigger-checkbox {
+    transform: scale(1.5);
+}
