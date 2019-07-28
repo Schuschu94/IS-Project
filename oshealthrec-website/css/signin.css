@@ -4,8 +4,7 @@ body {
     background-color: #eee;
   }
   
-
-  #login_page {
+#login_page {
     margin: auto;
     width: 100%;
 }
@@ -21,50 +20,65 @@ body {
   width: 45%;
 }
 
-  .form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-  }
-  .form-signin .form-signin-heading,
-  .form-signin .checkbox {
-    margin-bottom: 10px;
-  }
-  .form-signin .checkbox {
-    font-weight: normal;
-  }
-  .form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
-  }
-  .form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+  
+.form-signin .checkbox {
+   margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
   }
 
+.form-signin .form-control:focus {
+  z-index: 2;
+}
 
-  .ui-flex {
-    display: -webkit-box !important;
-    display: -webkit-flex !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap
+.form-signin .form-signin-heading {
+  margin-bottom: 26px;
+  font-size: 20px;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: 16px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 26px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .btn {
+  margin-bottom: 10px;
+  height: 45px;
+}
+
+
+.ui-flex {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap
 }
 
 .ui-flex, .ui-flex *, .ui-flex :after, .ui-flex :before {
@@ -77,6 +91,7 @@ body {
     -ms-flex-pack: center;
     justify-content: center
 }
+
 .ui-flex.center {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
