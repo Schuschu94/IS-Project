@@ -24,17 +24,18 @@ body {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+  margin-bottom: 30px;
 }
   
-.form-signin .checkbox {
+.form-signin.checkbox {
    margin-bottom: 10px;
 }
 
-.form-signin .checkbox {
+.form-signin.checkbox {
   font-weight: normal;
 }
 
-.form-signin .form-control {
+.form-signin.form-control {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
@@ -65,12 +66,8 @@ body {
   border-top-right-radius: 0;
 }
 
-.form-signin .btn {
-  margin-bottom: 10px;
-  height: 45px;
-}
 
-
+/* Image centered */
 .ui-flex {
   display: -webkit-box !important;
   display: -webkit-flex !important;
@@ -81,7 +78,10 @@ body {
   flex-wrap: wrap
 }
 
-.ui-flex, .ui-flex *, .ui-flex :after, .ui-flex :before {
+.ui-flex, 
+.ui-flex *, 
+.ui-flex :after, 
+.ui-flex :before {
     box-sizing: border-box
 }
 
