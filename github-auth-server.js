@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 
 app.use(cors())
 
-app.get('/token/:code', async function (req, res) {
+app.post('/token/:code', async function (req, res) {
     let code = req.params.code;
 
     const response = await fetch('https://github.com/login/oauth/access_token', {
