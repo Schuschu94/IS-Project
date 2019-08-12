@@ -43,8 +43,7 @@ $(document).ready(function() {
         token = data.token;
         console.log(data.token)
     }).then(function () {
-        let access_token = getCookie('access_token');
-        console.log(access_token);
+
         // console.log("TEST");
         // $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
         //     console.log('Test im REST Aufruf');
@@ -52,6 +51,8 @@ $(document).ready(function() {
         // })
     });
 
+    let access_token = getCookie('access_token');
+    console.log(access_token);
 
 //
 //         fetch('https://github.com/login/oauth/access_token', {
