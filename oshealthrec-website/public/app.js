@@ -33,23 +33,27 @@ let bearer;
 //     return "";
 // }
 
-$(document).ready(function() {
+$(document).ready(async function () {
 
-        let url = window.location.href;
-        let code = url.split("code=")[1];
-        console.log(code);
+    let url = window.location.href;
+    let code = url.split("code=")[1];
+    console.log(code);
 
-    $.post('http://34.67.49.75:8081/token/'+code, function(data) {
-        token = data;
-        console.log(data)
-    }).then(function () {
+    const response = await fetch('http://34.67.49.75:8081/token/' + code)
 
-        // console.log("TEST");
-        // $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
-        //     console.log('Test im REST Aufruf');
-        //     console.log(walletData);
-        // })
-    });
+    console.log(response);
+
+    // $.post('http://34.67.49.75:8081/token/'+code, function(data) {
+    //     token = data;
+    //     console.log(data)
+    // }).then(function () {
+
+    // console.log("TEST");
+    // $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
+    //     console.log('Test im REST Aufruf');
+    //     console.log(walletData);
+    // })
+    // });
 
     // let access_token = getCookie('access_token');
     // console.log(access_token);
@@ -70,7 +74,6 @@ $(document).ready(function() {
 //             console.log(JSON.stringify(myJson));
 //         })
 });
-
 
 
 // $(document).ready(function () {
