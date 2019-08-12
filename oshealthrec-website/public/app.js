@@ -29,7 +29,7 @@ $(document).ready(function() {
         fetch(serverIp + "/api/wallet", {
             method: 'get',
             headers: {
-                'Authorization': token
+                'X-Access-Token': token
             }
         }).then(function (response) {
             console.log(response);
