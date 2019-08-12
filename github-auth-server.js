@@ -1,8 +1,10 @@
 
 var express = require('express');
 var app = express();
+var cors = require('cors')
 const fetch = require("node-fetch");
 
+app.use(cors())
 
 app.get('/token/:code', async function (req, res) {
     let code = req.params.code;
