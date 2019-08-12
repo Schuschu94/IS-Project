@@ -25,16 +25,18 @@ $(document).ready(function() {
     $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
         token = data.token;
         console.log(data.token);
+    }).then(function () {
+        fetch(serverIp + "/api/wallet", {
+            method: 'get',
+            headers: {
+                'Authorization': token
+            }
+        }).then(function (response) {
+            console.log(response);
+        });
     });
 
-    fetch(serverIp + "/api/wallet", {
-        method: 'get',
-        headers: {
-            'Authorization': token
-        }
-    }).then(function (response) {
-        console.log(response);
-    })
+
 //
 //         fetch('https://github.com/login/oauth/access_token', {
 //             method: 'POST',
