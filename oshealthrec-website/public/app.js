@@ -16,22 +16,22 @@ let bearer;
 //     }
 // });
 
-function getCookie(cname){
-    let name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-
-    return "";
-}
+// function getCookie(cname){
+//     let name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(";");
+//     for (var i = 0; i < ca.length; i++) {
+//         var c = ca[i];
+//         while (c.charAt(0) == ' ') {
+//             c = c.substring(1);
+//         }
+//         if (c.indexOf(name) == 0) {
+//             return c.substring(name.length, c.length);
+//         }
+//     }
+//
+//     return "";
+// }
 
 $(document).ready(function() {
 
@@ -39,9 +39,9 @@ $(document).ready(function() {
         let code = url.split("code=")[1];
         console.log(code);
 
-    $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
-        token = data.token;
-        console.log(data.token)
+    $.post('http://localhost:8081/token/'+code, function(data) {
+        token = data;
+        console.log(data)
     }).then(function () {
 
         // console.log("TEST");
@@ -51,8 +51,8 @@ $(document).ready(function() {
         // })
     });
 
-    let access_token = getCookie('access_token');
-    console.log(access_token);
+    // let access_token = getCookie('access_token');
+    // console.log(access_token);
 
 //
 //         fetch('https://github.com/login/oauth/access_token', {
