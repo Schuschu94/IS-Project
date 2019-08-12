@@ -19,8 +19,9 @@ app.post('/token/:code', async function (req, res) {
     });
 
     const token = await response.toString();
+    console.log(token);
 
-    res.redirect("/index.html?access_token="+token);
+    res.end(token);
 
     // fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
