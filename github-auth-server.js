@@ -15,7 +15,8 @@ app.post('/token/:code', async function (req, res) {
         },
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        mode: 'no-cors'
     });
 
     const token = await response.toString();
