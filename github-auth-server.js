@@ -14,7 +14,8 @@ app.post('/token/:code', async function (req, res) {
             'code': code
         },
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
         },
         mode: 'no-cors'
     });
