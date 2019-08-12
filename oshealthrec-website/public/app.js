@@ -24,7 +24,14 @@ $(document).ready(function() {
 
     $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
         token = data.token;
-        console.log(data.token);
+        console.log(data.token)
+
+        var cookieObject = JSON.stringify(res.socket.parser.incoming.headers.cookie);
+        var accessToken = '"access_token';
+        var access_token_value = methods.getCookie(accessToken,cookieObject);
+        console.log("access token generated======"+access_token_value);
+
+        
     }).then(function () {
         console.log("TEST");
         $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
