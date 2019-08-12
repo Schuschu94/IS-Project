@@ -1,4 +1,6 @@
 const serverIp = "http://34.67.49.75:9999";
+let token;
+let bearer;
 //
 // $(document).ready(function() {
 //     var body = $('body');
@@ -21,8 +23,18 @@ $(document).ready(function() {
         console.log(code);
 
     $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
+        token = data.token;
         console.log(data.token);
     });
+
+    fetch(serverIp + "/api/wallet", {
+        method: 'get',
+        headers: {
+            'Authorization': token
+        }
+    }).then(function (response) {
+        console.log(response);
+    })
 //
 //         fetch('https://github.com/login/oauth/access_token', {
 //             method: 'POST',
@@ -40,8 +52,7 @@ $(document).ready(function() {
 //         })
 });
 
-let token;
-let bearer;
+
 
 // $(document).ready(function () {
 //     firebase.auth().onAuthStateChanged(function(user) {
