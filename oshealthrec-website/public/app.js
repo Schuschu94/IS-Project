@@ -26,6 +26,7 @@ $(document).ready(function() {
         token = data.token;
         console.log(data.token);
     }).then(function () {
+        console.log("TEST");
         $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
             console.log(walletData);
         })
