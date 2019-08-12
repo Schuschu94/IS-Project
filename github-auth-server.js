@@ -7,22 +7,24 @@ const fetch = require("node-fetch");
 app.get('/token/:code', async function (req, res) {
     let code = req.params.code;
 
-    const response = await fetch('https://github.com/login/oauth/access_token', {
-        method: 'post',
-        body: {
-            'client_id': '2e80edb9aac1beb5e0cf',
-            'client_secret': '19409ed971477475776611a5079a34d2ca0cc360',
-            'code': code
-        },
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    });
+    // const response = await fetch('https://github.com/login/oauth/access_token', {
+    //     method: 'post',
+    //     body: {
+    //         'client_id': '2e80edb9aac1beb5e0cf',
+    //         'client_secret': '19409ed971477475776611a5079a34d2ca0cc360',
+    //         'code': code
+    //     },
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    // });
 
-    const token = await response.toString();
-    console.log(token);
+    // const token = await response.toString();
+    // console.log(token);
 
-    res.end(token);
+    // res.end(token);
+
+    res.send(code);
 
     // fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
