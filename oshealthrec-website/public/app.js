@@ -39,7 +39,7 @@ $(document).ready(function() {
         let code = url.split("code=")[1];
         console.log(code);
 
-    $.post('http://localhost:8081/token/'+code, function(data) {
+    $.post('http://34.67.49.75:8081/token/'+code, function(data) {
         token = data;
         console.log(data)
     }).then(function () {
