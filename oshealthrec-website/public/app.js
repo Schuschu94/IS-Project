@@ -1,4 +1,4 @@
-const serverIp = "http://34.67.49.75:9999";
+const serverIp = "http://34.67.49.75:3000";
 let token;
 let bearer;
 //
