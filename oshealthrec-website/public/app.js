@@ -16,6 +16,23 @@ let bearer;
 //     }
 // });
 
+function getCookie(cname){
+    let name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+
+    return "";
+}
+
 $(document).ready(function() {
 
         let url = window.location.href;
@@ -25,19 +42,14 @@ $(document).ready(function() {
     $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
         token = data.token;
         console.log(data.token)
-
-        var cookieObject = JSON.stringify(res.socket.parser.incoming.headers.cookie);
-        var accessToken = '"access_token';
-        var access_token_value = methods.getCookie(accessToken,cookieObject);
-        console.log("access token generated======"+access_token_value);
-
-        
     }).then(function () {
-        console.log("TEST");
-        $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
-            console.log('Test im REST Aufruf');
-            console.log(walletData);
-        })
+        let access_token = getCookie('access_token');
+        console.log(access_token);
+        // console.log("TEST");
+        // $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
+        //     console.log('Test im REST Aufruf');
+        //     console.log(walletData);
+        // })
     });
 
 
