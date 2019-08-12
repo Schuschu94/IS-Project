@@ -28,6 +28,7 @@ $(document).ready(function() {
     }).then(function () {
         console.log("TEST");
         $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
+            console.log('Test im REST Aufruf');
             console.log(walletData);
         })
     });
