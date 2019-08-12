@@ -26,14 +26,9 @@ $(document).ready(function() {
         token = data.token;
         console.log(data.token);
     }).then(function () {
-        fetch(serverIp + "/api/wallet", {
-            method: 'get',
-            headers: {
-                "access_token": token
-            }
-        }).then(function (response) {
-            console.log(response);
-        });
+        $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
+            console.log(walletData);
+        })
     });
 
 
