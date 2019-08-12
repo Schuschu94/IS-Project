@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 app.post('/token/:code', async function (req, res) {
     let code = req.params.code;
 
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
+    const response = await fetch('https://github.com/login/oauth/access_token', {
         method: 'post',
         body: {
             'client_id': '2e80edb9aac1beb5e0cf',
@@ -18,7 +18,7 @@ app.post('/token/:code', async function (req, res) {
         },
     });
 
-    const token = await response.toString();
+    const token = await response.data.access_token;
 
     res.end(token);
 
