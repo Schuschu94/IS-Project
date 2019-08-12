@@ -1,4 +1,4 @@
-const serverIp = "https://34.67.49.75:3000";
+const serverIp = "http://34.67.49.75:9999";
 //
 // $(document).ready(function() {
 //     var body = $('body');
@@ -14,15 +14,15 @@ const serverIp = "https://34.67.49.75:3000";
 //     }
 // });
 
-// $(document).ready(function() {
-//
-//         let url = window.location.href;
-//         let code = url.split("code=")[1];
-//         console.log(code);
-//
-//     $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
-//         console.log(data.token);
-//     });
+$(document).ready(function() {
+
+        let url = window.location.href;
+        let code = url.split("code=")[1];
+        console.log(code);
+
+    $.getJSON('http://34.67.49.75:9999/authenticate/'+code, function(data) {
+        console.log(data.token);
+    });
 //
 //         fetch('https://github.com/login/oauth/access_token', {
 //             method: 'POST',
@@ -38,9 +38,8 @@ const serverIp = "https://34.67.49.75:3000";
 //         }).then(function (myJson) {
 //             console.log(JSON.stringify(myJson));
 //         })
-// });
+});
 
-const provider = new firebase.auth.GithubAuthProvider();
 let token;
 let bearer;
 
@@ -57,16 +56,6 @@ let bearer;
 // })
 
 function signIn() {
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-        if (result.credential) {
-            // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-            token = result.credential.accessToken;
-            bearer = 'Bearer '+ token;
-            console.log(token);
-            console.log(result.credential);
-        }
-
-    });
 }
 
 function checkWallet() {
