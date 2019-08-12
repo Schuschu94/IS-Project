@@ -55,58 +55,58 @@ let bearer;
 //
 // })
 
-function signIn() {
-}
-
-function checkWallet() {
-    console.log("Vor REST");
-    const userAction = async () => {
-        const response = await fetch(serverIp + "/api/wallet", {
-            method: 'GET',
-            headers: {
-                'Authorization': bearer
-            }
-        });
-        const myJson = await response.json(); //extract JSON from the http response
-        // do something with myJson
-        console.log(myJson);
-    }
-
-    fetch(serverIp + "/api/wallet", {
-        method: 'get',
-        headers: {
-            'Authorization': bearer
-        }
-    }).then(function (response) {
-        console.log(response);
-    })
-    console.log("Nach REST");
-}
-
-function importCard() {
-    console.log("Test");
-
-
-    // Datei Upload
-    const input = document.getElementById('fileInput');
-    const file = input.files[0];
-    console.log(file);
-
-    const upload = (file) => {
-        fetch(serverIp + "/api/wallet/import", {
-            method: 'POST',
-            headers: {
-                'Authorization': bearer
-            },
-            body: file, // string or object
-        }).then(function (response) {
-            console.log(response);
-        }).then(
-            success => console.log(success) // Handle the success response object
-        ).catch(
-            error => console.log(error) // Handle the error response object
-        );
-    };
-    console.log("Nach dem Rest");
-}
+// function signIn() {
+// }
+//
+// function checkWallet() {
+//     console.log("Vor REST");
+//     const userAction = async () => {
+//         const response = await fetch(serverIp + "/api/wallet", {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': bearer
+//             }
+//         });
+//         const myJson = await response.json(); //extract JSON from the http response
+//         // do something with myJson
+//         console.log(myJson);
+//     }
+//
+//     fetch(serverIp + "/api/wallet", {
+//         method: 'get',
+//         headers: {
+//             'Authorization': bearer
+//         }
+//     }).then(function (response) {
+//         console.log(response);
+//     })
+//     console.log("Nach REST");
+// }
+//
+// function importCard() {
+//     console.log("Test");
+//
+//
+//     // Datei Upload
+//     const input = document.getElementById('fileInput');
+//     const file = input.files[0];
+//     console.log(file);
+//
+//     const upload = (file) => {
+//         fetch(serverIp + "/api/wallet/import", {
+//             method: 'POST',
+//             headers: {
+//                 'Authorization': bearer
+//             },
+//             body: file, // string or object
+//         }).then(function (response) {
+//             console.log(response);
+//         }).then(
+//             success => console.log(success) // Handle the success response object
+//         ).catch(
+//             error => console.log(error) // Handle the error response object
+//         );
+//     };
+//     console.log("Nach dem Rest");
+// }
 
