@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 
 
 app.post('/token/:code', function (req, res) {
-    let code = req.param('code');
+    let code = req.params('code');
     fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         body: {
@@ -16,8 +16,11 @@ app.post('/token/:code', function (req, res) {
             'Content-Type': 'application/json'
         }
     }).then(function (response) {
+        console.log(code);
         console.log("Token gesendet: " +response.json());
         res.end(response.json());
+    }).catch(function () {
+        console.log("Token nicht erhalten");
     });
 });
 
