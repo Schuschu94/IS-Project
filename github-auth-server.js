@@ -21,7 +21,7 @@ app.post('/token/:code', async function (req, res) {
         },
     });
 
-    const token = await JSON.stringify(response.body);
+    const token = await response.body;
     console.log(token);
 
     res.end(token);
