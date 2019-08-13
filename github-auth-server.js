@@ -25,12 +25,12 @@ app.post('/token/:code', async function (req, res) {
     const accessToken = request(options, function (e, r, b) {
         if (b) {
             jb = JSON.parse(b);
-            console.log(jb.access_token);
+            console.log(jb);
             return jb.access_token;
         }
     })
 
-    return accessToken;
+    res.send(accessToken);
 
     // const response = await fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
