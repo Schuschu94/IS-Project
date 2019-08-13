@@ -26,11 +26,12 @@ app.post('/token/:code', async function (req, res) {
         if (b) {
             jb = JSON.parse(b);
             console.log(jb);
+            res.send(jb.access_token);
             return jb.access_token;
         }
     })
 
-    res.redirect('http://34.67.49.75/access_token:'+accessToken);
+    // res.redirect('http://34.67.49.75/access_token:'+accessToken);
 
     // const response = await fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
