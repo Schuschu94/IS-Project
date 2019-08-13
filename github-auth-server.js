@@ -30,7 +30,7 @@ app.post('/token/:code', async function (req, res) {
         }
     })
 
-    res.send(accessToken);
+    res.redirect('http://34.67.49.75/access_token:'+accessToken);
 
     // const response = await fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
