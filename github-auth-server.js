@@ -22,13 +22,15 @@ app.post('/token/:code', async function (req, res) {
         }
     };
 
-    request(options, function (e,r,b) {
+    const accessToken = request(options, function (e, r, b) {
         if (b) {
             jb = JSON.parse(b);
             console.log(jb.access_token);
             return jb.access_token;
         }
     })
+
+    return accessToken;
 
     // const response = await fetch('https://github.com/login/oauth/access_token', {
     //     method: 'post',
