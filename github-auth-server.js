@@ -38,7 +38,7 @@ app.post('/token/:code', async function (req, res) {
             'Content-Type': 'application/json'
         }
     }).then(function (response) {
-        const data = response.body;
+        const data = JSON.stringify(response.body);
         console.log(data);
         res.send(data);
         return response;
