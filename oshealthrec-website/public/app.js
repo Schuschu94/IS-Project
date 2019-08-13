@@ -1,6 +1,6 @@
 const serverIp = "http://34.67.49.75:3000";
 let token;
-let bearer;
+let tokenType;
 //
 // $(document).ready(function() {
 //     var body = $('body');
@@ -44,7 +44,11 @@ $(document).ready(async function () {
     })
 
     let data = await response.json();
-    console.log(data);
+    token = data.access_token;
+    tokenType = data.token_type;
+
+    console.log(token);
+    console.log(tokenType);
 
     // $.post('http://34.67.49.75:8081/token/'+code, function(data) {
     //     token = data;
