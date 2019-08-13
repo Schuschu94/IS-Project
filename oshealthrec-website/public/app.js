@@ -98,19 +98,17 @@ $(document).ready(async function () {
 // function signIn() {
 // }
 //
-function checkWallet() {
+async function checkWallet() {
     console.log("Vor REST");
-    const userAction = async () => {
-        const response = await fetch(serverIp + "/api/wallet", {
-            method: 'GET',
-            headers: {
-                'X-Access-Token': token
-            }
-        });
-        const myJson = await response.json(); //extract JSON from the http response
-        // do something with myJson
-        console.log(myJson);
-    }
+    const response = await fetch(serverIp + "/api/wallet", {
+        method: 'GET',
+        headers: {
+            'X-Access-Token': token
+        }
+    });
+    const myJson = await response.json(); //extract JSON from the http response
+    // do something with myJson
+    console.log(myJson);
 
     // fetch(serverIp + "/api/wallet", {
     //     method: 'get',
