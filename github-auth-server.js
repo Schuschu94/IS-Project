@@ -11,13 +11,13 @@ app.post('/token/:code', async function (req, res) {
 
     const response = await fetch('https://github.com/login/oauth/access_token', {
         method: 'post',
-        body: {
+        formData: {
             client_id: '2e80edb9aac1beb5e0cf',
             client_secret: '19409ed971477475776611a5079a34d2ca0cc360',
             code: code
         },
         headers: {
-            'Accept': 'application/json'
+            accept: 'application/json'
         },
     });
 
