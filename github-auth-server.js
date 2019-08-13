@@ -25,7 +25,7 @@ app.post('/token/:code', async function (req, res) {
 
     const accessToken = request(options, function (e, r, b) {
         if (b) {
-            jb = JSON.parse(b);
+            const jb = JSON.parse(b);
             console.log(jb);
             res.json(jb);
             return jb.access_token;
