@@ -43,7 +43,7 @@ $(document).ready(async function () {
         method: 'post'
     })
 
-    let data = response.json();
+    let data = await response.json();
     console.log(data);
 
     // $.post('http://34.67.49.75:8081/token/'+code, function(data) {
