@@ -1,16 +1,17 @@
-
 var express = require('express');
 var app = express();
 var cors = require('cors')
 const fetch = require("node-fetch");
+const request = require('request');
 
 app.use(cors())
 
 app.post('/token/:code', async function (req, res) {
     let code = req.params.code;
 
-    const response = await fetch('https://github.com/login/oauth/access_token', {
-        method: 'post',
+    options = {
+        method: 'POST',
+        uri: 'https://github.com/login/oauth/access_token',
         formData: {
             client_id: '2e80edb9aac1beb5e0cf',
             client_secret: '19409ed971477475776611a5079a34d2ca0cc360',
@@ -18,13 +19,33 @@ app.post('/token/:code', async function (req, res) {
         },
         headers: {
             accept: 'application/json'
-        },
-    });
+        }
+    };
 
-    const token = await JSON.stringify(response.body);
-    console.log(token);
+    request(options, function (e,r,b) {
+        if (b) {
+            jb = JSON.parse(b);
+            console.log(jb.access_token);
+            return jb.access_token;
+        }
+    })
 
-    res.send(token);
+    // const response = await fetch('https://github.com/login/oauth/access_token', {
+    //     method: 'post',
+    //     formData: {
+    //         client_id: '2e80edb9aac1beb5e0cf',
+    //         client_secret: '19409ed971477475776611a5079a34d2ca0cc360',
+    //         code: code
+    //     },
+    //     headers: {
+    //         accept: 'application/json'
+    //     },
+    // });
+    //
+    // const token = await JSON.stringify(response.body);
+    // console.log(token);
+    //
+    // res.send(token);
 
 
     // fetch('https://github.com/login/oauth/access_token', {
