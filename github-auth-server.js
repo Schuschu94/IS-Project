@@ -9,6 +9,7 @@ app.use(cors())
 app.post('/token/:code', async function (req, res) {
     let code = req.params.code;
 
+    res.set('Content-Type', 'application/json');
     options = {
         method: 'POST',
         uri: 'https://github.com/login/oauth/access_token',
