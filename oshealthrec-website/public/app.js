@@ -100,11 +100,11 @@ $(document).ready(async function () {
 //
 async function checkWallet() {
     console.log("Vor REST");
-    const response = await fetch(serverIp + "/api/wallet", {
+    const response = await fetch(serverIp + "/api/wallet?access_token=" + token, {
         method: 'GET',
-        headers: {
-            'X-Access-Token': token
-        }
+        // headers: {
+        //     'X-Access-Token': token
+        // }
     });
     const myJson = await response.json(); //extract JSON from the http response
     // do something with myJson
