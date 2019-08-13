@@ -16,9 +16,9 @@ app.post('/token/:code', async function (req, res) {
             'client_secret': '19409ed971477475776611a5079a34d2ca0cc360',
             'code': code
         },
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
     });
 
     const token = await JSON.stringify(response.body);
