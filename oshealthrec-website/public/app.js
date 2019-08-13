@@ -40,7 +40,7 @@ $(document).ready(async function () {
     console.log(code);
 
     const response = await fetch('http://34.67.49.75:8081/token/' + code, {
-        method: 'get'
+        method: 'post'
     })
 
     console.log(response);
