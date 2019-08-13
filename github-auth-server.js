@@ -21,7 +21,7 @@ app.post('/token/:code', async function (req, res) {
         },
     });
 
-    const token = await response.toString();
+    const token = await response.access_token;
     console.log(token);
 
     res.end(token);
