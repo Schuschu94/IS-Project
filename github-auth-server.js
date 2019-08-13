@@ -6,7 +6,7 @@ const request = require('request');
 
 app.use(cors())
 
-app.get('/token/:code', function (req, res) {
+app.get('/token/:code', async function (req, res) {
     let code = req.params.code;
 
     options = {
