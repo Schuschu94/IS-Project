@@ -17,7 +17,7 @@ app.post('/token/:code', async function (req, res) {
             code: code
         },
         headers: {
-            'Content-Type': 'application/json'
+            Accept: 'application/json'
         },
     });
 
