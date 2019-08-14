@@ -33,22 +33,22 @@ let tokenType;
 //     return "";
 // }
 
-$(document).ready(async function () {
-
-    let url = window.location.href;
-    let code = url.split("code=")[1];
-    console.log(code);
-
-    const response = await fetch('http://34.67.49.75:8081/token/' + code, {
-        method: 'post'
-    })
-
-    let data = await response.json();
-    token = data.access_token;
-    tokenType = data.token_type;
-
-    console.log(token);
-    console.log(tokenType);
+// $(document).ready(async function () {
+//
+//     let url = window.location.href;
+//     let code = url.split("code=")[1];
+//     console.log(code);
+//
+//     const response = await fetch('http://34.67.49.75:8081/token/' + code, {
+//         method: 'post'
+//     })
+//
+//     let data = await response.json();
+//     token = data.access_token;
+//     tokenType = data.token_type;
+//
+//     console.log(token);
+//     console.log(tokenType);
 
     // $.post('http://34.67.49.75:8081/token/'+code, function(data) {
     //     token = data;
@@ -80,7 +80,7 @@ $(document).ready(async function () {
 //         }).then(function (myJson) {
 //             console.log(JSON.stringify(myJson));
 //         })
-});
+// });
 
 
 // $(document).ready(function () {
@@ -98,17 +98,17 @@ $(document).ready(async function () {
 // function signIn() {
 // }
 //
-async function checkWallet() {
-    console.log("Vor REST");
-    const response = await fetch(serverIp + "/api/wallet?access_token=" + token, {
-        method: 'GET',
-        // headers: {
-        //     'X-Access-Token': token
-        // }
-    });
-    const myJson = await response.json(); //extract JSON from the http response
-    // do something with myJson
-    console.log(myJson);
+// async function checkWallet() {
+//     console.log("Vor REST");
+//     const response = await fetch(serverIp + "/api/wallet?access_token=" + token, {
+//         method: 'GET',
+//         // headers: {
+//         //     'X-Access-Token': token
+//         // }
+//     });
+//     const myJson = await response.json(); //extract JSON from the http response
+//     // do something with myJson
+//     console.log(myJson);
 
     // fetch(serverIp + "/api/wallet", {
     //     method: 'get',
@@ -119,7 +119,7 @@ async function checkWallet() {
     //     console.log(response);
     // })
     console.log("Nach REST");
-}
+// }
 //
 // function importCard() {
 //     console.log("Test");
