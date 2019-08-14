@@ -50,20 +50,20 @@ let tokenType;
 //     console.log(token);
 //     console.log(tokenType);
 
-    // $.post('http://34.67.49.75:8081/token/'+code, function(data) {
-    //     token = data;
-    //     console.log(data)
-    // }).then(function () {
+// $.post('http://34.67.49.75:8081/token/'+code, function(data) {
+//     token = data;
+//     console.log(data)
+// }).then(function () {
 
-    // console.log("TEST");
-    // $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
-    //     console.log('Test im REST Aufruf');
-    //     console.log(walletData);
-    // })
-    // });
+// console.log("TEST");
+// $.getJSON('http://34.67.49.75:3000/api/wallet?access_token='+token, function (walletData) {
+//     console.log('Test im REST Aufruf');
+//     console.log(walletData);
+// })
+// });
 
-    // let access_token = getCookie('access_token');
-    // console.log(access_token);
+// let access_token = getCookie('access_token');
+// console.log(access_token);
 
 //
 //         fetch('https://github.com/login/oauth/access_token', {
@@ -98,17 +98,18 @@ let tokenType;
 // function signIn() {
 // }
 //
-// async function checkWallet() {
-//     console.log("Vor REST");
-//     const response = await fetch(serverIp + "/api/wallet?access_token=" + token, {
-//         method: 'GET',
-//         // headers: {
-//         //     'X-Access-Token': token
-//         // }
-//     });
-//     const myJson = await response.json(); //extract JSON from the http response
-//     // do something with myJson
-//     console.log(myJson);
+async function checkWallet() {
+    console.log("Vor REST");
+    const response = await fetch(serverIp + "/api/wallet", {
+        method: 'GET',
+        credentials: 'include'
+        // headers: {
+        //     'X-Access-Token': token
+        // }
+    });
+    const myJson = await response.json(); //extract JSON from the http response
+    // do something with myJson
+    console.log(myJson);
 
     // fetch(serverIp + "/api/wallet", {
     //     method: 'get',
@@ -119,7 +120,8 @@ let tokenType;
     //     console.log(response);
     // })
     console.log("Nach REST");
-// }
+}
+
 //
 // function importCard() {
 //     console.log("Test");
