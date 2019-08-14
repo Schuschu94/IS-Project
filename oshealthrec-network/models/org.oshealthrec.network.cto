@@ -133,7 +133,12 @@ o String title
 }
 
 
-// transactions zum Updaten der Profile der participants
+// transactions bezüglich der Profile der participants
+/**
+ * Gibt den aufrufenden Participant zurück.
+ */
+transaction getCurrentParticipant {
+}
 /**
  * Aktualisiert das Profil des patients
  */

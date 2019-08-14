@@ -130,6 +130,16 @@ async function create_report(cr){
 
 // Funktionen um die Profile der Participants zu aktualisieren 
 /**
+ * Gibt den aufrufenden Participant zurück.
+ * @param {org.oshealthrec.network.getCurrentParticipant} gcp 
+ * @transaction
+ */
+async function getCurrentParticipant(gcp) {
+  let currentParticipant = getCurrentParticipant();
+
+  return currentParticipant;
+}
+/**
  * Aktualisiert das Profil des Patient
  * @param {org.oshealthrec.network.patient_update_profile} patient_update_profile
  * @transaction 

@@ -13,6 +13,18 @@
  */
 
 /**
+ * Allgemeine Regeln
+ */
+ // Regel um seinen eigenen Participant zurück zu geben
+ rule getCurrentParticipantTransaction {
+   description: "Allow participants to call getCurrentParticipant transaction."
+   participant: "org.oshealthrec.network.Person"
+   operation: CREATE
+   resource: "org.oshealthrec.network.getCurrentParticipant"
+   action: ALLOW
+ }
+
+/**
  *Regeln die den Patienten betreffen.
  */
  // Lese-Berechtigungen des Patienten
