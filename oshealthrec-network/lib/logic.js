@@ -135,7 +135,7 @@ async function create_report(cr){
  * @transaction
  */
 async function getCurrentParticipant(gcp) {
-  let currentParticipant = getCurrentParticipant();
+  let currentParticipant = await getCurrentParticipant();
 
   return currentParticipant;
 }
