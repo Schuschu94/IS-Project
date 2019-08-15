@@ -132,6 +132,7 @@ async function create_report(cr){
 /**
  * Gibt den aufrufenden Participant zurück.
  * @param {org.oshealthrec.network.getCurrentParticipant} gcp 
+ * @returns {org.oshealthrec.network.Person} The current Person
  * @transaction
  */
 async function getCurrentParticipant(gcp) {
@@ -481,6 +482,7 @@ async function add_report_for_patient(arfp){
 /**
  * Gibt die Reports eines Patients zurück
  * @param {org.oshealthrec.network.get_reports_from_patient} get_reports_from_patient
+ * @returns {org.oshealthrec.network.Report} Reports des Patienten
  * @transaction
  */
 async function get_reports_from_patient(grfp){
@@ -498,6 +500,7 @@ async function get_reports_from_patient(grfp){
 /**
  * Gibt Report mit bestimmter ReportID zurück
  * @param {org.oshealthrec.network.get_report} get_report
+ * @returns {org.oshealthrec.network.Report} Report
  * @transaction
  */
 async function get_report(gr){
@@ -540,6 +543,7 @@ async function get_all_reports(){
 /**
  * Gibt alle Patienten züruck, die einem bestimmten Doctor eine Freigabe erteilt haben.
  * @param {org.oshealthrec.network.employee_get_patients_from_doctor} employee_get_patients_from_doctor
+ * @returns {org.oshealthrec.network.Patient} Patients
  * @transaction
  */
 async function employee_get_patients_from_doctor(egpfd){  

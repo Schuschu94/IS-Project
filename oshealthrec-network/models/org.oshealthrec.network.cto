@@ -137,6 +137,7 @@ o String title
 /**
  * Gibt den aufrufenden Participant zurück.
  */
+@returns(Person)
 transaction getCurrentParticipant {
 }
 /**
@@ -262,6 +263,7 @@ transaction add_report_for_patient{
 /**
  * Gibt die Reports eines Patienten zurück.
  */
+ @returns(Report[])
 transaction get_reports_from_patient {
 --> Patient patient
 }
@@ -269,6 +271,7 @@ transaction get_reports_from_patient {
 /**
  * Gibt den Report mit der reportID zurück.
  */
+ @returns(Report)
 transaction get_report {
 o String reportID
 }
@@ -282,6 +285,7 @@ transaction get_all_reports {
 /**
  * Gibt die Patienten zurück, die dem übergebenen Doctor eine Freigabe erteilt haben.
  */
+ @returns(Patient[])
 transaction employee_get_patients_from_doctor {
 --> Doctor doctor
 }
