@@ -32,8 +32,18 @@ $(document).ready(async function () {
         }
     // Wird nur auf der Profil Seite des Patienten ausgeführt
     } else if (body.hasClass('patient-profil')){
+
+        // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
-        console.log(participantId);
+
+        // Hole Profil Daten des Nutzers aus der Blockchain
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        let profilJson = await response.json();
+        console.log(profilJson);
     }
 });
 
