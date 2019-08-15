@@ -11,7 +11,8 @@ $(document).ready(async function () {
             credentials: 'include'
         });
 
-        let participantPath = await response.json();
+        let participantJson = await response.json();
+        let participantPath = participantJson.participant;
         // Hole Typ des Participants aus dem gesamten Pfad
         let participantType = participantPath.split("network.").split("#")[0];
         console.log(participantType);
