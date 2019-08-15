@@ -16,6 +16,14 @@ $(document).ready(async function () {
         // Hole Typ des Participants aus dem gesamten Pfad
         let participantType = participantPath.split("network.")[1].split("#")[0];
         console.log(participantType);
+
+        if (participantType == 'Patient') {
+            window.location.href = "patient/profil.html";
+        } else if (participantType == 'Employee') {
+            window.location.href = "mitarbeiter/profil.html";
+        } else if (participantType == 'Doctor') {
+            window.location.href = "doktor/profil.html";
+        }
     }
 });
 
