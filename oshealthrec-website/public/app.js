@@ -15,7 +15,7 @@ $(document).ready(async function () {
         // let participantPath = participantJson.participant;
         // Hole Typ des Participants aus dem gesamten Pfad
         // let participantType = participantPath.split("network.").split("#")[0];
-        console.log(participantJson);
+        console.log(participantJson.participant);
     }
 });
 
