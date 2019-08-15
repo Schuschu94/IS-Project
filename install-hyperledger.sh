@@ -23,7 +23,7 @@ export FABRIC_VERSION=hlfv12
 ./createPeerAdminCard.sh
 
 # Installiere Network
-cd %HOME
+cd $HOME
 cd IS-Project/oshealthrec-network
 composer archive create -t dir -n .
 composer network install --card PeerAdmin@hlfv1 --archiveFile oshealthrec-network@0.0.1.bna
@@ -48,5 +48,5 @@ export COMPOSER_PROVIDERS='{
 # Webserver installieren und einrichten
 sudo apt install apache2
 sudo apt-get install screen
-cd %HOME/IS-Project
+cd $HOME/IS-Project
 sudo cp -a oshealthrec-website/public/. /var/www/html
