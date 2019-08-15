@@ -14,7 +14,7 @@ $(document).ready(async function () {
         let participantJson = await response.json();
         let participantPath = participantJson.participant;
 
-        // Hole Typ des Participants aus dem gesamten Pfad
+        // Hole Typ und Id des Participants aus dem gesamten Pfad
         let participantType = participantPath.split("network.")[1].split("#")[0];
         let participantId = participantPath.split("network.")[1].split("#")[1];
 
@@ -31,11 +31,17 @@ $(document).ready(async function () {
             window.location.href = "doktor/profil.html";
         }
 
-    // Wird nur auf der Profil Seite des Patienten ausgeführt
-    } else if (body.hasClass('patient-profil')){
+        // Wird nur auf der Profil Seite des Patienten ausgeführt
+    } else if (body.hasClass('patient-profil')) {
 
-        // Hole ID des Nutzers aus dem Session Storage
+        // Hole ID und Typ des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient"){
+            window.location.href = "../index.html";
+        }
 
         // Hole Profil Daten des Nutzers aus der Blockchain
         const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
@@ -58,11 +64,17 @@ $(document).ready(async function () {
         geburtsdatum.text(profilJson.birthday);
         blutgruppe.text(profilJson.bloodType);
 
-    // Wird nur auf der Profil Seite des Mitarbeiter ausgeführt
-    } else if (body.hasClass('mitarbeiter-profil')){
+        // Wird nur auf der Profil Seite des Mitarbeiter ausgeführt
+    } else if (body.hasClass('mitarbeiter-profil')) {
 
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Mitarbeiter handelt
+        if (participantType != "Employee"){
+            window.location.href = "../index.html";
+        }
 
         // Hole Profil Daten des Nutzers aus der Blockchain
         const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
@@ -83,11 +95,17 @@ $(document).ready(async function () {
         geschlecht.text(profilJson.sex);
         geburtsdatum.text(profilJson.birthday);
 
-    // Wird nur auf der Profil Seite des Doktors ausgeführt
-    } else if (body.hasClass('doktor-profil')){
+        // Wird nur auf der Profil Seite des Doktors ausgeführt
+    } else if (body.hasClass('doktor-profil')) {
 
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor"){
+            window.location.href = "../index.html";
+        }
 
         // Hole Profil Daten des Nutzers aus der Blockchain
         const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor/" + participantId, {
