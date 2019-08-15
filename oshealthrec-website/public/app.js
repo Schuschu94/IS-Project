@@ -129,8 +129,31 @@ $(document).ready(async function () {
         anschrift.html(profilJson.street + "<br />"
             + profilJson.zipcode + " " + profilJson.city + "<br />"
             + profilJson.country)
+
+        // Wird nur auf der Arzt-Suche Seite des Patienten ausgeführt
+    } else if (body.hasClass('patient-arzt-suche')) {
+
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient") {
+            window.location.href = "../index.html";
+        }
     }
 });
+
+async function queryArztSuche() {
+    let arztTabelle = $('#arztTabelle');
+
+    // Hole Eingaben des Nutzers
+    let inputVorname = $('#inputVorname').val();
+    let inputNachname = $('#inputNachname').val();
+    let inputStraße = $('#inputStraße').val();
+    let inputOrt = $('#inputOrt').val();
+
+}
 
 async function checkWallet() {
 

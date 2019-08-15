@@ -11,7 +11,7 @@
 
     <title>OSHealthRec</title>
 </head>
-<body>
+<body class="patient-arzt-suche">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
@@ -47,10 +47,10 @@
     <div class="row">
         <div class="col-sm-5">
             <form>
-                <input type="text" class="form-control mb-2" id="vorname" placeholder="Vorname">
-                <input type="text" class="form-control mb-2" id="nachname" placeholder="Nachname">
-                <input type="text" class="form-control mb-2" id="straße" placeholder="Straße">
-                <input type="text" class="form-control mb-2" id="Ort" placeholder="Ort">
+                <input type="text" class="form-control mb-2" id="inputVorname" placeholder="Vorname">
+                <input type="text" class="form-control mb-2" id="inputNachname" placeholder="Nachname">
+                <input type="text" class="form-control mb-2" id="inputStraße" placeholder="Straße">
+                <input type="text" class="form-control mb-2" id="inputOrt" placeholder="Ort">
                 <button type="button" class="btn btn-primary">Suchen</button>
             </form>
         </div>
@@ -65,7 +65,7 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="arztTabelle">
                 <tr>
                     <td>Dr. Li-Ming Yu</td>
                     <td>Musterstraße 42 <br />
