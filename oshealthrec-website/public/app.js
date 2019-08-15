@@ -12,10 +12,10 @@ $(document).ready(async function () {
         });
 
         let participantJson = await response.json();
-        // let participantPath = participantJson.participant;
+        let participantPath = participantJson.participant;
         // Hole Typ des Participants aus dem gesamten Pfad
-        // let participantType = participantPath.split("network.").split("#")[0];
-        console.log(participantJson.participant);
+        let participantType = participantPath.split("network.")[1].split("#")[0];
+        console.log(participantType);
     }
 });
 
