@@ -30,6 +30,7 @@ $(document).ready(async function () {
         } else if (participantType == 'Doctor') {
             window.location.href = "doktor/profil.html";
         }
+
     // Wird nur auf der Profil Seite des Patienten ausgeführt
     } else if (body.hasClass('patient-profil')){
 
@@ -41,7 +42,6 @@ $(document).ready(async function () {
             method: 'GET',
             credentials: 'include'
         });
-
         let profilJson = await response.json();
 
         // Hole Textfelder als jquery Variable
@@ -57,6 +57,29 @@ $(document).ready(async function () {
         geschlecht.text(profilJson.sex);
         geburtsdatum.text(profilJson.birthday);
         blutgruppe.text(profilJson.bloodType);
+    } else if (body.hasClass('mitarbeiter-profil')){
+
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+
+        // Hole Profil Daten des Nutzers aus der Blockchain
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        let profilJson = await response.json();
+
+        // Hole Textfelder als jquery Variable
+        let vorname = $('#vorname');
+        let nachname = $('#nachname');
+        let geschlecht = $('#geschlecht');
+        let geburtsdatum = $('#geburtsdatum');
+
+        // Setz Werte der Textfelder
+        vorname.text(profilJson.givenname);
+        nachname.text(profilJson.surname);
+        geschlecht.text(profilJson.sex);
+        geburtsdatum.text(profilJson.birthday);
     }
 });
 
