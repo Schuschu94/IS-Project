@@ -1,5 +1,4 @@
 const serverIp = "http://34.67.49.75:3000";
-let participantType;
 
 $(document).ready(async function () {
     let body = $('body');
@@ -16,7 +15,8 @@ $(document).ready(async function () {
         let participantPath = participantJson.participant;
 
         // Hole Typ des Participants aus dem gesamten Pfad
-        participantType = participantPath.split("network.")[1].split("#")[0];
+        let participantType = participantPath.split("network.")[1].split("#")[0];
+        sessionStorage.setItem("participantType", participantType);
         console.log(participantType);
 
         // Leite den Nutzer auf die entsprechende Seite weiter
@@ -29,6 +29,7 @@ $(document).ready(async function () {
         }
     // Wird nur auf der Profil Seite des Patienten ausgeführt
     } else if (body.hasClass('patient-profil')){
+        let participantType = sessionStorage.getItem("participantType");
         console.log(participantType);
     }
 });
