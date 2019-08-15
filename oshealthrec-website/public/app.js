@@ -43,7 +43,20 @@ $(document).ready(async function () {
         });
 
         let profilJson = await response.json();
-        console.log(profilJson);
+
+        // Hole Textfelder als jquery Variable
+        let vorname = $('#vorname');
+        let nachname = $('#nachname');
+        let geschlecht = $('#geschlecht');
+        let geburtsdatum = $('#geburtsdatum');
+        let blutgruppe = $('#blutgruppe');
+
+        // Setz Werte der Textfelder
+        vorname.text(profilJson.givenname);
+        nachname.text(profilJson.surname);
+        geschlecht.text(profilJson.sex);
+        geburtsdatum.text(profilJson.birthday);
+        blutgruppe.text(profilJson.bloodType);
     }
 });
 
