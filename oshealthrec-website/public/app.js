@@ -1,21 +1,22 @@
 const serverIp = "http://34.67.49.75:3000";
-//
-// $(document).ready(function() {
-//     var body = $('body');
-//
-//     // Wird nur auf der Profil-Seite des Patienten ausgeführt
-//     if (body.hasClass('patient-profil')) {
-//         // Aufruf des Rest-Servers
-//         const userAction = async () => {
-//             const response = await fetch(serverIp + "/org.oshealthrec.network.Patient");
-//             const myJson = await response.json(); //extract JSON from the http response
-//             // do something with myJson
-//         }
-//     }
-// });
-//     let url = window.location.href;
-//     let code = url.split("code=")[1];
-//     console.log(code);
+
+$(document).ready(async function () {
+    let body = $('body');
+
+    // Wird nur auf der Index-Seite ausgeführt
+    if (body.hasClass('index')) {
+        // Ping Aufruf, um als Antwort den aufrufenden Participant zu erhalten
+        const response = await fetch(serverIp + "/api/system/ping", {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        let participantPath = await response.json();
+        // Hole Typ des Participants aus dem gesamten Pfad
+        let participantType = participantPath.split("network.").split("#")[0];
+        console.log(participantType);
+    }
+});
 
 async function checkWallet() {
 
