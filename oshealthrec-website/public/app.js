@@ -16,8 +16,11 @@ $(document).ready(async function () {
 
         // Hole Typ des Participants aus dem gesamten Pfad
         let participantType = participantPath.split("network.")[1].split("#")[0];
+        let participantId = participantPath.split("network.")[1].split("#")[1];
+
+        // Speichere Infos im Session Storage
         sessionStorage.setItem("participantType", participantType);
-        console.log(participantType);
+        sessionStorage.setItem("participantId", participantId);
 
         // Leite den Nutzer auf die entsprechende Seite weiter
         if (participantType == 'Patient') {
@@ -29,8 +32,8 @@ $(document).ready(async function () {
         }
     // Wird nur auf der Profil Seite des Patienten ausgeführt
     } else if (body.hasClass('patient-profil')){
-        let participantType = sessionStorage.getItem("participantType");
-        console.log(participantType);
+        let participantId = sessionStorage.getItem("participantId");
+        console.log(participantId);
     }
 });
 
