@@ -39,7 +39,7 @@ $(document).ready(async function () {
         let participantType = sessionStorage.getItem("participantType");
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
-        if (participantType != "Patient"){
+        if (participantType != "Patient") {
             window.location.href = "../index.html";
         }
 
@@ -72,7 +72,7 @@ $(document).ready(async function () {
         let participantType = sessionStorage.getItem("participantType");
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Mitarbeiter handelt
-        if (participantType != "Employee"){
+        if (participantType != "Employee") {
             window.location.href = "../index.html";
         }
 
@@ -103,7 +103,7 @@ $(document).ready(async function () {
         let participantType = sessionStorage.getItem("participantType");
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
-        if (participantType != "Doctor"){
+        if (participantType != "Doctor") {
             window.location.href = "../index.html";
         }
 
