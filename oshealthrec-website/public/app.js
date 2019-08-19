@@ -164,6 +164,26 @@ $(document).ready(async function () {
     }
 });
 
+function filterDoctorTable() {
+    // Variablen deklarieren
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("inputVorname");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("arztTabelle");
+    tr = table.getElementsByTagName("tr");
+
+    // Zeige alle Zeilen an
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+    }
+
+    // Rufe die einzelnen Filter-Funktionen auf
+    filterDoctorTableByGivenname();
+    filterDoctorTableBySurname();
+    filterDoctorTableByStreet();
+    filterDoctorTableByCity();
+}
+
 function filterDoctorTableByGivenname() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
