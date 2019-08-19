@@ -149,7 +149,7 @@ $(document).ready(async function () {
         });
         const doctorArray = await response.json(); //extract JSON from the http response
 
-        console.log(doctorArray);
+        console.log(doctorArray[0]);
     }
 });
 
