@@ -365,6 +365,99 @@ $(document).ready(async function () {
             })
 
         }
+    } else if (body.hasClass('doktor-patienten')) {
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Profil Daten des Doktors aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("doktorProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doktor/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
+
+            // Speichere Profil Daten im SessionStorage
+            let doktorProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("doktorProfil", doktorProfil);
+        }
+        // Hole Doktor Profil aus dem SessionStorage
+        let doktorProfil = JSON.parse(sessionStorage.getItem("doktorProfil"));
+
+        // Hole PatientenIDs des Doktors
+        let patientArray = doktorProfil.patients;
+
+        // Hole Tabelle als jquery Variable
+        let patientenTabelle = $('#patientenTabelle');
+
+        // Falls nur ein Patient eine Freigabe erteilt hat
+        if (patientArray.length == 1) {
+            // Filter String um nach dem Patienten mit der patientId zu suchen
+            let patientId = patientArray[0].split("#")[1];
+            let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + patientId + "%22%7D%7D";
+
+            // Hole Patienten aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let patientProfileArray = await response.json();
+            let patient = patientProfileArray[0];
+
+            // Gebe Informationen des Patienten aus
+            let appendString = "<tr>" +
+                "<td>" + patient.givenname + " " + patient.surname + "</td>" +
+                "<td>" + patient.birthday + "</td>" +
+                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "</tr>";
+            patientenTabelle.append(appendString);
+
+            // Falls mehrere Patienten eine Freigabe erteilt haben
+        } else if (patientArray.length > 1) {
+            // Anfang des Filter Strings für mehrere Patienten
+            let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
+            let firstPatient = true;
+
+            // Füge alle IDs der Patienten zum Filter String hinzu
+            patientArray.forEach(function (patient) {
+                let patientId = patient.split("#")[1];
+                if (firstPatient) {
+                    // Beim ersten Patienten gibt es kein Komma am Anfang
+                    filterString += "%7B%22personID%22%3A%22" + patientId + "%22%7D";
+                    firstPatient = false;
+                } else {
+                    // Bei den folgenden Patienten gibt es ein Komma am Anfang
+                    filterString += "%2C%7B%22personID%22%3A%22" + patientId + "%22%7D";
+                }
+            });
+            // Füge abschließende Klammern zum Filter String hinzu
+            filterString += "%5D%7D%7D";
+
+            // Hole Profile aller Patienten mit einer Freigabe aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let patientProfileArray = await response.json();
+
+            // Gebe Daten für alle Patienten aus
+            patientProfileArray.forEach(function (patient) {
+                let appendString = "<tr>" +
+                    "<td>" + patient.givenname + " " + patient.surname + "</td>" +
+                    "<td>" + patient.birthday + "</td>" +
+                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "</tr>";
+
+                patientenTabelle.append(appendString);
+            })
+        }
     }
 });
 
