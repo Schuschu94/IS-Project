@@ -49,6 +49,8 @@ $(document).ready(async function () {
             credentials: 'include'
         });
         let profilJson = await response.json();
+        // Speichere Profil Daten im SessionStorage
+        sessionStorage.setItem("patientProfil", profilJson);
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -161,6 +163,40 @@ $(document).ready(async function () {
 
             arztTabelle.append(appendString);
         });
+
+        // Wird nur auf der Freigaben-Seite des Patienten aufgerufen
+    } else if (body.hasClass('patient-freigaben')) {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Profil Daten des Patienten aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("patientProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
+            // Speichere Profil Daten im SessionStorage
+            sessionStorage.setItem("patientProfil", profilJson);
+        }
+
+        let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
+        let doctorArray = patientProfil.doctors;
+
+        if(doctorArray.length == 1) {
+            let doctorId = doctorArray[0].split("#")[1];
+            console.log(doctorId);
+            // let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22"
+        }
+
     }
 });
 
