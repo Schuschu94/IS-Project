@@ -50,7 +50,8 @@ $(document).ready(async function () {
         });
         let profilJson = await response.json();
         // Speichere Profil Daten im SessionStorage
-        sessionStorage.setItem("patientProfil", JSON.stringify(profilJson));
+        let patientProfil = JSON.stringify(profilJson);
+        sessionStorage.setItem("patientProfil", patientProfil);
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -192,12 +193,16 @@ $(document).ready(async function () {
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
         let doctorArray = patientProfil.doctors;
 
-        console.log(doctorArray);
-
         if(doctorArray.length == 1) {
             let doctorId = doctorArray[0].split("#")[1];
-            console.log(doctorId);
-            // let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22"
+            let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
+
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let doctorJson = await response.json();
+            console.log(doctorJson);
         }
 
     }
