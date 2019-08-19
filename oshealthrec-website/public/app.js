@@ -271,7 +271,7 @@ $(document).ready(async function () {
         }
 
         // Wird nur auf der Mitarbeiter-Seite des Doktors ausgeführt
-    } else if (body.hasClass('dotkor-mitarbeiter')) {
+    } else if (body.hasClass('doktor-mitarbeiter')) {
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
