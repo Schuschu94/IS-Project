@@ -483,16 +483,16 @@ function filterDoctorTable() {
     }
 
     // Rufe die einzelnen Filter-Funktionen auf
-    filterTable("arztTabelle", "inputVorname");
-    filterTable("arztTabelle", "inputNachname");
-    filterTable("arztTabelle", "inputStraße");
-    filterTable("arztTabelle", "inputOrt");
+    filterTable("arztTabelle", "inputVorname", 0);
+    filterTable("arztTabelle", "inputNachname", 0);
+    filterTable("arztTabelle", "inputStraße", 1);
+    filterTable("arztTabelle", "inputOrt", 1);
 }
 
 /**
  * Filtert die Ärzte anhand des Vornamens
  */
-function filterTable(tableId, inputId) {
+function filterTable(tableId, inputId, colNr) {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById(inputId);
@@ -502,7 +502,7 @@ function filterTable(tableId, inputId) {
 
     // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[colNr];
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
