@@ -241,15 +241,17 @@ $(document).ready(async function () {
             });
             let doctorProfileArray = await response.json();
 
-            doctorProfileArray.forEach(function (doctor) {
-                let appendString = "<tr>" +
-                    "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
-                    "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
-                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
-                    "</tr>";
+            console.log(doctorProfileArray);
 
-                arztTabelle.append(appendString);
-            })
+            // doctorProfileArray.forEach(function (doctor) {
+            //     let appendString = "<tr>" +
+            //         "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+            //         "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+            //         "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+            //         "</tr>";
+            //
+            //     arztTabelle.append(appendString);
+            // })
 
         }
 
