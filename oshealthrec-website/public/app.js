@@ -193,16 +193,29 @@ $(document).ready(async function () {
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
         let doctorArray = patientProfil.doctors;
 
+        // Hole Tabelle als jquery Variable
+        let arztTabelle = $('#arztTabelle');
+
         if(doctorArray.length == 1) {
+            // Filter String um nach dem Dokter mit der doctorId zu suchen
             let doctorId = doctorArray[0].split("#")[1];
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
 
+            // Hole Doktor aus der Blockchain
             const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorJson = await response.json();
-            console.log(doctorJson);
+            let doctorArray = await response.json();
+            let doctor = doctorArray[0];
+
+            let appendString = "<tr>" +
+                "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "</tr>";
+
+            arztTabelle.append(appendString);
         }
 
     }
