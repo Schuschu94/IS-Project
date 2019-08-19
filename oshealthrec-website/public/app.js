@@ -219,7 +219,7 @@ $(document).ready(async function () {
         } else if (doctorArray.length > 1) {
             // Anfang des Filter Strings für mehrere Ärzte
             let filterString = "?filter=%7B%22where%22%3A%7B%22pr%22%3A%5B";
-            let firtDoctor = true;
+            let firstDoctor = true;
 
             // Füge alle IDs der Ärzte zum Filter String hinzu
             doctorArray.forEach(function (doctor) {
