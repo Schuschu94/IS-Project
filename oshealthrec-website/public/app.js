@@ -185,7 +185,8 @@ $(document).ready(async function () {
             });
             let profilJson = await response.json();
             // Speichere Profil Daten im SessionStorage
-            sessionStorage.setItem("patientProfil", profilJson);
+            let patientProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("patientProfil", patientProfil);
         }
 
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
