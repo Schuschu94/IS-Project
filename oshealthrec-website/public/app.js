@@ -216,6 +216,41 @@ $(document).ready(async function () {
                 "</tr>";
 
             arztTabelle.append(appendString);
+        } else if (doctorArray.length > 1) {
+            // Anfang des Filter Strings für mehrere Ärzte
+            let filterString = "?filter=%7B%22where%22%3A%7B%22pr%22%3A%5B";
+            let firtDoctor = true;
+
+            // Füge alle IDs der Ärzte zum Filter String hinzu
+            doctorArray.forEach(function (doctor) {
+                let doctorId = doctor.personID;
+                if (firstDoctor) {
+                    filterString += "%7B%22personID%22%3A%22" + doctorId + "%22%7D";
+                    firstDoctor = false;
+                } else {
+                    filterString += "%2C%7B%22personID%22%3A%22" + doctorId + "%22%7D";
+                }
+            });
+            // Füge abschließende Klammern zum Filter String hinzu
+            filterString += "%5D%7D%7D";
+
+            // Hole Doktoren aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let doctorProfileArray = await response.json();
+
+            doctorProfileArray.forEach(function (doctor) {
+                let appendString = "<tr>" +
+                    "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                    "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "</tr>";
+
+                arztTabelle.append(appendString);
+            })
+
         }
 
     }
