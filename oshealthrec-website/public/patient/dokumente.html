@@ -11,7 +11,7 @@
 
     <title>OSHealthRec</title>
 </head>
-<body>
+<body class="patient-dokumente">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
@@ -43,7 +43,6 @@
         <div class="col-sm-6">
             <form class="form-group form-inline">
                 <input type="text" class="form-control mr-3" id="suche" placeholder="Suchebgriff" style="width: 400px">
-                <button type="submit" class="btn btn-primary">Suche</button>
             </form>
         </div>
     </div>
@@ -58,7 +57,7 @@
                         <th scope="col">Datum</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="reportTabelle">
                     <tr>
                         <td>1</td>
                         <td>Blutanalyse</td>

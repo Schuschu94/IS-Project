@@ -122,6 +122,10 @@ $(document).ready(async function () {
         });
         let profilJson = await response.json();
 
+        // Speichere Profil Daten im SessionStorage
+        let doktorProfil = JSON.stringify(profilJson);
+        sessionStorage.setItem("doktorProfil", doktorProfil);
+
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
         let nachname = $('#nachname');
@@ -177,7 +181,6 @@ $(document).ready(async function () {
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
-
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
             window.location.href = "../index.html";
@@ -206,7 +209,7 @@ $(document).ready(async function () {
         let arztTabelle = $('#arztTabelle');
 
         // Falls nur ein Arzt eine Freigabe besitzt
-        if(doctorArray.length == 1) {
+        if (doctorArray.length == 1) {
             // Filter String um nach dem Dokter mit der doctorId zu suchen
             let doctorId = doctorArray[0].split("#")[1];
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
@@ -265,9 +268,103 @@ $(document).ready(async function () {
 
                 arztTabelle.append(appendString);
             })
-
         }
 
+        // Wird nur auf der Mitarbeiter-Seite des Doktors ausgeführt
+    } else if (body.hasClass('dotkor-mitarbeiter')) {
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Profil Daten des Doktors aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("doktorProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doktor/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
+
+            // Speichere Profil Daten im SessionStorage
+            let doktorProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("doktorProfil", doktorProfil);
+        }
+        // Hole Doktor Profil aus dem SessionStorage
+        let doktorProfil = JSON.parse(sessionStorage.getItem("doktorProfil"));
+
+        // Hole MitarbeiterIDs des Doktors
+        let employeeArray = doktorProfil.doctors;
+
+        // Hole Tabelle als jquery Variable
+        let mitarbeiterTabelle = $('#mitarbeiterTabelle');
+
+        // Falls nur ein Mitarbeiter vorhanden ist
+        if (employeeArray.length == 1) {
+            // Filter String um nach dem Mitarbeiter mit der employeeId zu suchen
+            let employeeId = employeeArray[0].split("#")[1];
+            let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + employeeId + "%22%7D%7D";
+
+            // Hole Mitarbeiter aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let employeeProfileArray = await response.json();
+            let employee = employeeProfileArray[0];
+
+            // Gebe Informationen des Doktors aus
+            let appendString = "<tr>" +
+                "<td>" + employee.givenname + " " + employee.surname + "</td>" +
+                "<td>" + employee.birthday + "</td>" +
+                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "</tr>";
+            mitarbeiterTabelle.append(appendString);
+
+            // Falls mehrere Mitarbeiter vorhanden sind
+        } else if (employeeArray.length > 1) {
+            // Anfang des Filter Strings für mehrere Mitarbeiter
+            let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
+            let firstEmployee = true;
+
+            // Füge alle IDs der Mitarbeiter zum Filter String hinzu
+            employeeArray.forEach(function (employee) {
+                let employeeId = employee.split("#")[1];
+                if (firstEmployee) {
+                    // Beim ersten Mitarbeiter gibt es kein Komma am Anfang
+                    filterString += "%7B%22personID%22%3A%22" + employeeId + "%22%7D";
+                    firstEmployee = false;
+                } else {
+                    // Bei den folgenden Mitarbeitern gibt es ein Komma am Anfang
+                    filterString += "%2C%7B%22personID%22%3A%22" + employeeId + "%22%7D";
+                }
+            });
+            // Füge abschließende Klammern zum Filter String hinzu
+            filterString += "%5D%7D%7D";
+
+            // Hole Profile aller Mitarbeiter mit einer Freigabe aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let employeeProfileArray = await response.json();
+
+            // Gebe Daten für alle Mitarbeiter aus
+            employeeProfileArray.forEach(function (employee) {
+                let appendString = "<tr>" +
+                    "<td>" + employee.givenname + " " + employee.surname + "</td>" +
+                    "<td>" + employee.birthday + "</td>" +
+                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "</tr>";
+
+                mitarbeiterTabelle.append(appendString);
+            })
+
+        }
     }
 });
 
