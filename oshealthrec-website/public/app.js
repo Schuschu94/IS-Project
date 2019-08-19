@@ -166,17 +166,26 @@ $(document).ready(async function () {
     }
 });
 
-async function queryArztSuche() {
+function filterDoctorTableByGivenname() {
+    // Variablen deklarieren
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("inputVorname");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("arztTabelle");
+    tr = table.getElementsByTagName("tr");
 
-
-
-
-    // Hole Eingaben des Nutzers
-    let inputVorname = $('#inputVorname').val();
-    let inputNachname = $('#inputNachname').val();
-    let inputStraße = $('#inputStraße').val();
-    let inputOrt = $('#inputOrt').val();
-
+    // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
 }
 
 async function checkWallet() {
