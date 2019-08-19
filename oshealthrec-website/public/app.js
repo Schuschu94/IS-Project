@@ -191,6 +191,8 @@ $(document).ready(async function () {
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
         let doctorArray = patientProfil.doctors;
 
+        console.log(doctorArray);
+
         if(doctorArray.length == 1) {
             let doctorId = doctorArray[0].split("#")[1];
             console.log(doctorId);
