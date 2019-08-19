@@ -206,8 +206,8 @@ $(document).ready(async function () {
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorArray = await response.json();
-            let doctor = doctorArray[0];
+            let doctorProfileArray = await response.json();
+            let doctor = doctorProfileArray[0];
 
             let appendString = "<tr>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
