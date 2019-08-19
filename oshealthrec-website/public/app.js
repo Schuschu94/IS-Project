@@ -161,8 +161,6 @@ $(document).ready(async function () {
 
             arztTabelle.append(appendString);
         });
-
-        console.log(doctorArray[0]);
     }
 });
 
@@ -180,7 +178,7 @@ function filterDoctorTableByGivenname() {
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+                // tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
@@ -202,7 +200,7 @@ function filterDoctorTableBySurname() {
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+                // tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
@@ -224,7 +222,7 @@ function filterDoctorTableByStreet() {
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+                // tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
@@ -246,7 +244,7 @@ function filterDoctorTableByCity() {
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+                // tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
