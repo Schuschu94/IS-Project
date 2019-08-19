@@ -166,6 +166,7 @@ $(document).ready(async function () {
 
         // Wird nur auf der Freigaben-Seite des Patienten aufgerufen
     } else if (body.hasClass('patient-freigaben')) {
+        console.log("TEST");
         // Hole Daten aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
