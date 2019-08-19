@@ -378,7 +378,7 @@ $(document).ready(async function () {
         // Hole Profil Daten des Doktors aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
         if (sessionStorage.getItem("doktorProfil") == null) {
             // Hole Profil Daten des Nutzers aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doktor/" + participantId, {
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor/" + participantId, {
                 method: 'GET',
                 credentials: 'include'
             });
