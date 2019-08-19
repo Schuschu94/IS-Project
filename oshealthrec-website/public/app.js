@@ -483,21 +483,21 @@ function filterDoctorTable() {
     }
 
     // Rufe die einzelnen Filter-Funktionen auf
-    filterDoctorTableByGivenname();
-    filterDoctorTableBySurname();
-    filterDoctorTableByStreet();
-    filterDoctorTableByCity();
+    filterTable("arztTabelle", "inputVorname");
+    filterTable("arztTabelle", "inputNachname");
+    filterTable("arztTabelle", "inputStraße");
+    filterTable("arztTabelle", "inputOrt");
 }
 
 /**
  * Filtert die Ärzte anhand des Vornamens
  */
-function filterDoctorTableByGivenname() {
+function filterTable(tableId, inputId) {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputVorname");
+    input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
-    table = document.getElementById("arztTabelle");
+    table = document.getElementById(tableId);
     tr = table.getElementsByTagName("tr");
 
     // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
@@ -517,12 +517,12 @@ function filterDoctorTableByGivenname() {
 /**
  * Filtert die Ärzte anhand des Nachnamens
  */
-function filterDoctorTableBySurname() {
+function filterTableBySurname(tableId) {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("inputNachname");
     filter = input.value.toUpperCase();
-    table = document.getElementById("arztTabelle");
+    table = document.getElementById(tableId);
     tr = table.getElementsByTagName("tr");
 
     // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
@@ -542,12 +542,12 @@ function filterDoctorTableBySurname() {
 /**
  * Filtert die Ärzte anhand der Straße
  */
-function filterDoctorTableByStreet() {
+function filterTableByStreet(tableId) {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("inputStraße");
     filter = input.value.toUpperCase();
-    table = document.getElementById("arztTabelle");
+    table = document.getElementById(tableId);
     tr = table.getElementsByTagName("tr");
 
     // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
