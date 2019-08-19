@@ -191,7 +191,7 @@ function filterDoctorTableByGivenname() {
 function filterDoctorTableBySurname() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputVorname");
+    input = document.getElementById("inputNachname");
     filter = input.value.toUpperCase();
     table = document.getElementById("arztTabelle");
     tr = table.getElementsByTagName("tr");
@@ -213,7 +213,7 @@ function filterDoctorTableBySurname() {
 function filterDoctorTableByStreet() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputVorname");
+    input = document.getElementById("inputStraße");
     filter = input.value.toUpperCase();
     table = document.getElementById("arztTabelle");
     tr = table.getElementsByTagName("tr");
@@ -235,7 +235,7 @@ function filterDoctorTableByStreet() {
 function filterDoctorTableByCity() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputVorname");
+    input = document.getElementById("inputOrt");
     filter = input.value.toUpperCase();
     table = document.getElementById("arztTabelle");
     tr = table.getElementsByTagName("tr");
