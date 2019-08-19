@@ -141,11 +141,22 @@ $(document).ready(async function () {
         if (participantType != "Patient") {
             window.location.href = "../index.html";
         }
+
+        // Rest Aufruf um alle Doktoren zu erhalten
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const doctorArray = await response.json(); //extract JSON from the http response
+
+        console.log(doctorArray);
     }
 });
 
 async function queryArztSuche() {
     let arztTabelle = $('#arztTabelle');
+
+
 
     // Hole Eingaben des Nutzers
     let inputVorname = $('#inputVorname').val();
