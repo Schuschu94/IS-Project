@@ -218,7 +218,7 @@ $(document).ready(async function () {
             arztTabelle.append(appendString);
         } else if (doctorArray.length > 1) {
             // Anfang des Filter Strings für mehrere Ärzte
-            let filterString = "?filter=%7B%22where%22%3A%7B%22pr%22%3A%5B";
+            let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
             let firstDoctor = true;
 
             // Füge alle IDs der Ärzte zum Filter String hinzu
