@@ -223,7 +223,7 @@ $(document).ready(async function () {
 
             // Füge alle IDs der Ärzte zum Filter String hinzu
             doctorArray.forEach(function (doctor) {
-                let doctorId = doctor.personID;
+                let doctorId = doctor.split("#")[1];
                 if (firstDoctor) {
                     filterString += "%7B%22personID%22%3A%22" + doctorId + "%22%7D";
                     firstDoctor = false;
@@ -243,15 +243,15 @@ $(document).ready(async function () {
 
             console.log(doctorProfileArray);
 
-            // doctorProfileArray.forEach(function (doctor) {
-            //     let appendString = "<tr>" +
-            //         "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
-            //         "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
-            //         "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
-            //         "</tr>";
-            //
-            //     arztTabelle.append(appendString);
-            // })
+            doctorProfileArray.forEach(function (doctor) {
+                let appendString = "<tr>" +
+                    "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                    "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "</tr>";
+
+                arztTabelle.append(appendString);
+            })
 
         }
 
