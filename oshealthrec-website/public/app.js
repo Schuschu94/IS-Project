@@ -50,7 +50,7 @@ $(document).ready(async function () {
         });
         let profilJson = await response.json();
         // Speichere Profil Daten im SessionStorage
-        sessionStorage.setItem("patientProfil", profilJson);
+        sessionStorage.setItem("patientProfil", JSON.stringify(profilJson));
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -185,7 +185,7 @@ $(document).ready(async function () {
             });
             let profilJson = await response.json();
             // Speichere Profil Daten im SessionStorage
-            sessionStorage.setItem("patientProfil", profilJson);
+            sessionStorage.setItem("patientProfil", JSON.stringify(profilJson));
         }
 
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
