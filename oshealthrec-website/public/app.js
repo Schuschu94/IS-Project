@@ -1,5 +1,9 @@
 const serverIp = "http://34.67.49.75:3000";
 
+/**
+ * Wird beim Laden jeder Seite aufgerufen
+ * über "body.hasClass('X') wird abgefragt, um welche Seite es sich handelt
+ */
 $(document).ready(async function () {
     let body = $('body');
 
@@ -49,6 +53,7 @@ $(document).ready(async function () {
             credentials: 'include'
         });
         let profilJson = await response.json();
+
         // Speichere Profil Daten im SessionStorage
         let patientProfil = JSON.stringify(profilJson);
         sessionStorage.setItem("patientProfil", patientProfil);
@@ -155,6 +160,7 @@ $(document).ready(async function () {
         });
         const doctorArray = await response.json(); //extract JSON from the http response
 
+        // Gebe Informationen von allen Doktoren aus
         doctorArray.forEach(function (doctor) {
             let appendString = "<tr>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
@@ -185,17 +191,21 @@ $(document).ready(async function () {
                 credentials: 'include'
             });
             let profilJson = await response.json();
+
             // Speichere Profil Daten im SessionStorage
             let patientProfil = JSON.stringify(profilJson);
             sessionStorage.setItem("patientProfil", patientProfil);
         }
 
+        // Hole Patienten Profil aus dem SessionStorage
         let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
+        // Hole Ärzte, denen der Patient eine Freigabe erteilt hat
         let doctorArray = patientProfil.doctors;
 
         // Hole Tabelle als jquery Variable
         let arztTabelle = $('#arztTabelle');
 
+        // Falls nur ein Arzt eine Freigabe besitzt
         if(doctorArray.length == 1) {
             // Filter String um nach dem Dokter mit der doctorId zu suchen
             let doctorId = doctorArray[0].split("#")[1];
@@ -209,13 +219,15 @@ $(document).ready(async function () {
             let doctorProfileArray = await response.json();
             let doctor = doctorProfileArray[0];
 
+            // Gebe Informationen des Doktors aus
             let appendString = "<tr>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
                 "</tr>";
-
             arztTabelle.append(appendString);
+
+            // Falls mehrere Ärzte eine Freigabe besitzen
         } else if (doctorArray.length > 1) {
             // Anfang des Filter Strings für mehrere Ärzte
             let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
@@ -225,24 +237,25 @@ $(document).ready(async function () {
             doctorArray.forEach(function (doctor) {
                 let doctorId = doctor.split("#")[1];
                 if (firstDoctor) {
+                    // Beim ersten Arzt gibt es kein Komma am Anfang
                     filterString += "%7B%22personID%22%3A%22" + doctorId + "%22%7D";
                     firstDoctor = false;
                 } else {
+                    // Bei den folgenden Ärzten gibt es ein Komma am Anfang
                     filterString += "%2C%7B%22personID%22%3A%22" + doctorId + "%22%7D";
                 }
             });
             // Füge abschließende Klammern zum Filter String hinzu
             filterString += "%5D%7D%7D";
 
-            // Hole Doktoren aus der Blockchain
+            // Hole Profile aller Doktoren mit einer Freigabe aus der Blockchain
             const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
             let doctorProfileArray = await response.json();
 
-            console.log(doctorProfileArray);
-
+            // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
                 let appendString = "<tr>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
@@ -258,11 +271,19 @@ $(document).ready(async function () {
     }
 });
 
+/**
+ * **********************************************************************************************
+ * Funktionen um auf der Seite arzt-suche.html die Ärzte zu filtern
+ */
+
+/**
+ * Filtert die Ärzte auf der Seite arzt-suche.html
+ * Zeigt zunächst alle Ärzte in der Tabelle an.
+ * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Ärzte auszublenden.
+ */
 function filterDoctorTable() {
     // Variablen deklarieren
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputVorname");
-    filter = input.value.toUpperCase();
+    var table, tr, td, i, txtValue;
     table = document.getElementById("arztTabelle");
     tr = table.getElementsByTagName("tr");
 
@@ -278,6 +299,9 @@ function filterDoctorTable() {
     filterDoctorTableByCity();
 }
 
+/**
+ * Filtert die Ärzte anhand des Vornamens
+ */
 function filterDoctorTableByGivenname() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
@@ -300,6 +324,9 @@ function filterDoctorTableByGivenname() {
     }
 }
 
+/**
+ * Filtert die Ärzte anhand des Nachnamens
+ */
 function filterDoctorTableBySurname() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
@@ -322,6 +349,9 @@ function filterDoctorTableBySurname() {
     }
 }
 
+/**
+ * Filtert die Ärzte anhand der Straße
+ */
 function filterDoctorTableByStreet() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
@@ -344,6 +374,9 @@ function filterDoctorTableByStreet() {
     }
 }
 
+/**
+ * Filtert die Ärzte anhand der Stadt
+ */
 function filterDoctorTableByCity() {
     // Variablen deklarieren
     var input, filter, table, tr, td, i, txtValue;
