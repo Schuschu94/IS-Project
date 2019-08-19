@@ -298,7 +298,7 @@ $(document).ready(async function () {
         let doktorProfil = JSON.parse(sessionStorage.getItem("doktorProfil"));
 
         // Hole MitarbeiterIDs des Doktors
-        let employeeArray = doktorProfil.doctors;
+        let employeeArray = doktorProfil.employees;
 
         // Hole Tabelle als jquery Variable
         let mitarbeiterTabelle = $('#mitarbeiterTabelle');
