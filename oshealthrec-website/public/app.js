@@ -142,6 +142,9 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
+        // Hole Tabelle als jquery Variable
+        let arztTabelle = $('#arztTabelle');
+
         // Rest Aufruf um alle Doktoren zu erhalten
         const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
             method: 'GET',
@@ -149,12 +152,22 @@ $(document).ready(async function () {
         });
         const doctorArray = await response.json(); //extract JSON from the http response
 
+        doctorArray.forEach(function (doctor) {
+            let appendString = "<tr>" +
+                "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "</tr>";
+
+            arztTabelle.append(appendString);
+        });
+
         console.log(doctorArray[0]);
     }
 });
 
 async function queryArztSuche() {
-    let arztTabelle = $('#arztTabelle');
+
 
 
 
