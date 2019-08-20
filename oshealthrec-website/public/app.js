@@ -433,7 +433,6 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                 "<td>" + patient.birthday + "</td>" +
-                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
                 "</tr>";
             patientenTabelle.append(appendString);
 
