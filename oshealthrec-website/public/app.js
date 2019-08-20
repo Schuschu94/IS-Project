@@ -476,6 +476,40 @@ $(document).ready(async function () {
                 patientenTabelle.append(appendString);
             })
         }
+
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/mitarbeiter-suche.html ausgeführt
+         */
+    } else if (body.hasClass("doktor-mitarbeiter-suche")) {
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Doktor handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Tabelle als jquery Variable
+        let mitarbeiterTabelle = $('#mitarbeiterTabelle');
+
+        // Rest Aufruf um alle Mitarbeiter zu erhalten
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const employeeArray = await response.json(); //extract JSON from the http response
+
+        // Gebe Informationen von allen Mitarbeitern aus
+        employeeArray.forEach(function (employee) {
+            let appendString = "<tr>" +
+                "<td>" + employee.givenname + " " + employee.surname + "</td>" +
+                "<td>" + employee.birthday + "</td>" +
+                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "</tr>";
+
+            mitarbeiterTabelle.append(appendString);
+        });
     }
 });
 

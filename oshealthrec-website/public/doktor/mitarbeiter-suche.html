@@ -11,7 +11,7 @@
 
     <title>OSHealthRec</title>
 </head>
-<body>
+<body class="doktor-mitarbeiter-suche">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
@@ -50,7 +50,6 @@
                 <input type="text" class="form-control mb-2" id="vorname" placeholder="Vorname">
                 <input type="text" class="form-control mb-2" id="nachname" placeholder="Nachname">
                 <input type="text" class="form-control mb-2" id="geburtsdatum" placeholder="Gebutsdatum">
-                <button type="button" class="btn btn-primary">Suchen</button>
             </form>
         </div>
     </div>
@@ -64,12 +63,8 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>Sebastian Kamp</td>
-                    <td>01.02.1991</td>
-                    <td><input type="checkbox" class="form-check-input bigger-checkbox"></td>
-                </tr>
+                <tbody id="mitarbeiterTabelle">
+
                 </tbody>
             </table>
         </div>
