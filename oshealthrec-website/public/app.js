@@ -7,7 +7,9 @@ const serverIp = "http://34.67.49.75:3000";
 $(document).ready(async function () {
     let body = $('body');
 
-    // Wird nur auf der Index-Seite ausgeführt
+    /**************************************************************************************************************
+     * Wird nur auf der Seite index.html ausgeführt
+     */
     if (body.hasClass('index')) {
 
         // Ping Aufruf, um als Antwort den aufrufenden Participant zu erhalten
@@ -35,7 +37,9 @@ $(document).ready(async function () {
             window.location.href = "doktor/profil.html";
         }
 
-        // Wird nur auf der Profil Seite des Patienten ausgeführt
+        /**************************************************************************************************************
+         * Wird nur auf der Seite patient/profil.html ausgeführt
+         */
     } else if (body.hasClass('patient-profil')) {
 
         // Hole ID und Typ des Nutzers aus dem Session Storage
@@ -72,7 +76,9 @@ $(document).ready(async function () {
         geburtsdatum.text(profilJson.birthday);
         blutgruppe.text(profilJson.bloodType);
 
-        // Wird nur auf der Profil Seite des Mitarbeiter ausgeführt
+        /**************************************************************************************************************
+         * Wird nur auf der Seite mitarbeiter/profil.html ausgeführt
+         */
     } else if (body.hasClass('mitarbeiter-profil')) {
 
         // Hole ID des Nutzers aus dem Session Storage
@@ -103,7 +109,9 @@ $(document).ready(async function () {
         geschlecht.text(profilJson.sex);
         geburtsdatum.text(profilJson.birthday);
 
-        // Wird nur auf der Profil Seite des Doktors ausgeführt
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/profil.html ausgeführt
+         */
     } else if (body.hasClass('doktor-profil')) {
 
         // Hole ID des Nutzers aus dem Session Storage
@@ -142,7 +150,9 @@ $(document).ready(async function () {
             + profilJson.zipcode + " " + profilJson.city + "<br />"
             + profilJson.country)
 
-        // Wird nur auf der Arzt-Suche Seite des Patienten ausgeführt
+        /**************************************************************************************************************
+         * Wird nur auf der Seite patient/arzt-suche.html ausgeführt
+         */
     } else if (body.hasClass('patient-arzt-suche')) {
 
         // Hole ID des Nutzers aus dem Session Storage
@@ -175,7 +185,9 @@ $(document).ready(async function () {
             arztTabelle.append(appendString);
         });
 
-        // Wird nur auf der Freigaben-Seite des Patienten aufgerufen
+        /**************************************************************************************************************
+         * Wird nur auf der Seite patient-freigaben.html ausgeführt
+         */
     } else if (body.hasClass('patient-freigaben')) {
         // Hole Daten aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
@@ -270,7 +282,9 @@ $(document).ready(async function () {
             })
         }
 
-        // Wird nur auf der Mitarbeiter-Seite des Doktors ausgeführt
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/mitarbeiter.html ausgeführt
+         */
     } else if (body.hasClass('doktor-mitarbeiter')) {
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
@@ -365,6 +379,10 @@ $(document).ready(async function () {
             })
 
         }
+
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/patienten.html ausgeführt
+         */
     } else if (body.hasClass('doktor-patienten')) {
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
@@ -463,11 +481,11 @@ $(document).ready(async function () {
 
 /**
  * **********************************************************************************************
- * Funktionen um auf der Seite arzt-suche.html die Ärzte zu filtern
+ * Funktionen um Inhalte von Tabellen zu filtern
  */
 
 /**
- * Filtert die Ärzte auf der Seite arzt-suche.html
+ * Filtert die Ärzte auf der Seite patient/arzt-suche.html
  * Zeigt zunächst alle Ärzte in der Tabelle an.
  * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Ärzte auszublenden.
  */
@@ -490,7 +508,36 @@ function filterDoctorTable() {
 }
 
 /**
- * Filtert die Ärzte anhand des Vornamens
+ * Filtert die Patienten auf der Seite doktor/patienten.html
+ * Zeigt zunächst alle Patienten des Arztes in der Tabelle an.
+ * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Patienten auszublenden.
+ */
+function filterPatientTable() {
+    // Variablen deklarieren
+    var table, tr, td, i, txtValue;
+    table = document.getElementById("patientenTabelle");
+    tr = table.getElementsByTagName("tr");
+
+    // Zeige alle Zeilen an
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+    }
+
+    // Rufe die einzelnen Filter-Funktionen auf
+    filterTable("patientenTabelle", "inputVorname", 0);
+    filterTable("patientenTabelle", "inputNachname", 0);
+    filterTable("patientenTabelle", "inputGeburtsdatum", 1);
+}
+
+/**
+ * Filtert die Ärzte anhand der übergebenen Werte
+ *
+ * @param {string} tableId
+ *   Id der Tabelle deren Inhalt gefiltert werden soll
+ * @param {string} inputId
+ *   Id des Inputfelds, indem der Filter-Wert steht
+ * @param {int} colNr
+ *   Nummer der Spalte, deren Inhalt gefiltert werden soll
  */
 function filterTable(tableId, inputId, colNr) {
     // Variablen deklarieren
@@ -514,81 +561,12 @@ function filterTable(tableId, inputId, colNr) {
     }
 }
 
-/**
- * Filtert die Ärzte anhand des Nachnamens
- */
-function filterTableBySurname(tableId) {
-    // Variablen deklarieren
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputNachname");
-    filter = input.value.toUpperCase();
-    table = document.getElementById(tableId);
-    tr = table.getElementsByTagName("tr");
-
-    // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                // tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
 
 /**
- * Filtert die Ärzte anhand der Straße
+ * !!!Wird wahrscheinlich nicht mehr benötigt!!!
+ *
+ * Schreibt den Inhalt der Wallet des Nutzers in die Konsolle
  */
-function filterTableByStreet(tableId) {
-    // Variablen deklarieren
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputStraße");
-    filter = input.value.toUpperCase();
-    table = document.getElementById(tableId);
-    tr = table.getElementsByTagName("tr");
-
-    // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                // tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-/**
- * Filtert die Ärzte anhand der Stadt
- */
-function filterDoctorTableByCity() {
-    // Variablen deklarieren
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("inputOrt");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("arztTabelle");
-    tr = table.getElementsByTagName("tr");
-
-    // Prüfe alle Tabllen Reihen und blende die aus, die nicht dem Filter entsprechen
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                // tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
 async function checkWallet() {
 
     // Rest Aufruf um die Wallet des Users zu erhalten
