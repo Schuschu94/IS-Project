@@ -564,6 +564,28 @@ function filterPatientTable() {
 }
 
 /**
+ * Filtert die Mitarbeiter auf der Seite doktor/mitarbeiter-suche.html
+ * Zeigt zunächst alle Mitarbeiter in der Tabelle an.
+ * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Mitarbeiter auszublenden.
+ */
+function filterPatientTable() {
+    // Variablen deklarieren
+    var table, tr, td, i, txtValue;
+    table = document.getElementById("mitarbeiterTabelle");
+    tr = table.getElementsByTagName("tr");
+
+    // Zeige alle Zeilen an
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+    }
+
+    // Rufe die einzelnen Filter-Funktionen auf
+    filterTable("mitarbeiterTabelle", "inputVorname", 0);
+    filterTable("mitarbeiterTabelle", "inputNachname", 0);
+    filterTable("mitarbeiterTabelle", "inputGeburtsdatum", 1);
+}
+
+/**
  * Filtert die Ärzte anhand der übergebenen Werte
  *
  * @param {string} tableId
