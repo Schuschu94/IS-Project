@@ -127,16 +127,21 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
-        // Hole Profil Daten des Nutzers aus der Blockchain
-        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor/" + participantId, {
-            method: 'GET',
-            credentials: 'include'
-        });
-        let profilJson = await response.json();
+        // Hole Profil Daten des Doktors aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("doktorProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
 
-        // Speichere Profil Daten im SessionStorage
-        let doktorProfil = JSON.stringify(profilJson);
-        sessionStorage.setItem("doktorProfil", doktorProfil);
+            // Speichere Profil Daten im SessionStorage
+            let doktorProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("doktorProfil", doktorProfil);
+        }
+        // Hole Doktor Profil aus dem SessionStorage
+        let doktorProfil = JSON.parse(sessionStorage.getItem("doktorProfil"));
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -146,13 +151,13 @@ $(document).ready(async function () {
         let anschrift = $('#anschrift');
 
         // Setz Werte der Textfelder
-        vorname.text(profilJson.givenname);
-        nachname.text(profilJson.surname);
-        geschlecht.text(profilJson.sex);
-        geburtsdatum.text(profilJson.birthday);
-        anschrift.html(profilJson.street + "<br />"
-            + profilJson.zipcode + " " + profilJson.city + "<br />"
-            + profilJson.country)
+        vorname.text(doktorProfil.givenname);
+        nachname.text(doktorProfil.surname);
+        geschlecht.text(doktorProfil.sex);
+        geburtsdatum.text(doktorProfil.birthday);
+        anschrift.html(doktorProfil.street + "<br />"
+            + doktorProfil.zipcode + " " + doktorProfil.city + "<br />"
+            + doktorProfil.country)
 
         /**************************************************************************************************************
          * Wird nur auf der Seite patient/arzt-suche.html ausgeführt
