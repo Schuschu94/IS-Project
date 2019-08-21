@@ -456,7 +456,7 @@ $(document).ready(async function () {
             let patient = patientProfileArray[0];
 
             // Gebe Informationen des Patienten aus
-            let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
+            let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID + "'>" +
                 "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                 "<td>" + patient.birthday + "</td>" +
                 "</tr>";
@@ -496,7 +496,7 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
-                let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
+                let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID + "'>" +
                     "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                     "<td>" + patient.birthday + "</td>" +
                     "</tr>";
@@ -594,7 +594,7 @@ $(document).ready(async function () {
             let doctor = doctorProfileArray[0];
 
             // Gebe Informationen des Doktors aus
-            let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID +"'>" +
+            let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "</tr>";
@@ -634,7 +634,7 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
-                let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID +"'>" +
+                let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                     "</tr>";
@@ -728,7 +728,7 @@ $(document).ready(async function () {
             let patient = patientProfileArray[0];
 
             // Gebe Informationen des Patienten aus
-            let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patient.html?Id=" + patient.personID +"'>" +
+            let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patient.html?Id=" + patient.personID + "'>" +
                 "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                 "<td>" + patient.birthday + "</td>" +
                 "</tr>";
@@ -768,7 +768,7 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
-                let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patient.html?Id=" + patient.personID +"'>" +
+                let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patient.html?Id=" + patient.personID + "'>" +
                     "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                     "<td>" + patient.birthday + "</td>" +
                     "</tr>";
@@ -822,10 +822,15 @@ $(document).ready(async function () {
 
 /**
  * Loggt den aktuellen Nutzer aus.
- * Löscht die Cookies und den SessionStorage
  */
 function logout() {
+    // Lösche den SessionStorage
     sessionStorage.clear();
+
+    /*
+    Leite auf die Logout-Seite des Rest-Servers weiter.
+    Dort werden die Cookies (z.B. der Token) gelöscht.
+     */
     window.location.replace("http://34.67.49.75:3000/auth/logout");
 }
 
