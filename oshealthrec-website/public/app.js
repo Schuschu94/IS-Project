@@ -586,6 +586,11 @@ $(document).ready(async function () {
                 credentials: 'include'
             });
             let doctorProfileArray = await response.json();
+
+            // Schreibe Array mit allen Ärzten des Mitarbeiters in den SessionStorage
+            let doctorProfileArrayJson = JSON.stringify(doctorProfileArray);
+            sessionStorage.setItem("doctorProfileArray", doctorProfileArrayJson);
+
             let doctor = doctorProfileArray[0];
 
             // Gebe Informationen des Doktors aus
@@ -622,6 +627,10 @@ $(document).ready(async function () {
                 credentials: 'include'
             });
             let doctorProfileArray = await response.json();
+
+            // Schreibe Array mit allen Ärzten des Mitarbeiters in den SessionStorage
+            let doctorProfileArrayJson = JSON.stringify(doctorProfileArray);
+            sessionStorage.setItem("doctorProfileArray", doctorProfileArrayJson);
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
@@ -669,6 +678,104 @@ $(document).ready(async function () {
         geschlecht.text(patient.sex);
         geburtsdatum.text(patient.birthday);
         blutgruppe.text(patient.bloodType);
+
+        /**************************************************************************************************************
+         * Wird nur auf der Seite mitarbeiter/patienten-suche.html ausgeführt
+         */
+    } else if (body.hasClass('mitarbeiter-patienten-suche')) {
+
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+        let doctorProfileArrayJSON = sessionStorage.getItem("doctorProfileArray");
+        let doctorProfileArray = JSON.parse(doctorProfileArrayJSON);
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Mitarbeiter handelt
+        if (participantType != "Employee") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Id des ausgewählten Arztes aus der URL
+        let searchParams = new URLSearchParams(window.location.search);
+        let doctorId = searchParams.get('Id');
+
+        // Hole Doktor mit der übergebenen Id aus dem DoctorArray
+        let doktorProfil = doctorProfileArray.find(d => d.personID === doctorId);
+
+        // Hole PatientenIDs des Doktors
+        let patientArray = doktorProfil.patients;
+
+        // Hole Tabelle als jquery Variable
+        let patientenTabelle = $('#patientenTabelle');
+
+        // Falls nur ein Patient eine Freigabe erteilt hat
+        if (patientArray.length == 1) {
+            // Filter String um nach dem Patienten mit der patientId zu suchen
+            let patientId = patientArray[0].split("#")[1];
+            let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + patientId + "%22%7D%7D";
+
+            // Hole Patienten aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let patientProfileArray = await response.json();
+
+            // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
+            let patientProfileArrayJson = JSON.stringify(patientProfileArray);
+            sessionStorage.setItem("patientProfileArray", patientProfileArrayJson);
+
+            let patient = patientProfileArray[0];
+
+            // Gebe Informationen des Patienten aus
+            let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
+                "<td>" + patient.givenname + " " + patient.surname + "</td>" +
+                "<td>" + patient.birthday + "</td>" +
+                "</tr>";
+            patientenTabelle.append(appendString);
+
+            // Falls mehrere Patienten eine Freigabe erteilt haben
+        } else if (patientArray.length > 1) {
+            // Anfang des Filter Strings für mehrere Patienten
+            let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
+            let firstPatient = true;
+
+            // Füge alle IDs der Patienten zum Filter String hinzu
+            patientArray.forEach(function (patient) {
+                let patientId = patient.split("#")[1];
+                if (firstPatient) {
+                    // Beim ersten Patienten gibt es kein Komma am Anfang
+                    filterString += "%7B%22personID%22%3A%22" + patientId + "%22%7D";
+                    firstPatient = false;
+                } else {
+                    // Bei den folgenden Patienten gibt es ein Komma am Anfang
+                    filterString += "%2C%7B%22personID%22%3A%22" + patientId + "%22%7D";
+                }
+            });
+            // Füge abschließende Klammern zum Filter String hinzu
+            filterString += "%5D%7D%7D";
+
+            // Hole Profile aller Patienten mit einer Freigabe aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let patientProfileArray = await response.json();
+
+            // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
+            let patientProfileArrayJson = JSON.stringify(patientProfileArray);
+            sessionStorage.setItem("patientProfileArray", patientProfileArrayJson);
+
+            // Gebe Daten für alle Patienten aus
+            patientProfileArray.forEach(function (patient) {
+                let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
+                    "<td>" + patient.givenname + " " + patient.surname + "</td>" +
+                    "<td>" + patient.birthday + "</td>" +
+                    "</tr>";
+
+                patientenTabelle.append(appendString);
+            })
+        }
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen

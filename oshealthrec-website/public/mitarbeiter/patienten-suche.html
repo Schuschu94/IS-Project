@@ -11,7 +11,7 @@
 
     <title>OSHealthRec</title>
 </head>
-<body>
+<body class="mitarbeiter-patienten-suche">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
@@ -47,7 +47,6 @@
                 <input type="text" class="form-control mb-2" id="vorname" placeholder="Vorname">
                 <input type="text" class="form-control mb-2" id="nachname" placeholder="Nachname">
                 <input type="text" class="form-control mb-2" id="geburtsdatum" placeholder="Gebutsdatum">
-                <button type="button" class="btn btn-primary">Suchen</button>
             </form>
         </div>
     </div>
@@ -60,11 +59,8 @@
                     <th scope="col">Geburtsdatum</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>Ole Kohl</td>
-                    <td>16.08.1997</td>
-                </tr>
+                <tbody id="patientenTabelle">
+
                 </tbody>
             </table>
         </div>
