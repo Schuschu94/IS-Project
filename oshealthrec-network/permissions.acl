@@ -122,6 +122,21 @@ rule PatientDeleteDoctorFromArray {
 }
 
 
+rule PatientReadReport {
+  description: "Allow patient to read his own reports."
+  participant(p): "org.oshealthrec.network.Patient"
+  operation: READ
+  resource(v): "org.oshealthrec.network.Report"
+  // Suche im Reports Array des Patienten nach dem Report
+  condition: (
+    p.reports.some(function (report) {
+        return report.getIdentifier() === v.getIdentifier();
+    })
+  )
+  action: ALLOW
+}
+
+
 /**
  * Regeln die den Doctor betreffen.
  */
