@@ -50,3 +50,6 @@ sudo apt install apache2
 sudo apt-get install screen
 cd $HOME/IS-Project
 sudo cp -a oshealthrec-website/public/. /var/www/html
+
+#Logout Rückführung zur Loginseite einrichten
+https://github.com/hyperledger/composer/issues/4387
