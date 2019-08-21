@@ -30,6 +30,7 @@ o String sex
 // Patient
 participant Patient extends Person {
   o String bloodType
+  o String emergency_contact
   o String[] intolerances
 --> Doctor[] doctors
 --> Report[] reports
@@ -37,10 +38,13 @@ participant Patient extends Person {
 
 // Doctor
 participant Doctor extends Person {
+o String title
+o String medical_specialty
 o String street
 o String city
 o String country
 o String zipcode
+o String call_number
 --> Patient[] patients
 --> Employee[] employees
 
@@ -82,6 +86,7 @@ o String givenname
 o String surname
 o String sex
 o String bloodType
+o String emergency_contact
 o String[] intolerances
 --> Doctor[] doctors
 --> Report[] reports
@@ -105,15 +110,18 @@ o String sex
  */
 transaction createDoctor{
 o String personID
+o String title
+o String medical_specialty
 o String birthday
 o String email
 o String givenname
 o String surname
 o String sex
 o String street
-o String city default ="Osnabrueck"
-o String country default = "DE"
+o String city 
+o String country 
 o String zipcode
+o String call_number
 --> Patient[] patients
 --> Employee[] employees
 }
@@ -151,6 +159,7 @@ transaction patient_update_profile {
   o String sex
   o String[] intolerances
   o String bloodType
+  o String emergency_contact
   --> Patient patient
 }
 
@@ -170,6 +179,8 @@ transaction employee_update_profile {
  * Aktualisiert das Profil des doctors
  */
 transaction doctor_update_profile {
+  o String title
+  o String medical_specialty
   o String birthday
   o String email
   o String street
@@ -179,6 +190,7 @@ transaction doctor_update_profile {
   o String city
   o String country
   o String zipcode
+  o String call_number
   --> Doctor doctor
 }
 
