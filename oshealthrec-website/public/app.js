@@ -431,6 +431,10 @@ $(document).ready(async function () {
                 credentials: 'include'
             });
             let patientProfileArray = await response.json();
+
+            // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
+            sessionStorage.setItem("patientProfileArray", patientProfileArray);
+
             let patient = patientProfileArray[0];
 
             // Gebe Informationen des Patienten aus
@@ -467,6 +471,9 @@ $(document).ready(async function () {
                 credentials: 'include'
             });
             let patientProfileArray = await response.json();
+
+            // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
+            sessionStorage.setItem("patientProfileArray", patientProfileArray);
 
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
