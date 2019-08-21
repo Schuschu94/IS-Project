@@ -616,8 +616,44 @@ $(document).ready(async function () {
                 doktorTabelle.append(appendString);
             })
         }
+
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/patient.html ausgeführt
+         */
+    } else if (body.hasClass('doktor-patient')) {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+        let patientProfileArray = sessionStorage.getItem("patientProfileArray");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Id des ausgewählten Patienten aus der URL
+        let searchParams = new URLSearchParams(window.location.search);
+        let patientId = searchParams.get('Id');
+
+        // Hole Patienten mit der übergebenen Id aus dem PatientenArray
+        let patient = patientProfileArray.find(p => p.personID === patientId);
+
+        // Hole Textfelder als jquery Variable
+        let vorname = $('#vorname');
+        let nachname = $('#nachname');
+        let geschlecht = $('#geschlecht');
+        let geburtsdatum = $('#geburtsdatum');
+        let blutgruppe = $('#blutgruppe');
+
+        // Setz Werte der Textfelder
+        vorname.text(patient.givenname);
+        nachname.text(patient.surname);
+        geschlecht.text(patient.sex);
+        geburtsdatum.text(patient.birthday);
+        blutgruppe.text(patient.bloodType);
     }
 
+    // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
     $(".clickable-row").click(function () {
         window.location = $(this).data("href");
     })
