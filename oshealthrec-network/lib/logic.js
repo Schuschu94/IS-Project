@@ -23,6 +23,8 @@
       newPatient.givenname = createPatient.givenname;
       newPatient.surname = createPatient.surname;
       newPatient.sex = createPatient.sex;
+      newPatient.bloodType = createPatient.bloodType;
+      newPatient.emergency_contact = createPatient.emergency_contact;
       newPatient.doctors = createPatient.doctors;
       newPatient.reports = createPatient.reports;
 
@@ -80,6 +82,9 @@
       createDoctor.personID);
 
       // Setze Variablen des Doctors
+      
+      newDoctor.title = createDoctor.title;
+      newDoctor.medical_specialty = createDoctor.medical_specialty;
       newDoctor.birthday = createDoctor.birthday;
       newDoctor.email = createDoctor.email;
       newDoctor.givenname = createDoctor.givenname;
@@ -91,6 +96,8 @@
       newDoctor.city = createDoctor.city;
       newDoctor.country = createDoctor.country;
       newDoctor.zipcode = createDoctor.zipcode;
+      newDoctor.call_number = createDoctor.call_number;
+      
 
       // Füge Doctor der Registry hinzu
       return userRegistry.add(newDoctor);
@@ -153,6 +160,7 @@ async function patient_update_profile(pup) {
   let surname = pup.surname;
   let sex = pup.sex;
   let bloodType = pup.bloodType;
+  let emergency_contact = pup.emergency_contact;
   let intolerances = pup.intolerances;
 
   // Prüfe welche Werte in der Transaction gesetzt wurden
@@ -174,6 +182,9 @@ async function patient_update_profile(pup) {
   }
   if (bloodType != "") {
     pup.patient.bloodType = bloodType;
+  }
+  if (emergency_contact != "") {
+    pup.patient.emergency_contact = emergency_contact;
   }
   if (intolerances.length > 1){
     pup.patient.intolerances = intolerances;
@@ -228,6 +239,8 @@ async function employee_update_profile(eup) {
  */
 async function doctor_update_profile(dup) {
   // Hole Werte aus der Transaction (dup)
+  let title = dup.title;
+  let medical_specialty = dup.medical_specialty;
   let birthday = dup.birthday;
   let email = dup.email;
   let givenname = dup.givenname;
@@ -237,9 +250,17 @@ async function doctor_update_profile(dup) {
   let city = dup.city;
   let country = dup.country;
   let zipcode = dup.zipcode;
+  let call_number = dup.call_number;
 
   // Prüfe welche Werte in der Transaction gesetzt wurden
   // und aktualisiere nur die gesetzten Werte
+
+  if (title != "") {
+    dup.doctor.title = title;
+  }
+  if (medical_specialty != "") {
+    dup.doctor.medical_specialty = medical_specialty;
+  }
   if (birthday != "") {
     dup.doctor.birthday = birthday;
   }
@@ -266,6 +287,9 @@ async function doctor_update_profile(dup) {
   }
   if (zipcode != "") {
     dup.doctor.zipcode = zipcode;
+  }
+  if (call_number != "") {
+    dup.doctor.call_number = call_number;
   }
 
   // Schreibe Updates in die Registry
