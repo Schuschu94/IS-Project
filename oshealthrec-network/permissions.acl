@@ -420,6 +420,14 @@ rule EmployeeDeleteDoctorFromArray {
 }
 
 // Regeln zum Erstellen eines Reports
+rule EmployeeCreateReportAsset {    
+  description: "Allow employee to create a report Asset."    
+  participant: "org.oshealthrec.network.Employee"    
+  operation: CREATE    
+  resource: "org.hyperledger.composer.system.AddAsset"    
+  action: ALLOW
+}
+
 rule EmployeeCreateReportTransaction {    
   description: "Allow employee to create create_report transaction."    
   participant(p): "org.oshealthrec.network.Employee"    
