@@ -813,13 +813,13 @@ function filterDoctorTable() {
 }
 
 /**
- * Filtert die Patienten auf der Seite doktor/patienten.html
+ * Filtert die Patienten in der Übersicht aller Patienten
  * Zeigt zunächst alle Patienten des Arztes in der Tabelle an.
  * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Patienten auszublenden.
  */
 function filterPatientTable() {
     // Variablen deklarieren
-    var table, tr, td, i, txtValue;
+    var table, tr, i;
     table = document.getElementById("patientenTabelle");
     tr = table.getElementsByTagName("tr");
 
@@ -841,7 +841,7 @@ function filterPatientTable() {
  */
 function filterEmployeeTable() {
     // Variablen deklarieren
-    var table, tr, td, i, txtValue;
+    var table, tr, i;
     table = document.getElementById("mitarbeiterTabelle");
     tr = table.getElementsByTagName("tr");
 
