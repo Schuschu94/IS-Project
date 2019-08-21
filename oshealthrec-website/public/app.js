@@ -589,7 +589,7 @@ $(document).ready(async function () {
             let doctor = doctorProfileArray[0];
 
             // Gebe Informationen des Doktors aus
-            let appendString = "<tr>" +
+            let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID +"'>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "</tr>";
@@ -625,7 +625,7 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
-                let appendString = "<tr>" +
+                let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID +"'>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                     "</tr>";
