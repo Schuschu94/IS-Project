@@ -51,16 +51,22 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
-        // Hole Profil Daten des Nutzers aus der Blockchain
-        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
-            method: 'GET',
-            credentials: 'include'
-        });
-        let profilJson = await response.json();
+        // Hole Profil Daten des Patienten aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("patientProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
 
-        // Speichere Profil Daten im SessionStorage
-        let patientProfil = JSON.stringify(profilJson);
-        sessionStorage.setItem("patientProfil", patientProfil);
+            // Speichere Profil Daten im SessionStorage
+            let patientProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("patientProfil", patientProfil);
+        }
+
+        // Hole Patienten Profil aus dem SessionStorage
+        let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -70,11 +76,11 @@ $(document).ready(async function () {
         let blutgruppe = $('#blutgruppe');
 
         // Setz Werte der Textfelder
-        vorname.text(profilJson.givenname);
-        nachname.text(profilJson.surname);
-        geschlecht.text(profilJson.sex);
-        geburtsdatum.text(profilJson.birthday);
-        blutgruppe.text(profilJson.bloodType);
+        vorname.text(patientProfil.givenname);
+        nachname.text(patientProfil.surname);
+        geschlecht.text(patientProfil.sex);
+        geburtsdatum.text(patientProfil.birthday);
+        blutgruppe.text(patientProfil.bloodType);
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/profil.html ausgeführt
@@ -90,16 +96,22 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
-        // Hole Profil Daten des Nutzers aus der Blockchain
-        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
-            method: 'GET',
-            credentials: 'include'
-        });
-        let profilJson = await response.json();
+        // Hole Profil Daten des Mitarbeiters aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+        if (sessionStorage.getItem("mitarbeiterProfil") == null) {
+            // Hole Profil Daten des Nutzers aus der Blockchain
+            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let profilJson = await response.json();
 
-        // Speichere Profil Daten im SessionStorage
-        let mitarbeiterProfil = JSON.stringify(profilJson);
-        sessionStorage.setItem("mitarbeiterProfil", mitarbeiterProfil);
+            // Speichere Profil Daten im SessionStorage
+            let mitarbeiterProfil = JSON.stringify(profilJson);
+            sessionStorage.setItem("mitarbeiterProfil", mitarbeiterProfil);
+        }
+
+        // Hole Mitarbeiter Profil aus dem SessionStorage
+        let mitarbeiterProfil = JSON.parse(sessionStorage.getItem("mitarbeiterProfil"));
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
@@ -108,10 +120,10 @@ $(document).ready(async function () {
         let geburtsdatum = $('#geburtsdatum');
 
         // Setz Werte der Textfelder
-        vorname.text(profilJson.givenname);
-        nachname.text(profilJson.surname);
-        geschlecht.text(profilJson.sex);
-        geburtsdatum.text(profilJson.birthday);
+        vorname.text(mitarbeiterProfil.givenname);
+        nachname.text(mitarbeiterProfil.surname);
+        geschlecht.text(mitarbeiterProfil.sex);
+        geburtsdatum.text(mitarbeiterProfil.birthday);
 
         /**************************************************************************************************************
          * Wird nur auf der Seite doktor/profil.html ausgeführt
