@@ -821,6 +821,15 @@ $(document).ready(async function () {
 });
 
 /**
+ * Loggt den aktuellen Nutzer aus.
+ * Löscht die Cookies und den SessionStorage
+ */
+function logout() {
+    sessionStorage.clear();
+    window.location.replace("http://34.67.49.75:3000/auth/logout");
+}
+
+/**
  * **********************************************************************************************
  * Funktionen um Inhalte von Tabellen zu filtern
  */
