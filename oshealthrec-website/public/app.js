@@ -624,7 +624,8 @@ $(document).ready(async function () {
         // Hole Daten aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
-        let patientProfileArray = sessionStorage.getItem("patientProfileArray");
+        let patientProfileArrayJSON = sessionStorage.getItem("patientProfileArray");
+        let patientProfileArray = JSON.parse(patientProfileArrayJSON);
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
         if (participantType != "Doctor") {
