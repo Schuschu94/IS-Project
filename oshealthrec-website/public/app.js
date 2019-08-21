@@ -439,7 +439,7 @@ $(document).ready(async function () {
             let patient = patientProfileArray[0];
 
             // Gebe Informationen des Patienten aus
-            let appendString = "<tr>" +
+            let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
                 "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                 "<td>" + patient.birthday + "</td>" +
                 "</tr>";
@@ -479,7 +479,7 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
-                let appendString = "<tr>" +
+                let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID +"'>" +
                     "<td>" + patient.givenname + " " + patient.surname + "</td>" +
                     "<td>" + patient.birthday + "</td>" +
                     "</tr>";
@@ -617,6 +617,10 @@ $(document).ready(async function () {
             })
         }
     }
+
+    $(".clickable-row").click(function () {
+        window.location = $this.data("href");
+    })
 });
 
 /**
