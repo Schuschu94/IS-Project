@@ -200,7 +200,7 @@ $(document).ready(async function () {
         // Gebe Informationen von allen Doktoren aus
         doctorArray.forEach(function (doctor) {
             let appendString = "<tr>" +
-                "<td>"+ doctor.title + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>"+ doctor.title + " " doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
@@ -260,7 +260,7 @@ $(document).ready(async function () {
 
             // Gebe Informationen des Doktors aus
             let appendString = "<tr>" +
-                "<td>" + doctor.title + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
