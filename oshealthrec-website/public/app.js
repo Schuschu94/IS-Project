@@ -725,11 +725,10 @@ $(document).ready(async function () {
             // Hole Doktor und Employee, für den der Report hochgeladen wurde, aus dem Arrays
             let doctor = doctorArray.find(d => d.personID === doctorId);
             if (doctorId != uploadedById)  {
-                uploadedBy = employeeArray.find(e => e.personID === employeeId);
+                uploadedBy = employeeArray.find(e => e.personID === uploadedById);
             } else {
                 uploadedBy = doctor;
             }
-
 
             let appendString = "<tr>" +
                 "<td>" + report.reportID + "</td>" +
