@@ -200,8 +200,9 @@ $(document).ready(async function () {
         // Gebe Informationen von allen Doktoren aus
         doctorArray.forEach(function (doctor) {
             let appendString = "<tr>" +
-                "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>"+ doctor.title + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td>" + doctor.medical_specialty + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
                 "</tr>";
 
@@ -261,6 +262,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td>" + doctor.medical_specialty + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
                 "</tr>";
             arztTabelle.append(appendString);
@@ -298,6 +300,7 @@ $(document).ready(async function () {
                 let appendString = "<tr>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                    "<td>" + doctor.medical_specialty + "</td>" +
                     "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
                     "</tr>";
 
@@ -599,6 +602,7 @@ $(document).ready(async function () {
             let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
                 "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td>" + doctor.medical_specialty + "</td>" +
                 "</tr>";
             doktorTabelle.append(appendString);
 
@@ -639,6 +643,7 @@ $(document).ready(async function () {
                 let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                    "<td>" + doctor.medical_specialty + "</td>" +
                     "</tr>";
 
                 doktorTabelle.append(appendString);
