@@ -719,11 +719,17 @@ $(document).ready(async function () {
 
             // Hole Ids des Arztes und des Doktors des Reports
             let doctorId = report.uploadedForDr.split("#")[1];
-            let employeeId = report.uploadedby.split('#')[1];
+            let uploadedById = report.uploadedby.split('#')[1];
+            let uploadedBy;
 
             // Hole Doktor und Employee, für den der Report hochgeladen wurde, aus dem Arrays
             let doctor = doctorArray.find(d => d.personID === doctorId);
-            let employee = employeeArray.find(e => e.personID === employeeId);
+            if (doctorId != uploadedById)  {
+                uploadedBy = employeeArray.find(e => e.personID === employeeId);
+            } else {
+                uploadedBy = doctor;
+            }
+
 
             let appendString = "<tr>" +
                 "<td>" + report.reportID + "</td>" +
@@ -732,7 +738,7 @@ $(document).ready(async function () {
                 "<td>" + report.date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>";
             if (sessionStorage.getItem("participantId") === doctorId) {
-                appendString += "<td>" + employee.givenname + " " + employee.surname + "</td>" + "</tr>";
+                appendString += "<td>" + uploadedBy.givenname + " " + uploadedBy.surname + "</td>" + "</tr>";
             } else {
                 appendString += "<td>" + " " + "</td>" + "</tr>";
             }
