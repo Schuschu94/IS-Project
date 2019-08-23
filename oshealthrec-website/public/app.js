@@ -200,7 +200,7 @@ $(document).ready(async function () {
         // Gebe Informationen von allen Doktoren aus
         doctorArray.forEach(function (doctor) {
             let appendString = "<tr>" +
-                "<td>"+ doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
                 "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
@@ -717,17 +717,14 @@ $(document).ready(async function () {
         // Gebe Daten für alle Reports aus
         reportArray.forEach(function (report) {
 
-                      // Hole Ids des Arztes und des Doktors des Reports
+            // Hole Ids des Arztes und des Doktors des Reports
             let doctorId = report.uploadedForDr.split("#")[1];
             let uploadedById = report.uploadedby.split('#')[1];
             let uploadedBy;
 
-            console.log(doctorArray);
-            console.log(doctorId);
-
             // Hole Doktor und Employee, für den der Report hochgeladen wurde, aus dem Arrays
             let doctor = doctorArray.find(d => d.personID === doctorId);
-            if (doctorId != uploadedById)  {
+            if (doctorId != uploadedById) {
                 uploadedBy = employeeArray.find(e => e.personID === uploadedById);
             } else {
                 uploadedBy = doctor;
@@ -927,7 +924,7 @@ $(document).ready(async function () {
                 "<td>" + report.description + "</td>" +
                 "<td>" + report.date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>"
-                "</tr>";
+            "</tr>";
 
             reportTabelle.append(appendString);
         });
