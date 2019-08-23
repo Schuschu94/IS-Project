@@ -679,6 +679,7 @@ $(document).ready(async function () {
         let geburtsdatum = $('#geburtsdatum');
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
+        let reportTabelle = $('#reportTabelle');
 
         // Setz Werte der Textfelder
         vorname.text(patient.givenname);
@@ -687,6 +688,31 @@ $(document).ready(async function () {
         geburtsdatum.text(patient.birthday);
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
+
+        // Erstelle Filter um nur die Reports des ausgewählten Patienten anzuzueigen
+        let patientPath = "org.oshealthrec.network.Patient";
+        let filterString = "?filter=%7B%22where%22%3A%7B%22owner%22%3A%22resource%3A" + patientPath + "%23" + patientId + "%22%7D%7D";
+
+        // Hole Reports aus der Blockchain
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report" + filterString, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        let reportArray = await response.json();
+
+        // Gebe Daten für alle Reports aus
+        reportArray.forEach(function (report) {
+            let appendString = "<tr>" +
+                "<td>" + report.reportID + "</td>" +
+                "<td>" + report.title + "</td>" +
+                "<td>" + report.description + "</td>" +
+                "<td>" + report.date + "</td>" +
+                "<td>" + report.uploadedForDr + "</td>" +
+                "<td>" + report.uploadedby + "</td>" +
+                "</tr>";
+
+            reportTabelle.append(appendString);
+        })
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/patienten-suche.html ausgeführt
