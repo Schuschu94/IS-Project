@@ -195,7 +195,7 @@ $(document).ready(async function () {
             method: 'GET',
             credentials: 'include'
         });
-        const doctorArray = await response.json(); //extract JSON from the http response
+        const doctorArray = await response.json();
 
         // Gebe Informationen von allen Doktoren aus
         doctorArray.forEach(function (doctor) {
@@ -823,6 +823,55 @@ $(document).ready(async function () {
         geburtsdatum.text(patient.birthday);
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
+    } else if (body.hasClass('patient-dokumente')) {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Tabelle als jquery Variable
+        let reportTabelle = $('#reportTabelle');
+
+        // Rest Aufruf um alle Doktoren zu erhalten
+        const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const doctorArray = await doctorResponse.json();
+
+        /*
+        Rest Aufruf um alle Reports des Patienten zu erhalten.
+        Aufgrund der Regeln in der Blockchain werden hier nur die Reports zurückgegeben, die dem Aufrufer zugeordnet sind.
+         */
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const reportArray = await response.json(); //extract JSON from the http response
+
+        // Gebe Informationen von allen Reports aus
+        reportArray.forEach(function (report) {
+            // Hole Id des Doktors, der den Report hochgeladen hat
+            let doctorId = report.uploadedForDr.split('Doctor#')[1];
+
+            // Hole Doktor mit der übergebenen Id aus dem DoktorArray
+            let doctor = doctorArray.find(d => d.personID === doctorId);
+
+            let appendString = "<tr>" +
+                "<td>" + report.reportID + "</td>" +
+                "<td>" + report.title + "</td>" +
+                "<td>" + report.description + "</td>" +
+                "<td>" + report.date + "</td>" +
+                "<td>" + report.date + "</td>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>"
+                "</tr>";
+
+            reportTabelle.append(appendString);
+        });
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
