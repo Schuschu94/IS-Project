@@ -74,6 +74,7 @@ $(document).ready(async function () {
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
         let blutgruppe = $('#blutgruppe');
+        let notfallkontakt = $('#notfallkontakt')
 
         // Setz Werte der Textfelder
         vorname.text(patientProfil.givenname);
@@ -81,6 +82,7 @@ $(document).ready(async function () {
         geschlecht.text(patientProfil.sex);
         geburtsdatum.text(patientProfil.birthday);
         blutgruppe.text(patientProfil.bloodType);
+        blutgruppe.text(patientProfil.emergency_contact);
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/profil.html ausgeführt
@@ -671,6 +673,7 @@ $(document).ready(async function () {
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
         let blutgruppe = $('#blutgruppe');
+        let notfallkontakt = $('#notfallkontakt');
 
         // Setz Werte der Textfelder
         vorname.text(patient.givenname);
@@ -678,6 +681,7 @@ $(document).ready(async function () {
         geschlecht.text(patient.sex);
         geburtsdatum.text(patient.birthday);
         blutgruppe.text(patient.bloodType);
+        notfallkontakt.text(patient.emergency_contact);
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/patienten-suche.html ausgeführt
@@ -805,6 +809,7 @@ $(document).ready(async function () {
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
         let blutgruppe = $('#blutgruppe');
+        let notfallkontakt = $('#notfallkontakt');
 
         // Setz Werte der Textfelder
         vorname.text(patient.givenname);
@@ -812,6 +817,7 @@ $(document).ready(async function () {
         geschlecht.text(patient.sex);
         geburtsdatum.text(patient.birthday);
         blutgruppe.text(patient.bloodType);
+        notfallkontakt.text(patient.emergency_contact);
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
