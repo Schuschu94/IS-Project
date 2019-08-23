@@ -689,6 +689,20 @@ $(document).ready(async function () {
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
 
+        // Rest Aufruf um alle Doktoren zu erhalten
+        const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const doctorArray = await doctorResponse.json();
+
+        // Rest Aufruf um alle Mitarbeiter zu erhalten
+        const employeeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Employee", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const employeeArray = await employeeResponse.json();
+
         // Erstelle Filter um nur die Reports des ausgewählten Patienten anzuzueigen
         let patientPath = "org.oshealthrec.network.Patient";
         let filterString = "?filter=%7B%22where%22%3A%7B%22owner%22%3A%22resource%3A" + patientPath + "%23" + patientId + "%22%7D%7D";
@@ -702,17 +716,29 @@ $(document).ready(async function () {
 
         // Gebe Daten für alle Reports aus
         reportArray.forEach(function (report) {
+
+            // Hole Ids des Arztes und des Doktors des Reports
+            let doctorId = report.uploadedForDr.split("#")[1];
+            let employeeId = report.uploadedby.split('#')[1];
+
+            // Hole Doktor und Employee, für den der Report hochgeladen wurde, aus dem Arrays
+            let doctor = doctorArray.find(d => d.personID === doctorId);
+            let employee = employeeArray.find(e => e.personID === employeeId);
+
             let appendString = "<tr>" +
                 "<td>" + report.reportID + "</td>" +
                 "<td>" + report.title + "</td>" +
                 "<td>" + report.description + "</td>" +
                 "<td>" + report.date + "</td>" +
-                "<td>" + report.uploadedForDr + "</td>" +
-                "<td>" + report.uploadedby + "</td>" +
-                "</tr>";
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>";
+            if (sessionStorage.getItem("participantId") === doctorId) {
+                appendString += "<td>" + employee.givenname + " " + employee.surname + "</td>" + "</tr>";
+            } else {
+                appendString += "<td>" + " " + "</td>" + "</tr>";
+            }
 
             reportTabelle.append(appendString);
-        })
+        });
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/patienten-suche.html ausgeführt
