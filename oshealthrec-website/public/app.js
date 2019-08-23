@@ -866,7 +866,6 @@ $(document).ready(async function () {
                 "<td>" + report.title + "</td>" +
                 "<td>" + report.description + "</td>" +
                 "<td>" + report.date + "</td>" +
-                "<td>" + report.date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>"
                 "</tr>";
 
