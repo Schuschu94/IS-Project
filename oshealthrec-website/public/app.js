@@ -1156,6 +1156,7 @@ async function withdrawEmployee(employeeId) {
     bodyDDEObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
 
     let bodyDDEJson = JSON.stringify(bodyDDEObject);
+    console.log(bodyDDEJson);
 
     // Lösche den Employee aus dem Employee-Array des Doktors
     const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_employee", {
