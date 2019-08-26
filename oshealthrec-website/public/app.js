@@ -297,12 +297,11 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
-                let doctorId = doctor.split("#")[1];
                 let appendString = "<tr>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                     "<td>" + doctor.medical_specialty + "</td>" +
-                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Berechtigung entziehen</button></td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctor.personID + "\")'>Berechtigung entziehen</button></td>" +
                     "</tr>";
 
                 arztTabelle.append(appendString);
