@@ -714,8 +714,10 @@ $(document).ready(async function () {
         });
         let reportArray = await response.json();
 
+        console.log(reportArray);
         // Gebe Daten für alle Reports aus
         reportArray.forEach(function (report) {
+            console.log(report);
 
             // Hole Ids des Arztes und des Doktors des Reports
             let doctorId = report.uploadedForDr.split("#")[1];
