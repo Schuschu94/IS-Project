@@ -1039,10 +1039,8 @@ function filterDoctorTable() {
     }
 
     // Rufe die einzelnen Filter-Funktionen auf
-    filterTable("arztTabelle", "inputVorname", 0);
-    filterTable("arztTabelle", "inputNachname", 0);
-    filterTable("arztTabelle", "inputStraße", 1);
-    filterTable("arztTabelle", "inputOrt", 1);
+    filterTable("arztTabelle", "inputName", 0);
+    filterTable("arztTabelle", "inputAdresse", 1);
 }
 
 /**
@@ -1062,8 +1060,7 @@ function filterPatientTable() {
     }
 
     // Rufe die einzelnen Filter-Funktionen auf
-    filterTable("patientenTabelle", "inputVorname", 0);
-    filterTable("patientenTabelle", "inputNachname", 0);
+    filterTable("patientenTabelle", "inputName", 0);
     filterTable("patientenTabelle", "inputGeburtsdatum", 1);
 }
 
@@ -1107,8 +1104,7 @@ function filterEmployeeTable() {
     }
 
     // Rufe die einzelnen Filter-Funktionen auf
-    filterTable("mitarbeiterTabelle", "inputVorname", 0);
-    filterTable("mitarbeiterTabelle", "inputNachname", 0);
+    filterTable("mitarbeiterTabelle", "inputName", 0);
     filterTable("mitarbeiterTabelle", "inputGeburtsdatum", 1);
 }
 
