@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
@@ -16,7 +17,8 @@
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -39,72 +41,87 @@
 </nav>
 
 <div class="container">
-    <div class="col-sm-4">
-        <form>
-            <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()" placeholder="Titel">
-            <input type="text" class="form-control mb-2 mr-5" id="inputBeschreibung" onkeyup="filterReportTable()" placeholder="Beschreibung">
-            <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()" placeholder="Datum">
-            <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon" onkeyup="filterReportTable()" placeholder="Hochgeladen von">
-        </form>
-    </div>
-    <div class="col-2">
-
-    </div>
-    <div class="col-6">
-        <dl class="row">
-            <dt class="col-sm-3">Vorname</dt>
-            <dd class="col-sm-9" id="vorname"></dd>
-
-            <dt class="col-sm-3">Nachname</dt>
-            <dd class="col-sm-9" id="nachname"></dd>
-
-            <dt class="col-sm-3">Geschlecht</dt>
-            <dd class="col-sm-9" id="geschlecht"></dd>
-
-            <dt class="col-sm-3">Geburtsdatum</dt>
-            <dd class="col-sm-9" id="geburtsdatum"></dd>
-
-            <dt class="col-sm-3">Blutgruppe</dt>
-            <dd class="col-sm-9" id="blutgruppe"></dd>
-
-            <dt class="col-sm-3">Notfallkontakt</dt>
-            <dd class="col-sm-9" id="notfallkontakt"></dd>
-        </dl>
-    </div>
     <div class="row">
-        <div class="col-sm-9">
-            <table class="table table-hover mt-3">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Titel</th>
-                    <th scope="col">Beschreibung</th>
-                    <th scope="col">Datum</th>
-                    <th scope="col">Arzt</th>
-                    <th scope="col">Hochgeladen von</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="reportTabelle">
-
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-3">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary mt-3 btn-block freigaben-button">Herunterladen</button> <br />
-                <button type="button" class="btn btn-primary btn-block freigaben-button" onclick="window.location.href='/doktor/hochladen.html'">Hochladen</button>
+        <div class="col-sm-4">
+            <form>
+                <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
+                       placeholder="Titel">
+                <input type="text" class="form-control mb-2 mr-5" id="inputBeschreibung" onkeyup="filterReportTable()"
+                       placeholder="Beschreibung">
+                <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()"
+                       placeholder="Datum">
+                <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon" onkeyup="filterReportTable()"
+                       placeholder="Hochgeladen von">
             </form>
         </div>
+        <div class="col-2">
+
+        </div>
+        <div class="col-6">
+            <dl class="row">
+                <dt class="col-sm-3">Vorname</dt>
+                <dd class="col-sm-9" id="vorname"></dd>
+
+                <dt class="col-sm-3">Nachname</dt>
+                <dd class="col-sm-9" id="nachname"></dd>
+
+                <dt class="col-sm-3">Geschlecht</dt>
+                <dd class="col-sm-9" id="geschlecht"></dd>
+
+                <dt class="col-sm-3">Geburtsdatum</dt>
+                <dd class="col-sm-9" id="geburtsdatum"></dd>
+
+                <dt class="col-sm-3">Blutgruppe</dt>
+                <dd class="col-sm-9" id="blutgruppe"></dd>
+
+                <dt class="col-sm-3">Notfallkontakt</dt>
+                <dd class="col-sm-9" id="notfallkontakt"></dd>
+            </dl>
+        </div>
     </div>
-</div>
+        <div class="row">
+            <div class="col-sm-9">
+                <table class="table table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Titel</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Arzt</th>
+                        <th scope="col">Hochgeladen von</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="reportTabelle">
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+                <form class="form-group">
+                    <button type="button" class="btn btn-primary mt-3 btn-block freigaben-button">Herunterladen</button>
+                    <br/>
+                    <button type="button" class="btn btn-primary btn-block freigaben-button"
+                            onclick="window.location.href='/doktor/hochladen.html'">Hochladen
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<script src="../app.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script src="../app.js"></script>
 </body>
 </html>
