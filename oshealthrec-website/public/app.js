@@ -361,7 +361,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\">Berechtigung entziehen</button></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(employee.personID)'>Berechtigung entziehen</button></td>" +
                 "</tr>";
             mitarbeiterTabelle.append(appendString);
 
@@ -398,7 +398,7 @@ $(document).ready(async function () {
                 let appendString = "<tr>" +
                     "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                     "<td>" + employee.birthday + "</td>" +
-                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(employee.personID)'>Berechtigung entziehen</button></td>" +
                     "</tr>";
 
                 mitarbeiterTabelle.append(appendString);
@@ -1140,25 +1140,52 @@ function filterTable(tableId, inputId, colNr) {
     }
 }
 
-
+/**
+ * Entzieht einem Employee die Zugehörigkeit zu einem Doktor.
+ *
+ * @param {string} employeeId
+ *   Id des Employees
+ */
 async function withdrawEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
-    let bodyObject = new Object();
-    bodyObject.$class = "org.oshealthrec.network.doctor_delete_employee";
-    bodyObject.employee = "resource:org.oshealthrec.network.Employee#"+employeeId;
-    bodyObject.doctor = "resource:org.oshealthrec.network.Doctor#"+doctorId;
+    let bodyDDEObject = new Object();
+    bodyDDEObject.$class = "org.oshealthrec.network.doctor_delete_employee";
+    bodyDDEObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
+    bodyDDEObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
 
-    let bodyJson = JSON.stringify(bodyObject);
+    let bodyDDEJson = JSON.stringify(bodyDDEObject);
 
     // Lösche den Employee aus dem Employee-Array des Doktors
     const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_employee", {
         method: 'POST',
         credentials: 'include',
-        body: bodyJson
+        body: bodyDDEJson
     });
-    const reportArray = await response.json();
+    const doctorDeleteEmployeeResponse = await response.json();
+    console.log(doctorDeleteEmployeeResponse);
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyEDDObject = new Object();
+    bodyEDDObject.$class = "org.oshealthrec.network.doctor_delete_employee";
+    bodyEDDObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+    bodyEDDObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
+
+    let bodyEDDJson = JSON.stringify(bodyEDDObject);
+
+    // Lösche den Doktor aus dem Doctor-Array des Mitarbeiter
+    const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.employee_delete_doctor", {
+        method: 'POST',
+        credentials: 'include',
+        body: bodyEDDJson
+    });
+    const employeeDeleteDoctorResponse = await ddeResponse.json();
+    console.log(employeeDeleteDoctorResponse);
+
+    // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
+    sessionStorage.removeItem('doktorProfil');
+    location.reload();
 }
 
 /**
