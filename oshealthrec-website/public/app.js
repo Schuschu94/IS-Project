@@ -1225,7 +1225,7 @@ async function withdrawDoctor(doctorId) {
     const patientDeleteDoctorResponse = await response.json();
     console.log(patientDeleteDoctorResponse);
 
-    / Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDDPObject = new Object();
     bodyDDPObject.$class = "org.oshealthrec.network.doctor_delete_patient";
     bodyDDPObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
