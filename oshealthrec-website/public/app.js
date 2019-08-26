@@ -1231,7 +1231,7 @@ async function withdrawDoctor(doctorId) {
     bodyDDPObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
     bodyDDPObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
 
-    let bodyDDPJson = JSON.stringify(bodyDDpObject);
+    let bodyDDPJson = JSON.stringify(bodyDDPObject);
     console.log(bodyDDPJson);
 
     // Lösche den Patienten aus dem Patienten-Array des Doktors
