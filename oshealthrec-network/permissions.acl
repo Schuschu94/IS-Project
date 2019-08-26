@@ -111,6 +111,14 @@ rule PatientDeleteDoctor {
   action: ALLOW
 }
 
+rule DoctorDeletePatient {
+  description: "Allow patient create doctor_delete_patient transaction."
+  participant: "org.oshealthrec.network.Patient"
+  operation: CREATE
+  resource: "org.oshealthrec.network.doctor_delete_patient"
+  action: ALLOW
+}
+
 rule PatientDeleteDoctorFromArray {
   description: "Allow patient to delete Doctor from the patient´s doctor array."
   participant(p): "org.oshealthrec.network.Patient"
