@@ -361,7 +361,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "<button type=\"button\" class=\"btn btn-primary btn-block\">Berechtigung entziehen</button>" +
                 "</tr>";
             mitarbeiterTabelle.append(appendString);
 
