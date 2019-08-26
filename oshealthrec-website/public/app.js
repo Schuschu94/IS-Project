@@ -361,7 +361,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<button type=\"button\" class=\"btn btn-primary btn-block\">Berechtigung entziehen</button>" +
+                "<td><button type=\"button\" class=\"btn btn-primary btn-block\">Berechtigung entziehen</button></td>" +
                 "</tr>";
             mitarbeiterTabelle.append(appendString);
 
