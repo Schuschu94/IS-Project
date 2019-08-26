@@ -142,10 +142,18 @@ rule PatientReadReport {
  */
 
 // Lese-Berechtigungen des Doctors
-rule DoctorReadOwn {
-  description: "Grant Doctor READ access to own profil."
+rule DoctorReadDoctors {
+  description: "Grant Doctor READ access all doctors."
   participant(p): "org.oshealthrec.network.Doctor"
-  operation: READ, UPDATE
+  operation: READ
+  resource(v): "org.oshealthrec.network.Doctor"
+  action: ALLOW
+}
+
+rule DoctorUpdateOwnProfile {
+  description: "Grant Doctor Update access all doctors."
+  participant(p): "org.oshealthrec.network.Doctor"
+  operation: UPDATE
   resource(v): "org.oshealthrec.network.Doctor"
   condition: (v.getIdentifier() == p.getIdentifier())
   action: ALLOW
@@ -318,6 +326,7 @@ rule EmployeeReadOwn {
   action: ALLOW
 }
 
+/**
 rule EmployeeReadHisDoctors {
   description: "Grant Employee READ access to his doctors profil."
   participant(p): "org.oshealthrec.network.Employee"
@@ -331,6 +340,7 @@ rule EmployeeReadHisDoctors {
   )
   action: ALLOW
 }
+*/
 
 rule EmployeeReadDoctor {
   description: "Allow employee to read doctor."
