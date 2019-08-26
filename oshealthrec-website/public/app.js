@@ -1172,7 +1172,7 @@ async function withdrawEmployee(employeeId) {
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyEDDObject = new Object();
-    bodyEDDObject.$class = "org.oshealthrec.network.doctor_delete_employee";
+    bodyEDDObject.$class = "org.oshealthrec.network.employee_delete_doctor";
     bodyEDDObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
     bodyEDDObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
 
