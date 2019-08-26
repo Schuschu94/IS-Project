@@ -263,7 +263,7 @@ $(document).ready(async function () {
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
-                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Berechtigung entziehen</button></td>" +
                 "</tr>";
             arztTabelle.append(appendString);
 
@@ -297,11 +297,12 @@ $(document).ready(async function () {
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
+                let doctorId = doctor.split("#")[1];
                 let appendString = "<tr>" +
                     "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                     "<td>" + doctor.medical_specialty + "</td>" +
-                    "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Berechtigung entziehen</button></td>" +
                     "</tr>";
 
                 arztTabelle.append(appendString);
@@ -398,7 +399,7 @@ $(document).ready(async function () {
                 let appendString = "<tr>" +
                     "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                     "<td>" + employee.birthday + "</td>" +
-                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" data-id='employeeId' onclick='withdrawEmployee()'>Berechtigung entziehen</button></td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employeeId + "\")'>Berechtigung entziehen</button></td>" +
                     "</tr>";
 
                 mitarbeiterTabelle.append(appendString);
@@ -1178,7 +1179,7 @@ async function withdrawEmployee(employeeId) {
 
     let bodyEDDJson = JSON.stringify(bodyEDDObject);
 
-    // Lösche den Doktor aus dem Doctor-Array des Mitarbeiter
+    // Lösche den Doktor aus dem Doctor-Array des Mitarbeiters
     const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.employee_delete_doctor", {
         method: 'POST',
         credentials: 'include',
@@ -1192,6 +1193,53 @@ async function withdrawEmployee(employeeId) {
 
     // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('doktorProfil');
+    location.reload();
+}
+
+/**
+ * Entzieht einem Doktor die Freigabe eines Patienten.
+ *
+ * @param {string} doctorId
+ *   Id des Doktors
+ */
+async function withdrawDoctor(doctorId) {
+    let patientId = sessionStorage.getItem('participantId');
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyPDDObject = new Object();
+    bodyPDDObject.$class = "org.oshealthrec.network.patient_delete_doctor";
+    bodyPDDObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
+    bodyPDDObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+    let bodyPDDJson = JSON.stringify(bodyPDDObject);
+    console.log(bodyPDDJson);
+
+    // Lösche den Doktor aus dem Doktor-Array des Patienten
+    const response = await fetch(serverIp + "/api/org.oshealthrec.network.patient_delete_doctor", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyPDDJson
+    });
+    const patientDeleteDoctorResponse = await response.json();
+    console.log(patientDeleteDoctorResponse);
+
+    // Lösche den Patienten aus dem Patienten-Array des Doktors
+    const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_patient", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyPDDJson
+    });
+    const doctorDeletePatientResponse = await ddeResponse.json();
+    console.log(doctorDeletePatientResponse);
+
+    // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
+    sessionStorage.removeItem('patientProfil');
     location.reload();
 }
 
