@@ -144,9 +144,9 @@ rule PatientReadReport {
 // Lese-Berechtigungen des Doctors
 rule DoctorReadDoctors {
   description: "Grant Doctor READ access all doctors."
-  participant(p): "org.oshealthrec.network.Doctor"
+  participant: "org.oshealthrec.network.Doctor"
   operation: READ
-  resource(v): "org.oshealthrec.network.Doctor"
+  resource: "org.oshealthrec.network.Doctor"
   action: ALLOW
 }
 
