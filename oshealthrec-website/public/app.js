@@ -1179,6 +1179,9 @@ async function withdrawEmployee(employeeId) {
     const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.employee_delete_doctor", {
         method: 'POST',
         credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: bodyEDDJson
     });
     const employeeDeleteDoctorResponse = await ddeResponse.json();
