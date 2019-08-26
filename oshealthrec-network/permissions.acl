@@ -38,9 +38,9 @@ rule PatientReadOwn {
 }
 
 rule PatientReadDoctor {
-  description: "Allow patient to read doctor."
+  description: "Allow patient to read and update doctor."
   participant: "org.oshealthrec.network.Patient"
-  operation: READ
+  operation: READ, UPDATE
   resource: "org.oshealthrec.network.Doctor"
   action: ALLOW
 }
@@ -174,9 +174,9 @@ rule DoctorReadHisPatients {
 }
 
 rule DoctorReadEmployee {
-  description: "Allow doctor to read employee."
+  description: "Allow doctor to read and update employee."
   participant: "org.oshealthrec.network.Doctor"
-  operation: READ
+  operation: READ, UPDATE
   resource: "org.oshealthrec.network.Employee"
   action: ALLOW
 }

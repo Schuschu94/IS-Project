@@ -1141,6 +1141,26 @@ function filterTable(tableId, inputId, colNr) {
 }
 
 
+async function withdrawEmployee(employeeId) {
+    let doctorId = sessionStorage.getItem('participantId');
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyObject = new Object();
+    bodyObject.$class = "org.oshealthrec.network.doctor_delete_employee";
+    bodyObject.employee = "resource:org.oshealthrec.network.Employee#"+employeeId;
+    bodyObject.doctor = "resource:org.oshealthrec.network.Doctor#"+doctorId;
+
+    let bodyJson = JSON.stringify(bodyObject);
+
+    // Lösche den Employee aus dem Employee-Array des Doktors
+    const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_employee", {
+        method: 'POST',
+        credentials: 'include',
+        body: bodyJson
+    });
+    const reportArray = await response.json();
+}
+
 /**
  * !!!Wird wahrscheinlich nicht mehr benötigt!!!
  *
@@ -1148,10 +1168,11 @@ function filterTable(tableId, inputId, colNr) {
  */
 async function checkWallet() {
 
+
     // Rest Aufruf um die Wallet des Users zu erhalten
     const response = await fetch(serverIp + "/api/wallet", {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
     });
     const myJson = await response.json(); //extract JSON from the http response
 
