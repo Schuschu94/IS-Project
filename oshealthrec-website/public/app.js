@@ -1225,6 +1225,15 @@ async function withdrawDoctor(doctorId) {
     const patientDeleteDoctorResponse = await response.json();
     console.log(patientDeleteDoctorResponse);
 
+    / Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyDDPObject = new Object();
+    bodyDDPObject.$class = "org.oshealthrec.network.doctor_delete_patient";
+    bodyDDPObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
+    bodyDDPObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+    let bodyDDPJson = JSON.stringify(bodyDDpObject);
+    console.log(bodyDDPJson);
+
     // Lösche den Patienten aus dem Patienten-Array des Doktors
     const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_patient", {
         method: 'POST',
@@ -1232,7 +1241,7 @@ async function withdrawDoctor(doctorId) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: bodyPDDJson
+        body: bodyDDPJson
     });
     const doctorDeletePatientResponse = await ddeResponse.json();
     console.log(doctorDeletePatientResponse);
