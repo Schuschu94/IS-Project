@@ -361,7 +361,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(employeeId)'>Berechtigung entziehen</button></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(" + employeeId + ")'>Berechtigung entziehen</button></td>" +
                 "</tr>";
             mitarbeiterTabelle.append(appendString);
 
@@ -398,7 +398,7 @@ $(document).ready(async function () {
                 let appendString = "<tr>" +
                     "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                     "<td>" + employee.birthday + "</td>" +
-                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(employeeId)'>Berechtigung entziehen</button></td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" data-id='employeeId' onclick='withdrawEmployee()'>Berechtigung entziehen</button></td>" +
                     "</tr>";
 
                 mitarbeiterTabelle.append(appendString);
