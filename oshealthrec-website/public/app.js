@@ -983,11 +983,13 @@ $(document).ready(async function () {
             // Hole Doktor mit der übergebenen Id aus dem DoktorArray
             let doctor = doctorArray.find(d => d.personID === doctorId);
 
+            let date = report.date.split('T')[0];
+
             let appendString = "<tr>" +
                 "<td>" + report.reportID + "</td>" +
                 "<td>" + report.title + "</td>" +
                 "<td>" + report.description + "</td>" +
-                "<td>" + report.date + "</td>" +
+                "<td>" + date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>"
             "</tr>";
 
@@ -1063,6 +1065,29 @@ function filterPatientTable() {
     filterTable("patientenTabelle", "inputVorname", 0);
     filterTable("patientenTabelle", "inputNachname", 0);
     filterTable("patientenTabelle", "inputGeburtsdatum", 1);
+}
+
+/**
+ * Filtert die Patienten in der Übersicht aller Patienten
+ * Zeigt zunächst alle Patienten des Arztes in der Tabelle an.
+ * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Patienten auszublenden.
+ */
+function filterReportTable() {
+    // Variablen deklarieren
+    var table, tr, i;
+    table = document.getElementById("reportTabelle");
+    tr = table.getElementsByTagName("tr");
+
+    // Zeige alle Zeilen an
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+    }
+
+    // Rufe die einzelnen Filter-Funktionen auf
+    filterTable("reportTabelle", "inputTitel", 1);
+    filterTable("reportTabelle", "inputBeschreibung", 2);
+    filterTable("reportTabelle", "inputDatum", 3);
+    filterTable("reportTabelle", "inputHochgeladenVon", 4);
 }
 
 /**
