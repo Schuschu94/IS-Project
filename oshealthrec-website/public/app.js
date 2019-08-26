@@ -714,10 +714,8 @@ $(document).ready(async function () {
         });
         let reportArray = await response.json();
 
-        console.log(reportArray);
         // Gebe Daten für alle Reports aus
         reportArray.forEach(function (report) {
-            console.log(report);
 
             // Hole Ids des Arztes und des Doktors des Reports
             let doctorId = report.uploadedForDr.split("#")[1];
@@ -732,11 +730,13 @@ $(document).ready(async function () {
                 uploadedBy = doctor;
             }
 
+            let date = report.date.split('T')[0];
+
             let appendString = "<tr>" +
                 "<td>" + report.reportID + "</td>" +
                 "<td>" + report.title + "</td>" +
                 "<td>" + report.description + "</td>" +
-                "<td>" + report.date + "</td>" +
+                "<td>" + date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>";
             if (sessionStorage.getItem("participantId") === doctorId) {
                 appendString += "<td>" + uploadedBy.givenname + " " + uploadedBy.surname + "</td>" + "</tr>";
