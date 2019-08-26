@@ -1185,8 +1185,8 @@ async function withdrawEmployee(employeeId) {
     console.log(employeeDeleteDoctorResponse);
 
     // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
-    sessionStorage.removeItem('doktorProfil');
-    location.reload();
+    // sessionStorage.removeItem('doktorProfil');
+    // location.reload();
 }
 
 /**
