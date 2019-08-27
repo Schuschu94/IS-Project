@@ -1010,6 +1010,9 @@ $(document).ready(async function () {
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
         }
+
+        let date = new Date();
+        console.log(date);
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
@@ -1156,6 +1159,9 @@ function filterTable(tableId, inputId, colNr) {
 }
 
 function uploadReport() {
+    // hole Daten aus dem SessionStorage
+    let participantId = sessionStorage.getItem("participantId");
+
     // hole InputFelder
     let fileInput = document.getElementById('datei');
     let titelInput = document.getElementById('titel');
@@ -1200,12 +1206,35 @@ function uploadReport() {
         task.on('state_changed',
             function progress(snapshot) {
                 let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 50;
-                innerProgressbar.css('width', percentage + '%').attr('aria-valuenow' , percentage);
+                innerProgressbar.css('width', percentage + '%').attr('aria-valuenow', percentage);
             },
             function error(err) {
 
             },
-            function complete() {
+            // Wird aufgerufen, wenn die Datei erfolgreich zum Firebase Storage hochgeladen wurde
+            async function complete() {
+                // Erstelle JSON Objekt zum Erstellen des Reports
+                let bodyCRObject = new Object();
+                bodyCRObject.$class = "org.oshealthrec.network.Report";
+                bodyCRObject.reportID = participantId + fileName;
+                bodyCRObject.date =
+                bodyCRObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
+                bodyCRObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+                let bodyDAEJson = JSON.stringify(bodyDAEObject);
+                console.log(bodyDAEJson);
+
+                // Füge den Employee zum Employee-Array des Doktors hinzu
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_add_employee", {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: bodyDAEJson
+                });
+                const doctorAddEmployeeResponse = await response.json();
+                console.log(doctorAddEmployeeResponse);
 
             }
         );
