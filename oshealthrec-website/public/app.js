@@ -1164,7 +1164,7 @@ function uploadReport() {
 
     // Hole hochzuladene Datei
     let fileInput = document.getElementById('datei');
-    let file = fileInput.target.files[0];
+    let file = fileInput.files[0];
 
     // Erstelle Pfad zur Datei
     let filePath = sessionStorage.getItem("chosenPatient");
