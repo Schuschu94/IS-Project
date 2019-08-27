@@ -1261,7 +1261,7 @@ function uploadReport() {
 
                 innerProgressbar.css('width', '100%').attr('aria-valuenow', "100");
 
-                //window.location.href = "/doktor/patient.html?Id=" + patientId;
+                window.location.href = "/doktor/patient.html?Id=" + patientId;
             }
         );
 
