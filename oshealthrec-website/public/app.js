@@ -1010,9 +1010,6 @@ $(document).ready(async function () {
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
         }
-
-        let date = new Date();
-        console.log(date);
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
@@ -1184,7 +1181,7 @@ function uploadReport() {
         let file = fileInput.files[0];
 
         // Erstelle Pfad zur Datei
-        let filePath = sessionStorage.getItem("chosenPatient");
+        let filePath = patientId;
         let fileType = file.name.split(".")[1];
         let fileName = Date.now();
         let fileString = filePath + "/" + fileName + "." + fileType;
@@ -1217,24 +1214,30 @@ function uploadReport() {
                 let bodyCRObject = new Object();
                 bodyCRObject.$class = "org.oshealthrec.network.Report";
                 bodyCRObject.reportID = participantId + fileName;
-                bodyCRObject.date =
-                bodyCRObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
-                bodyCRObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+                bodyCRObject.date = new Date();
+                bodyCRObject.description = beschreibungInput.value;
+                bodyCRObject.ref_location = fileString;
+                bodyCRObject.title = titelInput.value;
+                bodyCRObject.owner = "resource:org.oshealthrec.network.Patient#" + patientId;
+                if (participantId.includes("D")) {
+                    bodyCRObject.uploadedby = "resource:org.oshealthrec.network.Doctor#" + participantId;
+                    bodyCRObject.uploadedForDr = "resource:org.oshealthrec.network.Doctor#" + participantId;
+                }
 
-                let bodyDAEJson = JSON.stringify(bodyDAEObject);
-                console.log(bodyDAEJson);
+                let bodyCRJson = JSON.stringify(bodyCRObject);
+                console.log(bodyCRJson);
 
-                // Füge den Employee zum Employee-Array des Doktors hinzu
-                const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_add_employee", {
+                // Erstelle den Report durch den Rest-Aufruf
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report", {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: bodyDAEJson
+                    body: bodyCRJson
                 });
-                const doctorAddEmployeeResponse = await response.json();
-                console.log(doctorAddEmployeeResponse);
+                const doctorCreateReportResponse = await response.json();
+                console.log(doctorCreateReportResponse);
 
             }
         );
