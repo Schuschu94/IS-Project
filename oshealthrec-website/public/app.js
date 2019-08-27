@@ -1172,11 +1172,10 @@ function uploadReport() {
     let fileName = Date.now();
     let fileString = filePath + "/" + fileName + "." + fileType;
 
-    console.log(fileString);
+    console.log(file);
 
-    // Hole Storage Reference
-    // let storage = firebase.storage();
-    // let storageRef = storage.ref();
+    // Erstelle Storage Reference
+    let storageRef = firebase.storage().ref(fileString);
 
 }
 /**
