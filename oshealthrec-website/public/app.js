@@ -1009,7 +1009,7 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
-        let config = JSON.parse(config);
+        let config = JSON.parse(firebaseConfig);
         console.log(config);
     }
 
