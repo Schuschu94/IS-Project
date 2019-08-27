@@ -1247,8 +1247,8 @@ async function withdrawDoctor(doctorId) {
     console.log(doctorDeletePatientResponse);
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
-    // sessionStorage.removeItem('patientProfil');
-    // location.reload();
+    sessionStorage.removeItem('patientProfil');
+    location.reload();
 }
 
 /**
