@@ -203,7 +203,7 @@ $(document).ready(async function () {
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
-                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='approveDoctor(\"" + doctor.personID + "\")'>Freigeben</button></td>" +
                 "</tr>";
 
             arztTabelle.append(appendString);
@@ -1192,6 +1192,62 @@ async function withdrawEmployee(employeeId) {
 
     // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('doktorProfil');
+    location.reload();
+}
+
+/**
+ * Erteilt dem übergebenen Arzt eine Freigabe für den aufrufenden Patienten
+ *
+ * @param doctorId
+ *   Id des Doktors
+ */
+async function approveDoctor(doctorId) {
+    let patientId = sessionStorage.getItem('participantId');
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyPADObject = new Object();
+    bodyPADObject.$class = "org.oshealthrec.network.patient_add_doctor";
+    bodyPADObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+    bodyPADObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
+
+    let bodyPADJSON = JSON.stringify(bodyPADObject);
+    console.log(bodyPADJSON);
+
+    // Füge den Doktor zum Doktor-Array des Patienten hinzu
+    const response = await fetch(serverIp + "/api/org.oshealthrec.network.patient_add_doctor", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyPADJson
+    });
+    const patientAddDoctorResponse = await response.json();
+    console.log(patientAddDoctorResponse);
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyDAPObject = new Object();
+    bodyDAPObject.$class = "org.oshealthrec.network.doctor_add_patient";
+    bodyDAPObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
+    bodyDAPObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+    let bodyDAPJson = JSON.stringify(bodyDAPObject);
+    console.log(bodyDAPJson);
+
+    // Füge den Patienten zum Patienten-Array des Doktors hinzu
+    const dapResponse = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_add_patient", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyDAPJson
+    });
+    const doctorAddPatientResponse = await dapResponse.json();
+    console.log(doctorAddPatientResponse);
+
+    // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
+    sessionStorage.removeItem('patientProfil');
     location.reload();
 }
 
