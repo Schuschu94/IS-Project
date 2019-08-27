@@ -1257,6 +1257,7 @@ function uploadReport() {
                     body: bodyARFPJson
                 });
                 const addReportForPatientResponse = await arfpResponse.json();
+                console.log(addReportForPatientResponse);
 
                 innerProgressbar.css('width', '100%').attr('aria-valuenow', "100");
 
