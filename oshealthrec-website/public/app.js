@@ -1156,7 +1156,8 @@ function filterTable(tableId, inputId, colNr) {
 }
 
 function uploadReport() {
-    let patientId = sessionStorage.getItem("chosenPatient")
+    let patientId = sessionStorage.getItem("chosenPatient");
+    let progressbar = $("#progressbar");
 
     // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
     let config = JSON.parse(firebaseConfig);
@@ -1177,6 +1178,7 @@ function uploadReport() {
     // Erstelle Storage Reference
     let storageRef = firebase.storage().ref(fileString);
 
+    progressbar.show();
 }
 /**
  * Fügt einen Mitarbeiter zum ausführenden Doktor hinzu
