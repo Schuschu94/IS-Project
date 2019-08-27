@@ -665,9 +665,10 @@ $(document).ready(async function () {
             window.location.href = "../index.html";
         }
 
-        // Hole Id des ausgewählten Patienten aus der URL
+        // Hole Id des ausgewählten Patienten aus der URL und schreibe sie in den SessionStorage
         let searchParams = new URLSearchParams(window.location.search);
         let patientId = searchParams.get('Id');
+        sessionStorage.setItem("chosenPatient", patientId);
 
         // Hole Patienten mit der übergebenen Id aus dem PatientenArray
         let patient = patientProfileArray.find(p => p.personID === patientId);
@@ -1003,14 +1004,12 @@ $(document).ready(async function () {
         // Hole Daten aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
+        let patientId = sessionStorage.getItem("chosenPatient");
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
         }
-
-        let config = JSON.parse(firebaseConfig);
-        console.log(config);
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
@@ -1156,6 +1155,36 @@ function filterTable(tableId, inputId, colNr) {
     }
 }
 
+function uploadReport() {
+    let patientId = sessionStorage.getItem("chosenPatient")
+
+    // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
+    let config = JSON.parse(firebaseConfig);
+    firebase.initializeApp(config);
+
+    // Hole hochzuladene Datei
+    let fileInput = document.getElementById('datei');
+    let file = fileInput.target.files[0];
+
+    // Erstelle Pfad zur Datei
+    let filePath = sessionStorage.getItem("chosenPatient");
+    let fileType = file.name.split(".")[1];
+    let fileName = Date.now();
+    let fileString = filePath + "/" + fileName + "." + fileType;
+
+    console.log(fileString);
+
+    // Hole Storage Reference
+    // let storage = firebase.storage();
+    // let storageRef = storage.ref();
+
+}
+/**
+ * Fügt einen Mitarbeiter zum ausführenden Doktor hinzu
+ *
+ * @param employeeId
+ *   Id des Mitarbeiters
+ */
 async function approveEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
 
