@@ -1189,11 +1189,30 @@ function uploadReport() {
             storage = firebase.storage();
         }
 
-        let storageRef = storage.ref(fileString);
-
         progressbar.removeClass("hidden");
+
+        // Lade Datei zu Firebase Storage hoch
+        let storageRef = storage.ref(fileString);
+        let task = storageRef.put(file);
+
+        // Zeige Fortschritt in der Progressbar
+        task.on('state_changed',
+            function progress(snapshot) {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 50;
+                progressbar.css('width', percentage + '%').attr('aria-valuenow' , percentage);
+            },
+            function error(err) {
+
+            },
+            function complete() {
+
+            }
+        );
+
+
     }
 }
+
 /**
  * Fügt einen Mitarbeiter zum ausführenden Doktor hinzu
  *
