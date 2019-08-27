@@ -1220,7 +1220,7 @@ async function approveDoctor(doctorId) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: bodyPADJson
+        body: bodyPADJSON
     });
     const patientAddDoctorResponse = await response.json();
     console.log(patientAddDoctorResponse);
@@ -1248,7 +1248,7 @@ async function approveDoctor(doctorId) {
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('patientProfil');
-    location.reload();
+    location.location.href = "/patient/freigaben.html";
 }
 
 /**
