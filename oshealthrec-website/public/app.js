@@ -995,6 +995,22 @@ $(document).ready(async function () {
 
             reportTabelle.append(appendString);
         });
+
+        /**************************************************************************************************************
+         * Wird nur auf der Seite doktor/hochladen.html ausgeführt
+         */
+    } else if (body.hasClass('doktor-hochladen')) {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+
+        let config = JSON.parse(config);
+        console.log(config);
     }
 
     // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
