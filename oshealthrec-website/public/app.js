@@ -82,7 +82,7 @@ $(document).ready(async function () {
         geschlecht.text(patientProfil.sex);
         geburtsdatum.text(patientProfil.birthday);
         blutgruppe.text(patientProfil.bloodType);
-        blutgruppe.text(patientProfil.emergency_contact);
+        notfallkontakt.text(patientProfil.emergency_contact);
 
         /**************************************************************************************************************
          * Wird nur auf der Seite mitarbeiter/profil.html ausgeführt
@@ -1247,8 +1247,8 @@ async function withdrawDoctor(doctorId) {
     console.log(doctorDeletePatientResponse);
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
-    sessionStorage.removeItem('patientProfil');
-    location.reload();
+    // sessionStorage.removeItem('patientProfil');
+    // location.reload();
 }
 
 /**
