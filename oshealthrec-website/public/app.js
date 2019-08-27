@@ -1225,7 +1225,6 @@ function uploadReport() {
                 }
 
                 let bodyCRJson = JSON.stringify(bodyCRObject);
-                console.log(bodyCRJson);
 
                 // Erstelle den Report durch den Rest-Aufruf
                 const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report", {
@@ -1237,9 +1236,30 @@ function uploadReport() {
                     body: bodyCRJson
                 });
                 const doctorCreateReportResponse = await response.json();
-                console.log(doctorCreateReportResponse);
+
+                innerProgressbar.css('width', '75%').attr('aria-valuenow', "75");
+
+                // Erstelle JSON Objekt für die Transaktion add_report_for_patient
+                let bodyARFPObject = new Object();
+                bodyARFPObject.$class = "org.oshealthrec.network.add_report_for_patient";
+                bodyARFPObject.report = "org.oshealthrec.network.Report#" + participantId + fileName;
+                bodyARFPObject.patient = "org.oshealthrec.network.Patient" + patientId;
+
+                let bodyARFPJson = JSON.stringify(bodyARFPObject);
+
+                // Füge den Report dem Patienten hinzu
+                const arfpResponse = await fetch(serverIp + "/api/org.oshealthrec.network.add_report_for_patient", {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: bodyARFPJson
+                });
+                const addReportForPatientResponse = await arfpResponse.json();
 
                 innerProgressbar.css('width', '100%').attr('aria-valuenow', "100");
+
                 window.location.href = "/doktor/patient.html?Id=" + patientId;
             }
         );
