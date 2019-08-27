@@ -1248,7 +1248,7 @@ async function approveDoctor(doctorId) {
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('patientProfil');
-    location.location.href = "/patient/freigaben.html";
+    window.location.href = "/patient/freigaben.html";
 }
 
 /**
