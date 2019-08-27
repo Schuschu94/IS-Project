@@ -1278,7 +1278,12 @@ function uploadReport() {
 
                 innerProgressbar.css('width', '100%').attr('aria-valuenow', "100");
 
-                window.location.href = "/doktor/patient.html?Id=" + patientId;
+                if (participantId.includes("D")) {
+                    window.location.href = "/doktor/patient.html?Id=" + patientId;
+                } else if (participantId.includes("E")) {
+                    window.location.href = "/mitarbeiter/patient.html?Id=" + patientId;
+                }
+
             }
         );
 
