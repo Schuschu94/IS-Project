@@ -1166,7 +1166,8 @@ function uploadReport() {
     } else {
         let storage;
         let patientId = sessionStorage.getItem("chosenPatient");
-        let progressbar = $("#progressbar");
+        let innerProgressbar = $("#innerProgressbar");
+        let outerProgressbar = $("#outerProgressbar");
 
         // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
         let config = JSON.parse(firebaseConfig);
@@ -1189,7 +1190,7 @@ function uploadReport() {
             storage = firebase.storage();
         }
 
-        progressbar.removeClass("hidden");
+        outerProgressbar.removeClass("hidden");
 
         // Lade Datei zu Firebase Storage hoch
         let storageRef = storage.ref(fileString);
@@ -1199,7 +1200,7 @@ function uploadReport() {
         task.on('state_changed',
             function progress(snapshot) {
                 let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 50;
-                progressbar.css('width', percentage + '%').attr('aria-valuenow' , percentage);
+                innerProgressbar.css('width', percentage + '%').attr('aria-valuenow' , percentage);
             },
             function error(err) {
 
