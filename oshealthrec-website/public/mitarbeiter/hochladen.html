@@ -11,7 +11,7 @@
 
     <title>OSHealthRec</title>
 </head>
-<body>
+<body class="mitarbeiter-hochladen">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
@@ -44,10 +44,13 @@
     <div class="row">
         <div class="col-sm-5">
             <form class="mt-3">
+                <div class="progress mb-3 hidden" id="outerProgressbar">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"  id="innerProgressbar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
                 <input type="file" class="form-control-file mb-2" id="datei">
                 <input type="text" class="form-control mb-2" id="titel" placeholder="Titel">
                 <input type="text" class="form-control mb-2" id="beschreibung" placeholder="Beschreibung">
-                <button type="button" class="btn btn-primary">Hochladen</button>
+                <button type="button" class="btn btn-primary" onclick="uploadReport()">Hochladen</button>
             </form>
         </div>
     </div>

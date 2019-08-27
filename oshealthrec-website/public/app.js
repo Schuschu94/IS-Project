@@ -767,6 +767,7 @@ $(document).ready(async function () {
         // Hole Id des ausgewählten Arztes aus der URL
         let searchParams = new URLSearchParams(window.location.search);
         let doctorId = searchParams.get('Id');
+        sessionStorage.setItem("doctorId", doctorId);
 
         // Hole Doktor mit der übergebenen Id aus dem DoctorArray
         let doktorProfil = doctorProfileArray.find(d => d.personID === doctorId);
@@ -1004,10 +1005,18 @@ $(document).ready(async function () {
         // Hole Daten aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
-        let patientId = sessionStorage.getItem("chosenPatient");
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
         if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+    } else if (body.hasClass('mitarbeiter-hochladen')) {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Employee") {
             window.location.href = "../index.html";
         }
     }
@@ -1155,6 +1164,11 @@ function filterTable(tableId, inputId, colNr) {
     }
 }
 
+/**
+ * Lädt die ausgewählte Datei hoch,
+ * erstellt einen Report in der Blockchain
+ * und fügt diesen Report zum Reports-Array des Patienten hinzu.
+ */
 function uploadReport() {
     // hole Daten aus dem SessionStorage
     let participantId = sessionStorage.getItem("participantId");
@@ -1222,6 +1236,9 @@ function uploadReport() {
                 if (participantId.includes("D")) {
                     bodyCRObject.uploadedby = "resource:org.oshealthrec.network.Doctor#" + participantId;
                     bodyCRObject.uploadedForDr = "resource:org.oshealthrec.network.Doctor#" + participantId;
+                } else if (participantId.includes("E")) {
+                    bodyCRObject.uploadedby = "resource:org.oshealthrec.network.Employee#" + participantId;
+                    bodyCRObject.uploadedForDr = "resource:org.oshealthrec.network.Doctor#" + sessionStorage.getItem("doctorId");
                 }
 
                 let bodyCRJson = JSON.stringify(bodyCRObject);
