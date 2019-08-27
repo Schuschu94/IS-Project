@@ -1243,7 +1243,7 @@ function uploadReport() {
                 let bodyARFPObject = new Object();
                 bodyARFPObject.$class = "org.oshealthrec.network.add_report_for_patient";
                 bodyARFPObject.report = "resource:org.oshealthrec.network.Report#" + participantId + fileName;
-                bodyARFPObject.patient = "resource:org.oshealthrec.network.Patient" + patientId;
+                bodyARFPObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
 
                 let bodyARFPJson = JSON.stringify(bodyARFPObject);
 
