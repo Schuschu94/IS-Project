@@ -1156,29 +1156,43 @@ function filterTable(tableId, inputId, colNr) {
 }
 
 function uploadReport() {
-    let patientId = sessionStorage.getItem("chosenPatient");
-    let progressbar = $("#progressbar");
-
-    // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
-    let config = JSON.parse(firebaseConfig);
-    firebase.initializeApp(config);
-
-    // Hole hochzuladene Datei
+    // hole InputFelder
     let fileInput = document.getElementById('datei');
-    let file = fileInput.files[0];
+    let titelInput = document.getElementById('titel');
+    let beschreibungInput = document.getElementById('beschreibung');
 
-    // Erstelle Pfad zur Datei
-    let filePath = sessionStorage.getItem("chosenPatient");
-    let fileType = file.name.split(".")[1];
-    let fileName = Date.now();
-    let fileString = filePath + "/" + fileName + "." + fileType;
+    if (fileInput.files.length == 0 || titelInput.value === "" || beschreibungInput.value === "") {
+        alert("Bitte alle Felder ausfüllen!")
+    } else {
+        let storage;
+        let patientId = sessionStorage.getItem("chosenPatient");
+        let progressbar = $("#progressbar");
 
-    console.log(fileString);
+        // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
+        let config = JSON.parse(firebaseConfig);
+        firebase.initializeApp(config);
 
-    // Erstelle Storage Reference
-    let storageRef = firebase.storage().ref(fileString);
+        // Hole hochzuladene Datei
 
-    progressbar.removeClass("hidden");
+        let file = fileInput.files[0];
+
+        // Erstelle Pfad zur Datei
+        let filePath = sessionStorage.getItem("chosenPatient");
+        let fileType = file.name.split(".")[1];
+        let fileName = Date.now();
+        let fileString = filePath + "/" + fileName + "." + fileType;
+
+        console.log(fileString);
+
+        // Erstelle Storage Reference
+        if (storage == null) {
+            storage = firebase.storage();
+        }
+
+        let storageRef = storage.ref(fileString);
+
+        progressbar.removeClass("hidden");
+    }
 }
 /**
  * Fügt einen Mitarbeiter zum ausführenden Doktor hinzu
