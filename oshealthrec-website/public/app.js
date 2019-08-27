@@ -865,6 +865,7 @@ $(document).ready(async function () {
         // Hole Id des ausgewählten Patienten aus der URL
         let searchParams = new URLSearchParams(window.location.search);
         let patientId = searchParams.get('Id');
+        sessionStorage.setItem("chosenPatient", patientId);
 
         // Hole Patienten mit der übergebenen Id aus dem PatientenArray
         let patient = patientProfileArray.find(p => p.personID === patientId);
