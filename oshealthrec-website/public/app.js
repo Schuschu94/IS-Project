@@ -538,7 +538,7 @@ $(document).ready(async function () {
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<td><input type=\"checkbox\" class=\"form-check-input bigger-checkbox\"></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='approveEmployee(\"" + employee.personID + "\")'>Hinzufügen</button></td>" +
                 "</tr>";
 
             mitarbeiterTabelle.append(appendString);
@@ -1138,6 +1138,55 @@ function filterTable(tableId, inputId, colNr) {
             }
         }
     }
+}
+
+async function approveEmployee(employeeId) {
+    let doctorId = sessionStorage.getItem('participantId');
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyDAEObject = new Object();
+    bodyDAEObject.$class = "org.oshealthrec.network.doctor_add_employee";
+    bodyDAEObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
+    bodyDAEObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+    let bodyDAEJson = JSON.stringify(bodyDAEObject);
+    console.log(bodyDAEJson);
+
+    // Füge den Employee zum Employee-Array des Doktors hinzu
+    const response = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_add_employee", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyDAEJson
+    });
+    const doctorAddEmployeeResponse = await response.json();
+    console.log(doctorAddEmployeeResponse);
+
+    // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
+    let bodyEADObject = new Object();
+    bodyEADObject.$class = "org.oshealthrec.network.employee_add_doctor";
+    bodyEADObject.employee = "resource:org.oshealthrec.network.Employee#" + employeeId;
+    bodyEADObject.doctor = "resource:org.oshealthrec.network.Doctor#" + doctorId;
+
+    let bodyEADJson = JSON.stringify(bodyEADObject);
+
+    // Füge den Doktor zum Doctor-Array des Mitarbeiters hinzu
+    const eadResponse = await fetch(serverIp + "/api/org.oshealthrec.network.employee_add_doctor", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: bodyEADJson
+    });
+    const employeeAddDoctorResponse = await eadResponse.json();
+    console.log(employeeAddDoctorResponse);
+
+    // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
+    sessionStorage.removeItem('doktorProfil');
+    window.location.href = "/doktor/mitarbeiter.html";
 }
 
 /**
