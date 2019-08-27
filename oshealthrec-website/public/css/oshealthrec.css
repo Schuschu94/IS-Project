@@ -9,3 +9,7 @@
 input.bigger-checkbox {
     transform: scale(1.5);
 }
+
+div.hidden {
+    display: none;
+}

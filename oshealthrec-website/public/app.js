@@ -1178,7 +1178,7 @@ function uploadReport() {
     // Erstelle Storage Reference
     let storageRef = firebase.storage().ref(fileString);
 
-    progressbar.show();
+    progressbar.removeClass("hidden");
 }
 /**
  * Fügt einen Mitarbeiter zum ausführenden Doktor hinzu
