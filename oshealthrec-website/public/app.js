@@ -1235,7 +1235,7 @@ async function withdrawDoctor(doctorId) {
     console.log(bodyDDPJson);
 
     // Lösche den Patienten aus dem Patienten-Array des Doktors
-    const ddeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_patient", {
+    const ddpResponse = await fetch(serverIp + "/api/org.oshealthrec.network.doctor_delete_patient", {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -1243,7 +1243,7 @@ async function withdrawDoctor(doctorId) {
         },
         body: bodyDDPJson
     });
-    const doctorDeletePatientResponse = await ddeResponse.json();
+    const doctorDeletePatientResponse = await ddpResponse.json();
     console.log(doctorDeletePatientResponse);
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
