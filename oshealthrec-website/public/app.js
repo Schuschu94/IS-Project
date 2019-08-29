@@ -994,7 +994,7 @@ $(document).ready(async function () {
                 "<td>" + report.description + "</td>" +
                 "<td>" + date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Herunterladen</button></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.reportID + "\")'>Herunterladen</button></td>" +
             "</tr>";
 
             reportTabelle.append(appendString);
@@ -1193,7 +1193,6 @@ function uploadReport() {
         firebase.initializeApp(config);
 
         // Hole hochzuladene Datei
-
         let file = fileInput.files[0];
 
         // Erstelle Pfad zur Datei
@@ -1293,7 +1292,32 @@ function uploadReport() {
     }
 }
 
-function downloadReport() {
+async function downloadReport(reportId) {
+    // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
+    let config = JSON.parse(firebaseConfig);
+    firebase.initializeApp(config);
+
+    // hole Daten aus dem SessionStorage
+    let participantId = sessionStorage.getItem("participantId");
+
+    let storage;
+
+    // Erstelle Storage Reference
+    if (storage == null) {
+        storage = firebase.storage();
+    }
+
+    // Hole Report aus der Blockchain
+    const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report/" + reportId, {
+        method: 'GET',
+        credentials: 'include'
+    });
+    let report = await response.json();
+    let reportJson = JSON.stringify(report);
+
+    let reportRef = storage.ref(reportJson.ref_location);
+
+    console.log(reportRef.getDownloadURL());
 
 }
 
