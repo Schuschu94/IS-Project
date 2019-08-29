@@ -744,6 +744,7 @@ $(document).ready(async function () {
             } else {
                 appendString += "<td>" + " " + "</td>" + "</tr>";
             }
+            appendString += "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>";
 
             reportTabelle.append(appendString);
         });
