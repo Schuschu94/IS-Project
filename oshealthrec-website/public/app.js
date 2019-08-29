@@ -938,10 +938,11 @@ $(document).ready(async function () {
                 "<td>" + date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>";
             if (sessionStorage.getItem("participantId") === doctorId) {
-                appendString += "<td>" + uploadedBy.givenname + " " + uploadedBy.surname + "</td>" + "</tr>";
+                appendString += "<td>" + uploadedBy.givenname + " " + uploadedBy.surname + "</td>";
             } else {
-                appendString += "<td>" + " " + "</td>" + "</tr>";
+                appendString += "<td>" + " " + "</td>";
             }
+            appendString += "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td></tr>";
 
             reportTabelle.append(appendString);
         });
