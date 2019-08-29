@@ -35,7 +35,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-4">
             <form>
@@ -46,32 +46,36 @@
             </form>
         </div>
         <div class="col-2">
-
         </div>
         <div class="col-6">
             <dl class="row">
-                <dt class="col-sm-3">Vorname</dt>
-                <dd class="col-sm-9" id="vorname"></dd>
+                <dt class="col-sm-4">Vorname</dt>
+                <dd class="col-sm-8" id="vorname"></dd>
 
-                <dt class="col-sm-3">Nachname</dt>
-                <dd class="col-sm-9" id="nachname"></dd>
+                <dt class="col-sm-4">Nachname</dt>
+                <dd class="col-sm-8" id="nachname"></dd>
 
-                <dt class="col-sm-3">Geschlecht</dt>
-                <dd class="col-sm-9" id="geschlecht"></dd>
+                <dt class="col-sm-4">Geschlecht</dt>
+                <dd class="col-sm-8" id="geschlecht"></dd>
 
-                <dt class="col-sm-3">Geburtsdatum</dt>
-                <dd class="col-sm-9" id="geburtsdatum"></dd>
+                <dt class="col-sm-4">Geburtsdatum</dt>
+                <dd class="col-sm-8" id="geburtsdatum"></dd>
 
-                <dt class="col-sm-3">Blutgruppe</dt>
-                <dd class="col-sm-9" id="blutgruppe"></dd>
+                <dt class="col-sm-4">Blutgruppe</dt>
+                <dd class="col-sm-8" id="blutgruppe"></dd>
 
-                <dt class="col-sm-3">Notfallkontakt</dt>
-                <dd class="col-sm-9" id="notfallkontakt"></dd>
+                <dt class="col-sm-4">Notfallkontakt</dt>
+                <dd class="col-sm-8" id="notfallkontakt"></dd>
             </dl>
+        </div>
+        <div class="col-sm-2">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary btn-block freigaben-button" onclick="window.location.href='/mitarbeiter/hochladen.html'">Hochladen</button>
+            </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-12">
             <table class="table table-hover mt-3">
                 <thead>
                 <tr>
@@ -87,12 +91,6 @@
 
                 </tbody>
             </table>
-        </div>
-        <div class="col-sm-3">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary mt-3 btn-block freigaben-button">Herunterladen</button> <br />
-                <button type="button" class="btn btn-primary btn-block freigaben-button" onclick="window.location.href='/mitarbeiter/hochladen.html'">Hochladen</button>
-            </form>
         </div>
     </div>
 </div>
