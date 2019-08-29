@@ -1318,9 +1318,8 @@ async function downloadReport(reportId) {
 
     let reportRef = storage.ref(report.ref_location);
 
-    console.log(reportRef.getDownloadURL());
     reportRef.getDownloadURL().then(function (url) {
-        console.log(url);
+        window.open(url);
     });
 
 }
