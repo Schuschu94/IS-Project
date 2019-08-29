@@ -79,12 +79,7 @@ rule PatientReadReport {
   participant(p): "org.oshealthrec.network.Patient"
   operation: READ
   resource(v): "org.oshealthrec.network.Report"
-  // Suche im Reports Array des Patienten nach dem Report
-  condition: (
-    p.reports.some(function (report) {
-        return report.getIdentifier() === v.getIdentifier();
-    })
-  )
+  condition: (v.owner.getIdentifier() == p.getIdentifier())
   action: ALLOW
 }
 
