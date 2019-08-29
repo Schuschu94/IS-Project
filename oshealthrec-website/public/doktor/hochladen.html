@@ -10,19 +10,6 @@
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
-
-    <script>
-        $(document).ready(function () {
-            // Hole Daten aus dem Session Storage
-            let participantId = sessionStorage.getItem("participantId");
-            let participantType = sessionStorage.getItem("participantType");
-
-            // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
-            if (participantType != "Doctor") {
-                window.location.href = "../index.html";
-            }
-        })
-    </script>
 </head>
 <body class="doktor-hochladen">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
@@ -84,5 +71,18 @@
 
 <script src="../app.js"></script>
 <script type="text/javascript" src="../firebaseConfig.json"></script>
+
+<script>
+    $(document).ready(function () {
+        // Hole Daten aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+        if (participantType != "Doctor") {
+            window.location.href = "../index.html";
+        }
+    });
+</script>
 </body>
 </html>

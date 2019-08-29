@@ -6,52 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
-
-    <script>
-        $(document).ready(async function () {
-            // Hole ID des Nutzers aus dem Session Storage
-            let participantId = sessionStorage.getItem("participantId");
-            let participantType = sessionStorage.getItem("participantType");
-
-            // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
-            if (participantType != "Patient") {
-                window.location.href = "../index.html";
-            }
-
-            // Hole Tabelle als jquery Variable
-            let arztTabelle = $('#arztTabelle');
-
-            // Rest Aufruf um alle Doktoren zu erhalten
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
-                method: 'GET',
-                credentials: 'include'
-            });
-            const doctorArray = await response.json();
-
-            // Gebe Informationen von allen Doktoren aus
-            doctorArray.forEach(function (doctor) {
-                let appendString = "<tr>" +
-                    "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
-                    "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
-                    "<td>" + doctor.medical_specialty + "</td>" +
-                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='approveDoctor(\"" + doctor.personID + "\")'>Freigeben</button></td>" +
-                    "</tr>";
-
-                arztTabelle.append(appendString);
-            });
-        })
-    </script>
 </head>
 <body class="patient-arzt-suche">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="profil.html">
         <img src="../images/OSHealthRec-Logo.png" alt="OSHealthRec Logo">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -82,8 +49,10 @@
     <div class="row">
         <div class="col-sm-5">
             <form>
-                <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterDoctorTable()" placeholder="Name">
-                <input type="text" class="form-control mb-2" id="inputAdresse" onkeyup="filterDoctorTable()" placeholder="Adresse">
+                <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterDoctorTable()"
+                       placeholder="Name">
+                <input type="text" class="form-control mb-2" id="inputAdresse" onkeyup="filterDoctorTable()"
+                       placeholder="Adresse">
             </form>
         </div>
     </div>
@@ -91,11 +60,11 @@
         <div class="col-sm-10">
             <table class="table table-hover mt-5">
                 <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Anschrift</th>
-                        <th scope="col">Arztbezeichnung</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Anschrift</th>
+                    <th scope="col">Arztbezeichnung</th>
+                </tr>
                 </thead>
                 <tbody id="arztTabelle">
 
@@ -108,10 +77,51 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 <script src="../app.js"></script>
+
+<script>
+    $(document).ready(async function () {
+        // Hole ID des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient") {
+            window.location.href = "../index.html";
+        }
+
+        // Hole Tabelle als jquery Variable
+        let arztTabelle = $('#arztTabelle');
+
+        // Rest Aufruf um alle Doktoren zu erhalten
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const doctorArray = await response.json();
+
+        // Gebe Informationen von allen Doktoren aus
+        doctorArray.forEach(function (doctor) {
+            let appendString = "<tr>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                "<td>" + doctor.medical_specialty + "</td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='approveDoctor(\"" + doctor.personID + "\")'>Freigeben</button></td>" +
+                "</tr>";
+
+            arztTabelle.append(appendString);
+        });
+    });
+</script>
 </body>
 </html>
