@@ -285,6 +285,15 @@ rule EmployeeDeleteDoctorTransaction {
   action: ALLOW
 }
 
+rule EmployeeDeleteDoctor {
+  description: "Allow Doctor to delete himself from the employee´s doctor array."
+  participant: "org.oshealthrec.network.Doctor"
+  operation: UPDATE
+  resource: "org.oshealthrec.network.Employee"
+  transaction: "org.oshealthrec.network.employee_delete_doctor"
+  action: ALLOW
+}
+
 // Regeln zum Erstellen eines Reports
 rule EmployeeCreateAsset {    
   description: "Allow employee to create a report Asset."    
