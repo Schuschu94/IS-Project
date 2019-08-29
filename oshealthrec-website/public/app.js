@@ -1199,7 +1199,7 @@ function uploadReport() {
         // Erstelle Pfad zur Datei
         let filePath = patientId;
         let fileType = file.name.split(".")[1];
-        let fileName = Date.now();
+        let fileName = participantId + Date.now();
         let fileString = filePath + "/" + fileName + "." + fileType;
 
         console.log(fileString);
@@ -1229,7 +1229,7 @@ function uploadReport() {
                 // Erstelle JSON Objekt zum Erstellen des Reports
                 let bodyCRObject = new Object();
                 bodyCRObject.$class = "org.oshealthrec.network.Report";
-                bodyCRObject.reportID = participantId + fileName;
+                bodyCRObject.reportID = fileName;
                 bodyCRObject.date = new Date();
                 bodyCRObject.description = beschreibungInput.value;
                 bodyCRObject.ref_location = fileString;
@@ -1291,6 +1291,10 @@ function uploadReport() {
 
 
     }
+}
+
+function downloadReport() {
+
 }
 
 /**
