@@ -64,6 +64,16 @@ rule DoctorDeletePatientTransaction {
   action: ALLOW
 }
 
+rule DoctorDeletePatient {
+  description: "Allow patient to delete himself from the doctor's patient array."
+  participant(p): "org.oshealthrec.network.Patient"
+  operation: UPDATE
+  resource(v): "org.oshealthrec.network.Doctor"
+  transaction(tx): "org.oshealthrec.network.doctor_Delete_patient"
+  condition: (tx.patient.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
 rule PatientReadReport {
   description: "Allow patient to read his own reports."
   participant(p): "org.oshealthrec.network.Patient"
