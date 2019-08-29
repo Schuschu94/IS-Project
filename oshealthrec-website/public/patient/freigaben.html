@@ -10,6 +10,105 @@
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
+
+    <script>
+        $(document).ready(async function () {
+            // Hole Daten aus dem Session Storage
+            let participantId = sessionStorage.getItem("participantId");
+            let participantType = sessionStorage.getItem("participantType");
+
+            // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+            if (participantType != "Patient") {
+                window.location.href = "../index.html";
+            }
+
+            // Hole Profil Daten des Patienten aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+            if (sessionStorage.getItem("patientProfil") == null) {
+                // Hole Profil Daten des Nutzers aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let profilJson = await response.json();
+
+                // Speichere Profil Daten im SessionStorage
+                let patientProfil = JSON.stringify(profilJson);
+                sessionStorage.setItem("patientProfil", patientProfil);
+            }
+
+            // Hole Patienten Profil aus dem SessionStorage
+            let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
+            // Hole Ärzte, denen der Patient eine Freigabe erteilt hat
+            let doctorArray = patientProfil.doctors;
+
+            // Hole Tabelle als jquery Variable
+            let arztTabelle = $('#arztTabelle');
+
+            // Falls nur ein Arzt eine Freigabe besitzt
+            if (doctorArray.length == 1) {
+                // Filter String um nach dem Dokter mit der doctorId zu suchen
+                let doctorId = doctorArray[0].split("#")[1];
+                let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
+
+                // Hole Doktor aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let doctorProfileArray = await response.json();
+                let doctor = doctorProfileArray[0];
+
+                // Gebe Informationen des Doktors aus
+                let appendString = "<tr>" +
+                    "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+                    "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                    "<td>" + doctor.medical_specialty + "</td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Berechtigung entziehen</button></td>" +
+                    "</tr>";
+                arztTabelle.append(appendString);
+
+                // Falls mehrere Ärzte eine Freigabe besitzen
+            } else if (doctorArray.length > 1) {
+                // Anfang des Filter Strings für mehrere Ärzte
+                let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
+                let firstDoctor = true;
+
+                // Füge alle IDs der Ärzte zum Filter String hinzu
+                doctorArray.forEach(function (doctor) {
+                    let doctorId = doctor.split("#")[1];
+                    if (firstDoctor) {
+                        // Beim ersten Arzt gibt es kein Komma am Anfang
+                        filterString += "%7B%22personID%22%3A%22" + doctorId + "%22%7D";
+                        firstDoctor = false;
+                    } else {
+                        // Bei den folgenden Ärzten gibt es ein Komma am Anfang
+                        filterString += "%2C%7B%22personID%22%3A%22" + doctorId + "%22%7D";
+                    }
+                });
+                // Füge abschließende Klammern zum Filter String hinzu
+                filterString += "%5D%7D%7D";
+
+                // Hole Profile aller Doktoren mit einer Freigabe aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let doctorProfileArray = await response.json();
+
+                // Gebe Daten für alle Ärzte aus
+                doctorProfileArray.forEach(function (doctor) {
+                    let appendString = "<tr>" +
+                        "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                        "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
+                        "<td>" + doctor.medical_specialty + "</td>" +
+                        "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctor.personID + "\")'>Berechtigung entziehen</button></td>" +
+                        "</tr>";
+
+                    arztTabelle.append(appendString);
+                })
+            }
+        })
+    </script>
 </head>
 <body class="patient-freigaben">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">

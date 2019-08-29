@@ -10,6 +10,104 @@
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
+
+    <script>
+        $(document).ready(async function () {
+            // Hole ID des Nutzers aus dem Session Storage
+            let participantId = sessionStorage.getItem("participantId");
+            let participantType = sessionStorage.getItem("participantType");
+
+            // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+            if (participantType != "Doctor") {
+                window.location.href = "../index.html";
+            }
+
+            // Hole Profil Daten des Doktors aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
+            if (sessionStorage.getItem("doktorProfil") == null) {
+                // Hole Profil Daten des Nutzers aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor/" + participantId, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let profilJson = await response.json();
+
+                // Speichere Profil Daten im SessionStorage
+                let doktorProfil = JSON.stringify(profilJson);
+                sessionStorage.setItem("doktorProfil", doktorProfil);
+            }
+            // Hole Doktor Profil aus dem SessionStorage
+            let doktorProfil = JSON.parse(sessionStorage.getItem("doktorProfil"));
+
+            // Hole MitarbeiterIDs des Doktors
+            let employeeArray = doktorProfil.employees;
+
+            // Hole Tabelle als jquery Variable
+            let mitarbeiterTabelle = $('#mitarbeiterTabelle');
+
+            // Falls nur ein Mitarbeiter vorhanden ist
+            if (employeeArray.length == 1) {
+                // Filter String um nach dem Mitarbeiter mit der employeeId zu suchen
+                let employeeId = employeeArray[0].split("#")[1];
+                let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + employeeId + "%22%7D%7D";
+
+                // Hole Mitarbeiter aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let employeeProfileArray = await response.json();
+                let employee = employeeProfileArray[0];
+
+                // Gebe Informationen des Doktors aus
+                let appendString = "<tr>" +
+                    "<td>" + employee.givenname + " " + employee.surname + "</td>" +
+                    "<td>" + employee.birthday + "</td>" +
+                    "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employeeId + "\")'>Berechtigung entziehen</button></td>" +
+                    "</tr>";
+                mitarbeiterTabelle.append(appendString);
+
+                // Falls mehrere Mitarbeiter vorhanden sind
+            } else if (employeeArray.length > 1) {
+                // Anfang des Filter Strings für mehrere Mitarbeiter
+                let filterString = "?filter=%7B%22where%22%3A%7B%22or%22%3A%5B";
+                let firstEmployee = true;
+
+                // Füge alle IDs der Mitarbeiter zum Filter String hinzu
+                employeeArray.forEach(function (employee) {
+                    let employeeId = employee.split("#")[1];
+                    if (firstEmployee) {
+                        // Beim ersten Mitarbeiter gibt es kein Komma am Anfang
+                        filterString += "%7B%22personID%22%3A%22" + employeeId + "%22%7D";
+                        firstEmployee = false;
+                    } else {
+                        // Bei den folgenden Mitarbeitern gibt es ein Komma am Anfang
+                        filterString += "%2C%7B%22personID%22%3A%22" + employeeId + "%22%7D";
+                    }
+                });
+                // Füge abschließende Klammern zum Filter String hinzu
+                filterString += "%5D%7D%7D";
+
+                // Hole Profile aller Mitarbeiter mit einer Freigabe aus der Blockchain
+                const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                let employeeProfileArray = await response.json();
+
+                // Gebe Daten für alle Mitarbeiter aus
+                employeeProfileArray.forEach(function (employee) {
+                    let appendString = "<tr>" +
+                        "<td>" + employee.givenname + " " + employee.surname + "</td>" +
+                        "<td>" + employee.birthday + "</td>" +
+                        "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employee.personID + "\")'>Berechtigung entziehen</button></td>" +
+                        "</tr>";
+
+                    mitarbeiterTabelle.append(appendString);
+                })
+
+            }
+        })
+    </script>
 </head>
 <body class="doktor-mitarbeiter">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">

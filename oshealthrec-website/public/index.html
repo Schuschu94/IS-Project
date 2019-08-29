@@ -10,6 +10,34 @@
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
+    <script>
+        $(document).ready(async function () {
+            // Ping Aufruf, um als Antwort den aufrufenden Participant zu erhalten
+            const response = await fetch(serverIp + "/api/system/ping", {
+                method: 'GET',
+                credentials: 'include'
+            });
+            let participantJson = await response.json();
+            let participantPath = participantJson.participant;
+
+            // Hole Typ und Id des Participants aus dem gesamten Pfad
+            let participantType = participantPath.split("network.")[1].split("#")[0];
+            let participantId = participantPath.split("network.")[1].split("#")[1];
+
+            // Speichere Infos im Session Storage
+            sessionStorage.setItem("participantType", participantType);
+            sessionStorage.setItem("participantId", participantId);
+
+            // Leite den Nutzer auf die entsprechende Seite weiter
+            if (participantType == 'Patient') {
+                window.location.href = "patient/profil.html";
+            } else if (participantType == 'Employee') {
+                window.location.href = "mitarbeiter/profil.html";
+            } else if (participantType == 'Doctor') {
+                window.location.href = "doktor/profil.html";
+            }
+        })
+    </script>
 </head>
 <body class="index">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 pb-5">
@@ -33,14 +61,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<!--&lt;!&ndash; Firebase App (the core Firebase SDK) is always required and must be listed first &ndash;&gt;-->
-<!--<script src="/__/firebase/6.3.4/firebase-app.js"></script>-->
-<!--&lt;!&ndash; Add Firebase products that you want to use &ndash;&gt;-->
-<!--<script src="/__/firebase/6.3.4/firebase-auth.js"></script>-->
-<!--&lt;!&ndash; Initialize Firebase &ndash;&gt;-->
-<!--<script src="/__/firebase/init.js"></script>-->
-
 
 <script src="app.js"></script>
 </body>

@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="../css/oshealthrec.css">
 
     <title>OSHealthRec</title>
+
+    <script>
+        $(document).ready(function () {
+            // Hole Daten aus dem Session Storage
+            let participantId = sessionStorage.getItem("participantId");
+            let participantType = sessionStorage.getItem("participantType");
+
+            // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
+            if (participantType != "Employee") {
+                window.location.href = "../index.html";
+            }
+        })
+    </script>
 </head>
 <body class="mitarbeiter-hochladen">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
