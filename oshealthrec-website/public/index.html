@@ -11,6 +11,8 @@
 
     <title>OSHealthRec</title>
     <script>
+        const serverIp = "http://34.67.49.75:3000";
+
         $(document).ready(async function () {
             // Ping Aufruf, um als Antwort den aufrufenden Participant zu erhalten
             const response = await fetch(serverIp + "/api/system/ping", {
