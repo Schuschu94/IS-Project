@@ -994,7 +994,7 @@ $(document).ready(async function () {
                 "<td>" + report.description + "</td>" +
                 "<td>" + date + "</td>" +
                 "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.reportID + "\")'>Herunterladen</button></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>" +
             "</tr>";
 
             reportTabelle.append(appendString);
@@ -1292,7 +1292,7 @@ function uploadReport() {
     }
 }
 
-async function downloadReport(reportId) {
+async function downloadReport(reportLink) {
     // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
     if (firebase.apps.length === 0) {
         let config = JSON.parse(firebaseConfig);
@@ -1309,14 +1309,7 @@ async function downloadReport(reportId) {
         storage = firebase.storage();
     }
 
-    // Hole Report aus der Blockchain
-    const response = await fetch(serverIp + "/api/org.oshealthrec.network.Report/" + reportId, {
-        method: 'GET',
-        credentials: 'include'
-    });
-    let report = await response.json();
-
-    let reportRef = storage.ref(report.ref_location);
+    let reportRef = storage.ref(reportLink);
 
     reportRef.getDownloadURL().then(function (url) {
         window.open(url);
