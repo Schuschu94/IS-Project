@@ -1294,8 +1294,10 @@ function uploadReport() {
 
 async function downloadReport(reportId) {
     // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
-    let config = JSON.parse(firebaseConfig);
-    firebase.initializeApp(config);
+    if (firebase.apps.length === 0) {
+        let config = JSON.parse(firebaseConfig);
+        firebase.initializeApp(config);
+    }
 
     // hole Daten aus dem SessionStorage
     let participantId = sessionStorage.getItem("participantId");
@@ -1314,6 +1316,7 @@ async function downloadReport(reportId) {
     });
     let report = await response.json();
     let reportJson = JSON.stringify(report);
+    console.log(reportJson);
 
     let reportRef = storage.ref(reportJson.ref_location);
 
