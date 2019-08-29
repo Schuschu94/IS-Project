@@ -1315,16 +1315,10 @@ async function downloadReport(reportId) {
         credentials: 'include'
     });
     let report = await response.json();
-    let reportJson = JSON.stringify(report);
 
-    console.log(report);
-    console.log(reportJson);
-    let location = report.ref_location;
+    let reportRef = storage.ref(report.ref_location);
 
-    console.log(location);
-
-    let reportRef = storage.ref(reportJson.ref_location);
-
+    console.log(reportRef.getDownloadURL());
     reportRef.getDownloadURL().then(function (url) {
         console.log(url);
     });
