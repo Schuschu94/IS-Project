@@ -993,7 +993,8 @@ $(document).ready(async function () {
                 "<td>" + report.title + "</td>" +
                 "<td>" + report.description + "</td>" +
                 "<td>" + date + "</td>" +
-                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>"
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctorId + "\")'>Herunterladen</button></td>" +
             "</tr>";
 
             reportTabelle.append(appendString);
