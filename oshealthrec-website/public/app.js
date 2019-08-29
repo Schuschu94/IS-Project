@@ -509,23 +509,3 @@ async function withdrawDoctor(doctorId) {
     sessionStorage.removeItem('patientProfil');
     location.reload();
 }
-
-/**
- * !!!Wird wahrscheinlich nicht mehr benötigt!!!
- *
- * Schreibt den Inhalt der Wallet des Nutzers in die Konsolle
- */
-async function checkWallet() {
-
-
-    // Rest Aufruf um die Wallet des Users zu erhalten
-    const response = await fetch(serverIp + "/api/wallet", {
-        method: 'GET',
-        credentials: 'include',
-    });
-    const myJson = await response.json(); //extract JSON from the http response
-
-    // Schreibe Inhalt der Wallet in die Konsole
-    console.log(myJson);
-
-}
