@@ -69,7 +69,7 @@ rule DoctorDeletePatient {
   participant(p): "org.oshealthrec.network.Patient"
   operation: UPDATE
   resource(v): "org.oshealthrec.network.Doctor"
-  transaction(tx): "org.oshealthrec.network.doctor_Delete_patient"
+  transaction(tx): "org.oshealthrec.network.doctor_delete_patient"
   condition: (tx.patient.getIdentifier() == p.getIdentifier())
   action: ALLOW
 }
