@@ -1317,6 +1317,8 @@ async function downloadReport(reportId) {
     let report = await response.json();
     let reportJson = JSON.stringify(report);
 
+    console.log(reportJson.ref_location);
+
     let reportRef = storage.ref(reportJson.ref_location);
 
     reportRef.getDownloadURL().then(function (url) {
