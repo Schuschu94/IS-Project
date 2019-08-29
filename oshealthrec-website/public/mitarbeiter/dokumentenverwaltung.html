@@ -87,22 +87,13 @@
             window.location.href = "../index.html";
         }
 
-        // Hole Profil Daten des Mitarbeiters aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
-        if (sessionStorage.getItem("mitarbeiterProfil") == null) {
-            // Hole Profil Daten des Nutzers aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
-                method: 'GET',
-                credentials: 'include'
-            });
-            let profilJson = await response.json();
+        // Hole Profil Daten des Nutzers aus der Blockchain
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee/" + participantId, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        let mitarbeiterProfil = await response.json();
 
-            // Speichere Profil Daten im SessionStorage
-            let mitarbeiterProfil = JSON.stringify(profilJson);
-            sessionStorage.setItem("mitarbeiterProfil", mitarbeiterProfil);
-        }
-
-        // Hole Mitarbeiter Profil aus dem SessionStorage
-        let mitarbeiterProfil = JSON.parse(sessionStorage.getItem("mitarbeiterProfil"));
         // Hole Ärzte, denen der Mitarbeiter zugeteilt ist
         let doctorArray = mitarbeiterProfil.doctors;
 

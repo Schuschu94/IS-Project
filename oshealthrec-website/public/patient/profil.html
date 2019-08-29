@@ -93,22 +93,12 @@
             window.location.href = "../index.html";
         }
 
-        // Hole Profil Daten des Patienten aus der Blockchain, falls sie nicht im Session Storage gespeichert sind.
-        if (sessionStorage.getItem("patientProfil") == null) {
-            // Hole Profil Daten des Nutzers aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
-                method: 'GET',
-                credentials: 'include'
-            });
-            let profilJson = await response.json();
-
-            // Speichere Profil Daten im SessionStorage
-            let patientProfil = JSON.stringify(profilJson);
-            sessionStorage.setItem("patientProfil", patientProfil);
-        }
-
-        // Hole Patienten Profil aus dem SessionStorage
-        let patientProfil = JSON.parse(sessionStorage.getItem("patientProfil"));
+        // Hole Profil Daten des Nutzers aus der Blockchain
+        const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient/" + participantId, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        let patientProfil = await response.json();
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
