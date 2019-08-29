@@ -14,7 +14,7 @@
   // Prüfe, ob der Doctor bereits hinzugefügt wurde
   let index = doctorArray.indexOf(pad.doctor);
   if (index > -1) {
-    alert('You have already added this doctor!');
+    return;
   }
   else {
     // Füge Doctor zum Doctors-Array hinzu
@@ -37,7 +37,7 @@ async function doctor_add_patient(dap){
   // Prüfe, ob der Patient bereits im Array ist.
   let index = patientArray.indexOf(dap.patient);
   if (index > -1) {
-    alert('You have already added this patient!');
+    return;
   }
   else {
     // Füge Patient zum Array hinzu
@@ -103,7 +103,7 @@ async function employee_add_doctor(ead) {
   // Prüfe, ob der Doctor bereits im Array vorhanden ist
   let index = doctorArray.indexOf(ead.doctor);
   if (index > -1) {
-    alert('You have already added this doctor!');
+    return;
   }
   else {
     // Füge Doctor zum Array hinzu
@@ -127,7 +127,7 @@ async function doctor_add_employee(dae){
   // Prüfe, ob der Employee bereits im Array ist
   let index = employeeArray.indexOf(dae.employee);
   if (index > -1) {
-    alert('You have already added this employee!');
+    return;
   }
   else {
     // Füge Employee zum Array hinzu
@@ -194,7 +194,7 @@ async function add_report_for_patient(arfp){
   // Prüfe, ob der Report bereits im Array vorhanden ist
   let index = reportArray.indexOf(arfp.doctor);
   if (index > -1) {
-    alert('You have already added this report!');
+    return;
   } else {
     // Füge Report dem Array hinzu
     arfp.patient.reports.push(arfp.report);
