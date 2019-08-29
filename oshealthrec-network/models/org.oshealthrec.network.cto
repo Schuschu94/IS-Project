@@ -14,7 +14,6 @@
 
 namespace org.oshealthrec.network
 
-
 // Definition der participants
 
 // abstract Person
@@ -47,15 +46,12 @@ o String zipcode
 o String call_number
 --> Patient[] patients
 --> Employee[] employees
-
-
 }
 
 // Employee
 participant Employee extends Person {
 --> Doctor[] doctors
 }
-
 
 // Definition der Assets
 
@@ -71,128 +67,7 @@ o String title
 --> Person uploadedForDr
 }
 
-
 // Defintion der transactions
-
-// Transactions zum Erstellen der participants und Assets
-/**
- * Erstellt einen neuen Patienten
- */
-transaction createPatient{
-o String personID
-o String birthday
-o String email
-o String givenname
-o String surname
-o String sex
-o String bloodType
-o String emergency_contact
-o String[] intolerances
---> Doctor[] doctors
---> Report[] reports
-}
-
-/**
- * Erstellt einen neuen Employee
- */
-transaction createEmployee{
-o String personID
-o String birthday
-o String email
-o String givenname
-o String surname
-o String sex
---> Doctor[] doctors
-}
-
-/**
- * Erstellt einen neuen Doctor
- */
-transaction createDoctor{
-o String personID
-o String title
-o String medical_specialty
-o String birthday
-o String email
-o String givenname
-o String surname
-o String sex
-o String street
-o String city 
-o String country 
-o String zipcode
-o String call_number
---> Patient[] patients
---> Employee[] employees
-}
-
-/**
- * Erstellt einen neuen Report
- */
-transaction create_report {
-o String reportID
-o DateTime date
-o String description
-o String ref_location
-o String title
---> Patient patient
---> Person uploadedby
---> Person uploadedForDr
-}
-
-
-// transactions bezüglich der Profile der participants
-/**
- * Gibt den aufrufenden Participant zurück.
- */
-@returns(Person)
-transaction getCurrentParticipant {
-}
-/**
- * Aktualisiert das Profil des patients
- */
-transaction patient_update_profile {
-  o String birthday
-  o String email
-  o String givenname
-  o String surname
-  o String sex
-  o String[] intolerances
-  o String bloodType
-  o String emergency_contact
-  --> Patient patient
-}
-
-/**
- * Aktualisiert das Profil des employees
- */
-transaction employee_update_profile {
-  o String birthday
-  o String email
-  o String givenname
-  o String surname
-  o String sex
-  --> Employee employee
-}
-
-/**
- * Aktualisiert das Profil des doctors
- */
-transaction doctor_update_profile {
-  o String title
-  o String medical_specialty
-  o String birthday
-  o String email
-  o String street
-  o String givenname
-  o String surname
-  o String sex
-  o String city
-  o String country
-  o String zipcode
-  o String call_number
-  --> Doctor doctor
-}
 
 // transactions um die Freigabe eines Patienten für einen Doctor zu erteilen
 /**
@@ -262,7 +137,6 @@ transaction doctor_delete_employee {
 --> Doctor doctor
 }
 
-
 // transactions zum Management der Reports
 /**
  * Fügt einen Report dem Reports-Array des Patienten hinzu
@@ -270,34 +144,4 @@ transaction doctor_delete_employee {
 transaction add_report_for_patient{
 --> Report report
 --> Patient patient
-}
-
-/**
- * Gibt die Reports eines Patienten zurück.
- */
- @returns(Report[])
-transaction get_reports_from_patient {
---> Patient patient
-}
-
-/**
- * Gibt den Report mit der reportID zurück.
- */
- @returns(Report)
-transaction get_report {
-o String reportID
-}
-
-/**
- * Gibt alle Reports zurück.
- */
-transaction get_all_reports {
-}
-
-/**
- * Gibt die Patienten zurück, die dem übergebenen Doctor eine Freigabe erteilt haben.
- */
- @returns(Patient[])
-transaction employee_get_patients_from_doctor {
---> Doctor doctor
 }

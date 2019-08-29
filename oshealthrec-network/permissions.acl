@@ -1,34 +1,8 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * Allgemeine Regeln
- */
- // Regel um seinen eigenen Participant zurück zu geben
- rule getCurrentParticipantTransaction {
-   description: "Allow participants to call getCurrentParticipant transaction."
-   participant: "org.oshealthrec.network.Person"
-   operation: CREATE
-   resource: "org.oshealthrec.network.getCurrentParticipant"
-   action: ALLOW
- }
-
 /**
  *Regeln die den Patienten betreffen.
  */
- // Lese-Berechtigungen des Patienten
-rule PatientReadOwn {
+ // Lese und Update Berechtigungen des Patienten
+rule PatientReadUpdateOwn {
   description: "Grant Patient READ access to own profil."
   participant(p): "org.oshealthrec.network.Patient"
   operation: READ, UPDATE
@@ -40,32 +14,13 @@ rule PatientReadOwn {
 rule PatientReadDoctor {
   description: "Allow patient to read and update doctor."
   participant: "org.oshealthrec.network.Patient"
-  operation: READ, UPDATE
+  operation: READ
   resource: "org.oshealthrec.network.Doctor"
   action: ALLOW
 }
 
-//Regeln um das Profil des Patienten zu aktualisieren
-rule PatientCreateProfilUpdateTransaction {    
-  description: "Allow patient to create patient_update_profile transaction."    
-  participant: "org.oshealthrec.network.Patient"    
-  operation: CREATE    
-  resource: "org.oshealthrec.network.patient_update_profile"    
-  action: ALLOW
-}
-
-rule PatientUpdateProfile {
-  description: "Allow patient to update his profile."    
-  participant(p): "org.oshealthrec.network.Patient"    
-  operation: UPDATE   
-  resource: "org.oshealthrec.network.Patient"    
-  transaction(tx): "org.oshealthrec.network.patient_update_profile"
-  condition: (tx.patient.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln um den Patienten zum Patienten-Array des Doctors hinzuzufügen
-rule DoctorAddPatient {
+rule DoctorAddPatientTransaction {
   description: "Allow patient create doctor_add_patient transaction."
   participant: "org.oshealthrec.network.Patient"
   operation: CREATE
@@ -73,7 +28,7 @@ rule DoctorAddPatient {
   action: ALLOW
 }
 
-rule PatientAddHimself {
+rule DoctorAddPatient {
   description: "Allow patient to write himself into the doctor's patient array."
   participant(p): "org.oshealthrec.network.Patient"
   operation: UPDATE
@@ -84,7 +39,7 @@ rule PatientAddHimself {
 }
 
 // Regeln um den Doctor zum Doctors-Array des Patienten hinzuzufügen
-rule PatientAddDoctor {
+rule PatientAddDoctorTransaction {
   description: "Allow patient create patient_add_doctor transaction."
   participant: "org.oshealthrec.network.Patient"
   operation: CREATE
@@ -92,18 +47,8 @@ rule PatientAddDoctor {
   action: ALLOW
 }
 
-rule PatientAddDoctorToArray {
-  description: "Allow patient to write Doctor into the patient´s doctor array."
-  participant(p): "org.oshealthrec.network.Patient"
-  operation: UPDATE
-  resource(v): "org.oshealthrec.network.Patient"
-  transaction(tx): "org.oshealthrec.network.patient_add_doctor"
-  condition: (tx.patient.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln um den Doctor aus dem Doctors-Array des Patienten zu entfernen
-rule PatientDeleteDoctor {
+rule PatientDeleteDoctorTransaction {
   description: "Allow patient create patient_delete_doctor transaction."
   participant: "org.oshealthrec.network.Patient"
   operation: CREATE
@@ -111,33 +56,13 @@ rule PatientDeleteDoctor {
   action: ALLOW
 }
 
-rule DoctorDeletePatient {
+rule DoctorDeletePatientTransaction {
   description: "Allow patient create doctor_delete_patient transaction."
   participant: "org.oshealthrec.network.Patient"
   operation: CREATE
   resource: "org.oshealthrec.network.doctor_delete_patient"
   action: ALLOW
 }
-
-rule DoctorDeletePatientFromArray {
-  description: "Allow patient to delete patient from the doctors patient array."
-  participant: "org.oshealthrec.network.Patient"
-  operation: UPDATE
-  resource: "org.oshealthrec.network.Doctor"
-  transaction: "org.oshealthrec.network.doctor_delete_patient"
-  action: ALLOW
-}
-
-rule PatientDeleteDoctorFromArray {
-  description: "Allow patient to delete Doctor from the patient´s doctor array."
-  participant(p): "org.oshealthrec.network.Patient"
-  operation: UPDATE
-  resource(v): "org.oshealthrec.network.Patient"
-  transaction(tx): "org.oshealthrec.network.patient_delete_doctor"
-  condition: (tx.patient.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 
 rule PatientReadReport {
   description: "Allow patient to read his own reports."
@@ -153,22 +78,21 @@ rule PatientReadReport {
   action: ALLOW
 }
 
-
 /**
  * Regeln die den Doctor betreffen.
  */
 
 // Lese-Berechtigungen des Doctors
 rule DoctorReadDoctors {
-  description: "Grant Doctor READ access all doctors."
+  description: "Grant Doctor READ access to all doctors."
   participant: "org.oshealthrec.network.Doctor"
   operation: READ
   resource: "org.oshealthrec.network.Doctor"
   action: ALLOW
 }
 
-rule DoctorUpdateOwnProfile {
-  description: "Grant Doctor Update access all doctors."
+rule DoctorUpdateOwn {
+  description: "Allow Doctor to update himself."
   participant(p): "org.oshealthrec.network.Doctor"
   operation: UPDATE
   resource(v): "org.oshealthrec.network.Doctor"
@@ -193,7 +117,7 @@ rule DoctorReadHisPatients {
 rule DoctorReadEmployee {
   description: "Allow doctor to read and update employee."
   participant: "org.oshealthrec.network.Doctor"
-  operation: READ, UPDATE
+  operation: READ
   resource: "org.oshealthrec.network.Employee"
   action: ALLOW
 }
@@ -212,27 +136,8 @@ rule DoctorReadReport {
   action: ALLOW
 }
 
-// Regeln um das Profil des Doctors zu aktualisieren
-rule DoctorCreateProfilUpdateTransaction {    
-  description: "Allow doctor to create doctor_update_profile transaction."    
-  participant: "org.oshealthrec.network.Doctor"    
-  operation: CREATE    
-  resource: "org.oshealthrec.network.doctor_update_profile"    
-  action: ALLOW
-}
-
-rule DoctorUpdateProfile {
-  description: "Allow doctor to update his profile."    
-  participant(p): "org.oshealthrec.network.Doctor"    
-  operation: UPDATE    
-  resource: "org.oshealthrec.network.Doctor"    
-  transaction(tx): "org.oshealthrec.network.doctor_update_profile"
-  condition: (tx.Doctor.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln um den Employee in das Employee-Array des Doctors zu schreiben
-rule DoctorAddEmployee {
+rule DoctorAddEmployeeTransaction {
   description: "Allow doctor to create doctor_add_employee transaction."
   participant: "org.oshealthrec.network.Doctor"
   operation: CREATE
@@ -240,18 +145,8 @@ rule DoctorAddEmployee {
   action: ALLOW
 }
 
-rule DoctorAddEmployeeToArray {
-  description: "Allow doctor to write employee into the doctors´s employee array."
-  participant(p): "org.oshealthrec.network.Doctor"
-  operation: UPDATE
-  resource(v): "org.oshealthrec.network.Doctor"
-  transaction(tx): "org.oshealthrec.network.doctor_add_employee"
-  condition: (tx.doctor.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln um den Employee aus dem Employee-Array des Doctors zu entfernen
-rule DoctorDeleteEmployee {
+rule DoctorDeleteEmployeeTransaction {
   description: "Allow doctor to create doctor_delete_employee transaction."
   participant: "org.oshealthrec.network.Doctor"
   operation: CREATE
@@ -259,41 +154,12 @@ rule DoctorDeleteEmployee {
   action: ALLOW
 }
 
-rule DoctorDeleteEmployeeFromArray {
-  description: "Allow doctor to delete employee from the doctors´s employee array."
-  participant(p): "org.oshealthrec.network.Doctor"
-  operation: UPDATE
-  resource(v): "org.oshealthrec.network.Doctor"
-  transaction(tx): "org.oshealthrec.network.doctor_delete_employee"
-  condition: (tx.doctor.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln um dem Doctor zu erlauben einen Report zu erstellen
-rule DoctorCreateReportAsset {    
-  description: "Allow doctor to create a report Asset."    
+rule DoctorCreateAsset {    
+  description: "Allow doctor to create an Asset."    
   participant: "org.oshealthrec.network.Doctor"    
   operation: CREATE    
   resource: "org.hyperledger.composer.system.AddAsset"    
-  action: ALLOW
-}
-
-rule DoctorCreateReportTransaction {    
-  description: "Allow doctor to create create_report transaction."    
-  participant(p): "org.oshealthrec.network.Doctor"    
-  operation: CREATE    
-  resource(v): "org.oshealthrec.network.create_report"
-  transaction(tx): "org.oshealthrec.network.create_report"
-  condition: (
-    // Prüfe, ob der Arzt sich selbst als "uploadedby" eingetragen hat
-    p.getIdentifier() === tx.uploadedby.getIdentifier() &&
-    // Prüfe, ob der Arzt sich selbst als "uploadedForDr" eingetragen hat
-    p.getIdentifier() === tx.uploadedForDr.getIdentifier &&
-    // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
-    p.patients.some(function (patient){
-      return patient.getIdentifier() === tx.patient.getIdentifier();
-    })
-  )
   action: ALLOW
 }
 
@@ -329,12 +195,11 @@ rule DoctorAddReportforPatient {
   action: ALLOW
 }
 
-
 /**
  * Regeln, die den Employee betreffen
  */
 // Lese-Berechtigungen des Employees
-rule EmployeeReadOwn {
+rule EmployeeReadUpdateOwn {
   description: "Grant Patient READ access to own profil."
   participant(p): "org.oshealthrec.network.Employee"
   operation: READ, UPDATE
@@ -342,22 +207,6 @@ rule EmployeeReadOwn {
   condition: (v.getIdentifier() == p.getIdentifier())
   action: ALLOW
 }
-
-/**
-rule EmployeeReadHisDoctors {
-  description: "Grant Employee READ access to his doctors profil."
-  participant(p): "org.oshealthrec.network.Employee"
-  operation: READ
-  resource(v): "org.oshealthrec.network.Doctor"
-  // Suche im employees Array des doctors nach dem employee
-  condition: (
-    v.employees.some(function (employee) {
-      return employee.getIdentifier() === p.getIdentifier();
-    })
-  )
-  action: ALLOW
-}
-*/
 
 rule EmployeeReadDoctor {
   description: "Allow employee to read doctor."
@@ -399,27 +248,8 @@ rule EmployeeReadReport {
   action: ALLOW
 }
 
-// Regeln zum Aktualisieren des Profils des Employees
-rule EmployeeCreateProfilUpdateTransaction {    
-  description: "Allow employee to create employee_update_profile transaction."    
-  participant: "org.oshealthrec.network.Employee"    
-  operation: CREATE    
-  resource: "org.oshealthrec.network.employee_update_profile"    
-  action: ALLOW
-}
-
-rule EmployeeUpdateProfile {
-  description: "Allow employee to update his profile."    
-  participant(p): "org.oshealthrec.network.Employee"    
-  operation: UPDATE    
-  resource: "org.oshealthrec.network.Employee"    
-  transaction(tx): "org.oshealthrec.network.employee_update_profile"
-  condition: (tx.employee.getIdentifier() == p.getIdentifier())
-  action: ALLOW
-}
-
 // Regeln zum Hinzufügen des Doctors zum Doctors-Array des Employees
-rule EmployeeAddDoctor {
+rule EmployeeAddDoctorTransaction {
   description: "Allow Doctor to create employee_add_doctor transaction."
   participant: "org.oshealthrec.network.Doctor"
   operation: CREATE
@@ -427,7 +257,7 @@ rule EmployeeAddDoctor {
   action: ALLOW
 }
 
-rule EmployeeAddDoctorToArray {
+rule EmployeeAddDoctor {
   description: "Allow Doctor to write himself into the employee´s doctor array."
   participant: "org.oshealthrec.network.Doctor"
   operation: UPDATE
@@ -437,7 +267,7 @@ rule EmployeeAddDoctorToArray {
 }
 
 // Regeln zum Entfernen des Doctors aus dem Doctors-Array des Employees
-rule EmployeeDeleteDoctor {
+rule EmployeeDeleteDoctorTransaction {
   description: "Allow Doctor to create employee_delete_doctor transaction."
   participant: "org.oshealthrec.network.Doctor"
   operation: CREATE
@@ -445,44 +275,12 @@ rule EmployeeDeleteDoctor {
   action: ALLOW
 }
 
-rule EmployeeDeleteDoctorFromArray {
-  description: "Allow Doctor to delete himself from the employee´s doctor array."
-  participant: "org.oshealthrec.network.Doctor"
-  operation: UPDATE
-  resource: "org.oshealthrec.network.Employee"
-  transaction: "org.oshealthrec.network.employee_delete_doctor"
-  action: ALLOW
-}
-
 // Regeln zum Erstellen eines Reports
-rule EmployeeCreateReportAsset {    
+rule EmployeeCreateAsset {    
   description: "Allow employee to create a report Asset."    
   participant: "org.oshealthrec.network.Employee"    
   operation: CREATE    
   resource: "org.hyperledger.composer.system.AddAsset"    
-  action: ALLOW
-}
-
-rule EmployeeCreateReportTransaction {    
-  description: "Allow employee to create create_report transaction."    
-  participant(p): "org.oshealthrec.network.Employee"    
-  operation: CREATE    
-  resource(v): "org.oshealthrec.network.create_report"  
-  transaction(tx): "org.oshealthrec.network.create_report"
-  condition: (
-    // Prüfe, ob der Employee sich selbst als "uploadedby" eingetragen hat
-    p.getIdentifier() === tx.uploadedby.getIdentifier() &&
-    // Prüfe, ob der Mitarbeiter die Berechtigung für den eingetragenen Arzt hat
-    p.doctors.some(function (doctor){
-      return doctor.getIdentifier() === tx.uploadedForDr.getIdentifier();
-    }) &&
-    // Prüfe, ob der Arzt die Berechtigung für den eingtragenen Patienten hat
-    p.doctors.some(function (doctor){
-      return doctor.patients.some(function (patient){
-        return patient.getIdentifier() === tx.patient.getIdentifier();
-      })
-    })
-  )  
   action: ALLOW
 }
 
@@ -519,7 +317,6 @@ rule EmployeeAddReportforPatient {
   )
   action: ALLOW
 }
-
 
 /**
  * System-Regeln
