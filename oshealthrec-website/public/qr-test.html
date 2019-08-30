@@ -14,6 +14,12 @@
         function readQrCode() {
             $('#reader').html5_qrcode(function (data) {
                 $('#display').text(data.toString());
+            },
+            function (error) {
+                $('#display').text(error.toString());
+            },
+            function (videoError) {
+                $('#display').text(videoError.toString());
             });
         }
 
