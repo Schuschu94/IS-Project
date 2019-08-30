@@ -53,3 +53,8 @@ sudo cp -a oshealthrec-website/public/. /var/www/html
 
 #Logout Rückführung zur Loginseite einrichten
 https://github.com/hyperledger/composer/issues/4387
+
+#Apache für HTTPs einrichten
+https://www.tecchannel.de/a/owncloud-9-unter-ubuntu-server-16-04-lts-installieren,3277807,2
+
+
