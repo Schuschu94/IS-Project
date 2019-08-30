@@ -48,8 +48,9 @@
             let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
             scanner.addListener('scan', function (content) {
                 console.log(content);
-                scanner.stop().then(function (content) {
-                    approveDoctor(content);
+                let drId = content;
+                scanner.stop().then(function () {
+                    approveDoctor(drId);
                 });
             });
             Instascan.Camera.getCameras().then(function (cameras) {
