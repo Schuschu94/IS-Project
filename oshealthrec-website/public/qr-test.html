@@ -2,41 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QR-Test</title>
-<!--    <script type="module">-->
-<!--        import adapter from 'webrtc-adapter';-->
-<!--    </script>-->
+    <title>Qr-Test</title>
+    <script type="text/javascript" src="js/instascan.min.js"></script>
 </head>
 <body>
-    <div id="reader" style="width:300px;height:250px;">
-    </div>
-    <button onclick="readQrCode()">Read Code</button>
-    <div id="display"></div>
 
-    <script type="text/javascript">
-        function readQrCode() {
-            $('#reader').html5_qrcode(function (data) {
-                $('#display').text(data.toString());
-            },
-            function (error) {
-                $('#display').text(error.toString());
-            },
-            function (videoError) {
-                $('#display').text(videoError.toString());
-            });
+<video id="preview"></video>
+<script type="text/javascript">
+    let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
         }
+    }).catch(function (e) {
+        console.error(e);
+    });
+</script>
 
-    </script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-
-<!--    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>-->
-    <script type="text/javascript"src="../node_modules/webrtc-adapter/out/adapter.js"></script>
-    <script type="text/javascript" src="js/html5-qrcode.min.js"></script>
-    <script type="text/javascript" src="js/jsqrcode-combined.min.js"></script>
 
 </body>
 </html>
