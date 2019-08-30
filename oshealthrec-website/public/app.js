@@ -264,16 +264,15 @@ function uploadReport() {
 }
 
 async function downloadReport(reportLink) {
-    // let firebase;
     // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
     // if (firebase == null) {
     //     let config = JSON.parse(firebaseConfig);
     //     firebase.initializeApp(config);
     // }
- // if (!firebase.apps.length) {
- //        let config = JSON.parse(firebaseConfig);
- //        firebase.initializeApp(config);
- //    }
+ if (firebase.apps.length === 0) {
+        let config = JSON.parse(firebaseConfig);
+        firebase.initializeApp(config);
+    }
 
     // hole Daten aus dem SessionStorage
     let participantId = sessionStorage.getItem("participantId");
