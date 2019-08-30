@@ -270,10 +270,10 @@ async function downloadReport(reportLink) {
     //     let config = JSON.parse(firebaseConfig);
     //     firebase.initializeApp(config);
     // }
- if (!firebase.apps.length) {
-        let config = JSON.parse(firebaseConfig);
-        firebase.initializeApp(config);
-    }
+ // if (!firebase.apps.length) {
+ //        let config = JSON.parse(firebaseConfig);
+ //        firebase.initializeApp(config);
+ //    }
 
     // hole Daten aus dem SessionStorage
     let participantId = sessionStorage.getItem("participantId");
