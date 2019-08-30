@@ -264,13 +264,13 @@ function uploadReport() {
 }
 
 async function downloadReport(reportLink) {
-    let firebase;
+    // let firebase;
     // Hole Firebase Config aus externer JSON Datei und initialisiere Firebase
     // if (firebase == null) {
     //     let config = JSON.parse(firebaseConfig);
     //     firebase.initializeApp(config);
     // }
- if (firebase.apps.length === 0) {
+ if (!firebase.apps.length) {
         let config = JSON.parse(firebaseConfig);
         firebase.initializeApp(config);
     }
