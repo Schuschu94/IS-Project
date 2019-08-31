@@ -41,46 +41,54 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-6 d-flex align-items-center">
-            <h3>Liste aller berechtigten Ärzte</h3>
-        </div>
-        <div class="col-sm-3">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary btn-block freigaben-button"
-                        onclick="window.location.href='/patient/arzt-suche.html'">Arzt suchen
-                </button>
-            </form>
-        </div>
-        <div class="col-sm-3">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary btn-block freigaben-button"
-                        onclick="window.location.href='/patient/scan-qr.html'">Freigabescan
-                </button>
-            </form>
+    <div class="col-12">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
-    <div class="row">
-
+</div>
+<div class="row">
+    <div class="col-sm-6 d-flex align-items-center">
+        <h3>Liste aller berechtigten Ärzte</h3>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-hover mt-3">
-                <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Anschrift</th>
-                    <th scope="col">Arztbezeichnung</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="arztTabelle">
-
-                </tbody>
-            </table>
-        </div>
-
+    <div class="col-sm-3">
+        <form class="form-group">
+            <button type="button" class="btn btn-primary btn-block freigaben-button"
+                    onclick="window.location.href='/patient/arzt-suche.html'">Arzt suchen
+            </button>
+        </form>
     </div>
+    <div class="col-sm-3">
+        <form class="form-group">
+            <button type="button" class="btn btn-primary btn-block freigaben-button"
+                    onclick="window.location.href='/patient/scan-qr.html'">Freigabescan
+            </button>
+        </form>
+    </div>
+</div>
+<div class="row">
+
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover mt-3">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Anschrift</th>
+                <th scope="col">Arztbezeichnung</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="arztTabelle">
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </div>
 
 
@@ -185,6 +193,10 @@
                 arztTabelle.append(appendString);
             })
         }
+
+        let spinner = $('#spinner');
+        spinner.addClass('hidden');
+
     });
 </script>
 </body>
