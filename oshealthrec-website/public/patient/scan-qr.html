@@ -56,35 +56,33 @@
 
 <div class="container-fluid">
     <div class="row align-items-center">
-        <div class="col">
-            <video id="preview"></video>
-            <div class="text-center">
-                <div class="spinner-border text-primary hidden" role="status" id="spinner">
-                    <span class="sr-only">Loading...</span>
-                </div>
+        <video id="preview"></video>
+        <div class="text-center">
+            <div class="spinner-border text-primary hidden" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
             </div>
-            <script type="text/javascript">
-                let spinner = $('#spinner');
-                let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
-                scanner.addListener('scan', function (content) {
-                    console.log(content);
-                    let drId = content;
-                    scanner.stop().then(function () {
-                        spinner.removeClass('hidden');
-                        approveDoctor(drId);
-                    });
-                });
-                Instascan.Camera.getCameras().then(function (cameras) {
-                    if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
-                    } else {
-                        console.error('No cameras found.');
-                    }
-                }).catch(function (e) {
-                    console.error(e);
-                });
-            </script>
         </div>
+        <script type="text/javascript">
+            let spinner = $('#spinner');
+            let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
+            scanner.addListener('scan', function (content) {
+                console.log(content);
+                let drId = content;
+                scanner.stop().then(function () {
+                    spinner.removeClass('hidden');
+                    approveDoctor(drId);
+                });
+            });
+            Instascan.Camera.getCameras().then(function (cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function (e) {
+                console.error(e);
+            });
+        </script>
     </div>
 </div>
 
