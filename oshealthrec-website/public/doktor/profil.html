@@ -43,6 +43,15 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status" id="spinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <dl class="row">
                 <dt class="col-sm-2">Vorname</dt>
                 <dd class="col-sm-10" id="vorname"></dd>
@@ -109,7 +118,10 @@
         geburtsdatum.text(doktorProfil.birthday);
         anschrift.html(doktorProfil.street + "<br />"
             + doktorProfil.zipcode + " " + doktorProfil.city + "<br />"
-            + doktorProfil.country)
+            + doktorProfil.country);
+
+        let spinner = $('#spinner');
+        spinner.addClass('hidden');
     });
 </script>
 </body>
