@@ -175,7 +175,7 @@
         let intolerancesString = "";
         let firstIntolerance = true;
         patient.intolerances.forEach(function (intolerance) {
-            if (!firstIntolerance) {
+            if (firstIntolerance != true) {
                 intolerancesString += ", ";
                 firstIntolerance = false;
             }
