@@ -50,6 +50,7 @@
     $(document).ready(async function () {
         let loggedIn = searchParams.get('loggedIn');
 
+        console.log(loggedIn);
 
         if (loggedIn) {
             $('github').attr("disabled", true);
