@@ -63,8 +63,6 @@
             const response = await fetch(serverIp + "/api/system/ping", {
                 method: 'GET',
                 credentials: 'include'
-            }).catch(function (error) {
-                window.location.href = "index.html";
             });
             let participantJson = await response.json();
             let participantPath = participantJson.participant;
