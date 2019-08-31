@@ -64,7 +64,7 @@
                 method: 'GET',
                 credentials: 'include'
             }).catch(function (error) {
-                console.log(error());
+                // console.log(error());
             });
             let participantJson = await response.json();
             let participantPath = participantJson.participant;
