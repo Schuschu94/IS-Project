@@ -54,7 +54,7 @@
         console.log(loggedIn);
 
         if (loggedIn) {
-            $('github').attr("disabled", true);
+            $('github').prop("disabled", true);
 
             let spinner = $('#spinner');
             spinner.removeClass('hidden');
