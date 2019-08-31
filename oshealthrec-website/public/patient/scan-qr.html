@@ -80,5 +80,18 @@
         crossorigin="anonymous"></script>
 
 <script src="app.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(async function () {
+        // Hole ID und Typ des Nutzers aus dem Session Storage
+        let participantId = sessionStorage.getItem("participantId");
+        let participantType = sessionStorage.getItem("participantType");
+
+        // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
+        if (participantType != "Patient") {
+            window.location.href = "../index.html";
+        }
+    });
+</script>
 </body>
 </html>
