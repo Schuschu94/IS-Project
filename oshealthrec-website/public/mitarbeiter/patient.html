@@ -39,6 +39,15 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status" id="spinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-4">
             <form>
                 <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
@@ -219,6 +228,9 @@
 
             reportTabelle.append(appendString);
         });
+
+        let spinner = $('#spinner');
+        spinner.addClass('hidden');
     });
 </script>
 </body>

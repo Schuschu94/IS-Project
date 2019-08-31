@@ -37,7 +37,16 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status" id="spinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <h3>Patientensuche</h3>
@@ -180,6 +189,9 @@
                 patientenTabelle.append(appendString);
             })
         }
+
+        let spinner = $('#spinner');
+        spinner.addClass('hidden');
 
         // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
         $(".clickable-row").click(function () {
