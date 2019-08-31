@@ -42,6 +42,13 @@
 
 <div class="container">
     <div class="row">
+        <div class="text-center">
+            <div class="spinner-border text-primary hidden" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12">
             <dl class="row">
                 <dt class="col-sm-2">Vorname</dt>
@@ -130,6 +137,8 @@
         intoleranzen.text(intolerancesString);
         blutgruppe.text(patientProfil.bloodType);
         notfallkontakt.text(patientProfil.emergency_contact);
+
+        spinner.removeClass('hidden');
     });
 </script>
 </body>
