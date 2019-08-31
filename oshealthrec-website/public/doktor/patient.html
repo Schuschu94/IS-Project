@@ -105,7 +105,7 @@
                     <th scope="col">Datum</th>
                     <th scope="col">Arzt</th>
                     <th scope="col">Hochgeladen von</th>
-                    <th></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody id="reportTabelle">
@@ -227,7 +227,7 @@
             } else {
                 appendString += "<td>" + " " + "</td>";
             }
-            appendString += "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td></tr>";
+            appendString += "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td></tr>";
 
             reportTabelle.append(appendString);
         });
