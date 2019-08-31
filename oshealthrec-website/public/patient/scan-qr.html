@@ -44,12 +44,19 @@
 <div class="container">
     <div class="row">
         <video id="preview"></video>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary hidden" role="status" id="spinner">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <script type="text/javascript">
+            let spinner = $('#spinner');
             let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
             scanner.addListener('scan', function (content) {
                 console.log(content);
                 let drId = content;
                 scanner.stop().then(function () {
+                    spinner.removeClass('hidden');
                     approveDoctor(drId);
                 });
             });
