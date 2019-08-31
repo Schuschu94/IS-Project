@@ -98,6 +98,8 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
             window.location.href = "../index.html";
