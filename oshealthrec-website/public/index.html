@@ -48,6 +48,7 @@
 
 <script>
     $(document).ready(async function () {
+        let searchParams = new URLSearchParams(window.location.search);
         let loggedIn = searchParams.get('loggedIn');
 
         console.log(loggedIn);
