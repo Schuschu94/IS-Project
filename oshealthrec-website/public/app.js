@@ -11,7 +11,7 @@ function logout() {
     Leite auf die Logout-Seite des Rest-Servers weiter.
     Dort werden die Cookies (z.B. der Token) gelöscht.
      */
-    window.location.replace("http://34.67.49.75:3000/auth/logout");
+    window.location.replace("https://34.67.49.75:3000/auth/logout");
 }
 
 /**
