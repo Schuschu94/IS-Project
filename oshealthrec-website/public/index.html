@@ -63,9 +63,10 @@
             const response = await fetch(serverIp + "/api/system/ping", {
                 method: 'GET',
                 credentials: 'include'
+            }).catch(function (error) {
+                console.log(error());
             });
             let participantJson = await response.json();
-            console.log(participantJson);
             let participantPath = participantJson.participant;
 
             // Hole Typ und Id des Participants aus dem gesamten Pfad
