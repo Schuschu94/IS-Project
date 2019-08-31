@@ -62,7 +62,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Geburtsdatum</th>
-                    <th></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody id="mitarbeiterTabelle">
@@ -135,7 +135,7 @@
             let appendString = "<tr>" +
                 "<td>" + employee.givenname + " " + employee.surname + "</td>" +
                 "<td>" + employee.birthday + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employeeId + "\")'>Berechtigung entziehen</button></td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary\" onclick='withdrawEmployee(\"" + employeeId + "\")'>Berechtigung entziehen</button></td>" +
                 "</tr>";
             mitarbeiterTabelle.append(appendString);
 
