@@ -55,13 +55,17 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="row align-items-center">
-        <video id="preview"></video>
-        <div class="text-center">
-            <div class="spinner-border text-primary hidden" role="status" id="spinner">
-                <span class="sr-only">Loading...</span>
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status" id="spinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <video id="preview"></video>
         <script type="text/javascript">
             let spinner = $('#spinner');
             let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
