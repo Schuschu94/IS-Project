@@ -112,12 +112,17 @@
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
 
+        let intolerancesString = "";
+        patientProfil.intolerances.forEach(function (intolerance) {
+            intolerancesString += intolerance;
+        });
+
         // Setz Werte der Textfelder
         vorname.text(patientProfil.givenname);
         nachname.text(patientProfil.surname);
         geschlecht.text(patientProfil.sex);
         geburtsdatum.text(patientProfil.birthday);
-        intoleranzen.text(patientProfil.intolerances);
+        intoleranzen.text(intolerancesString);
         blutgruppe.text(patientProfil.bloodType);
         notfallkontakt.text(patientProfil.emergency_contact);
     });
