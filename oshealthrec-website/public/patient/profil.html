@@ -113,7 +113,12 @@
         let notfallkontakt = $('#notfallkontakt');
 
         let intolerancesString = "";
+        let firstIntolerance = true;
         patientProfil.intolerances.forEach(function (intolerance) {
+            if (!firstIntolerance) {
+                intolerancesString += ", ";
+                firstIntolerance = false;
+            }
             intolerancesString += intolerance;
         });
 
