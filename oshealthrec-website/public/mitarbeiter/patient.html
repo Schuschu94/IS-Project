@@ -48,6 +48,39 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-10">
+            <dl class="row">
+                <dt class="col-sm-2">Vorname</dt>
+                <dd class="col-sm-10" id="vorname"></dd>
+
+                <dt class="col-sm-2">Nachname</dt>
+                <dd class="col-sm-10" id="nachname"></dd>
+
+                <dt class="col-sm-2">Geschlecht</dt>
+                <dd class="col-sm-10" id="geschlecht"></dd>
+
+                <dt class="col-sm-2">Geburtsdatum</dt>
+                <dd class="col-sm-10" id="geburtsdatum"></dd>
+
+                <dt class="col-sm-2">Intoleranzen</dt>
+                <dd class="col-sm-10" id="intoleranzen"></dd>
+
+                <dt class="col-sm-2">Blutgruppe</dt>
+                <dd class="col-sm-10" id="blutgruppe"></dd>
+
+                <dt class="col-sm-2">Notfallkontakt</dt>
+                <dd class="col-sm-10" id="notfallkontakt"></dd>
+            </dl>
+        </div>
+        <div class="col-sm-2">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary btn-block freigaben-button"
+                        onclick="window.location.href='/mitarbeiter/hochladen.html'">Hochladen
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-4">
             <form>
                 <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
@@ -57,37 +90,7 @@
                 <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()"
                        placeholder="Datum">
                 <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon" onkeyup="filterReportTable()"
-                       placeholder="Hochgeladen von">
-            </form>
-        </div>
-        <div class="col-1">
-        </div>
-        <div class="col-5">
-            <dl class="row">
-                <dt class="col-sm-4">Vorname</dt>
-                <dd class="col-sm-8" id="vorname"></dd>
-
-                <dt class="col-sm-4">Nachname</dt>
-                <dd class="col-sm-8" id="nachname"></dd>
-
-                <dt class="col-sm-4">Geschlecht</dt>
-                <dd class="col-sm-8" id="geschlecht"></dd>
-
-                <dt class="col-sm-4">Geburtsdatum</dt>
-                <dd class="col-sm-8" id="geburtsdatum"></dd>
-
-                <dt class="col-sm-4">Blutgruppe</dt>
-                <dd class="col-sm-8" id="blutgruppe"></dd>
-
-                <dt class="col-sm-4">Notfallkontakt</dt>
-                <dd class="col-sm-8" id="notfallkontakt"></dd>
-            </dl>
-        </div>
-        <div class="col-sm-2">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary btn-block freigaben-button"
-                        onclick="window.location.href='/mitarbeiter/hochladen.html'">Hochladen
-                </button>
+                       placeholder="Arzt">
             </form>
         </div>
     </div>
@@ -100,8 +103,9 @@
                     <th scope="col">Titel</th>
                     <th scope="col">Beschreibung</th>
                     <th scope="col">Datum</th>
+                    <th scope="col">Arzt</th>
                     <th scope="col">Hochgeladen von</th>
-                    <th></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody id="reportTabelle">
@@ -158,15 +162,27 @@
         let nachname = $('#nachname');
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
+        let intoleranzen = $('#intoleranzen');
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
-        let reportTabelle = $('#reportTabelle');
+        let reportTabelle = $('#reportTabelle')
+
+        let intolerancesString = "";
+        let firstIntolerance = true;
+        patient.intolerances.forEach(function (intolerance) {
+            if (firstIntolerance != true) {
+                intolerancesString += ", ";
+                firstIntolerance = false;
+            }
+            intolerancesString += intolerance;
+        });
 
         // Setz Werte der Textfelder
         vorname.text(patient.givenname);
         nachname.text(patient.surname);
         geschlecht.text(patient.sex);
         geburtsdatum.text(patient.birthday);
+        intoleranzen.text(intolerancesString);
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
 
