@@ -65,6 +65,7 @@
                 credentials: 'include'
             });
             let participantJson = await response.json();
+            console.log(participantJson);
             let participantPath = participantJson.participant;
 
             // Hole Typ und Id des Participants aus dem gesamten Pfad
