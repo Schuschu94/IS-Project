@@ -42,6 +42,15 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status" id="spinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-5">
             <form>
                 <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
@@ -102,6 +111,8 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
             window.location.href = "../index.html";
@@ -148,6 +159,8 @@
 
             reportTabelle.append(appendString);
         });
+
+        spinner.addClass('hidden');
     });
 </script>
 </body>
