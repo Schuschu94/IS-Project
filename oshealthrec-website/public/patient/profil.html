@@ -56,6 +56,9 @@
                 <dt class="col-sm-2">Geburtsdatum</dt>
                 <dd class="col-sm-10" id="geburtsdatum"></dd>
 
+                <dt class="col-sm-2">Intoleranzen</dt>
+                <dd class="col-sm-10" id="intoleranzen"></dd>
+
                 <dt class="col-sm-2">Blutgruppe</dt>
                 <dd class="col-sm-10" id="blutgruppe"></dd>
 
@@ -105,14 +108,16 @@
         let nachname = $('#nachname');
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
+        let intoleranzen = $('#intoleranzen');
         let blutgruppe = $('#blutgruppe');
-        let notfallkontakt = $('#notfallkontakt')
+        let notfallkontakt = $('#notfallkontakt');
 
         // Setz Werte der Textfelder
         vorname.text(patientProfil.givenname);
         nachname.text(patientProfil.surname);
         geschlecht.text(patientProfil.sex);
         geburtsdatum.text(patientProfil.birthday);
+        intoleranzen.text(patientProfil.intolerances);
         blutgruppe.text(patientProfil.bloodType);
         notfallkontakt.text(patientProfil.emergency_contact);
     });
