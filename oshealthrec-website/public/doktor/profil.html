@@ -62,6 +62,9 @@
                 <dt class="col-sm-2">Nachname</dt>
                 <dd class="col-sm-10" id="nachname"></dd>
 
+                <dt class="col-sm-2">Fachrbereich</dt>
+                <dd class="col-sm-10" id="fachbereich"></dd>
+
                 <dt class="col-sm-2">Geschlecht</dt>
                 <dd class="col-sm-10" id="geschlecht"></dd>
 
@@ -113,10 +116,12 @@
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
         let anschrift = $('#anschrift');
+        let fachbereich =$('#fachbereich');
 
         // Setz Werte der Textfelder
         vorname.text(doktorProfil.givenname);
         nachname.text(doktorProfil.surname);
+        fachbereich.text(doktorProfil.medical_specialty);
         geschlecht.text(doktorProfil.sex);
         geburtsdatum.text(doktorProfil.birthday);
         anschrift.html(doktorProfil.street + "<br />"
