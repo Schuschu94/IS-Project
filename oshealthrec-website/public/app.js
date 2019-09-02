@@ -268,9 +268,6 @@ async function downloadReport(reportLink) {
         firebase.initializeApp(config);
     }
 
-    // hole Daten aus dem SessionStorage
-    let participantId = sessionStorage.getItem("participantId");
-
     let storage;
 
     // Erstelle Storage Reference

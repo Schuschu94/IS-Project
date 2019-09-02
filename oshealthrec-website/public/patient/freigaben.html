@@ -41,6 +41,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -113,6 +116,9 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+        let alertDiv = $('#alert');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
             window.location.href = "../index.html";
@@ -124,6 +130,12 @@
             credentials: 'include'
         });
         let patientProfil = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(response);
+        }
 
         // Hole Ärzte, denen der Patient eine Freigabe erteilt hat
         let doctorArray = patientProfil.doctors;
@@ -138,12 +150,18 @@
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
 
             // Hole Doktor aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+            const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorProfileArray = await response.json();
+            let doctorProfileArray = await doctorResponse.json();
             let doctor = doctorProfileArray[0];
+
+            if (doctorResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(response);
+            }
 
             // Gebe Informationen des Doktors aus
             let appendString = "<tr>" +
@@ -180,7 +198,13 @@
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorProfileArray = await response.json();
+            let doctorProfileArray = await doctorResponse.json();
+
+            if (doctorResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(response);
+            }
 
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
@@ -195,7 +219,6 @@
             })
         }
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
 
     });
