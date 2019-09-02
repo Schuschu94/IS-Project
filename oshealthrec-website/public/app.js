@@ -295,6 +295,9 @@ async function downloadReport(reportLink) {
 async function approveEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
 
+    let spinner = $('#spinner');
+    spinner.removeClass('hidden');
+
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDAEObject = new Object();
     bodyDAEObject.$class = "org.oshealthrec.network.doctor_add_employee";
@@ -336,6 +339,8 @@ async function approveEmployee(employeeId) {
     const employeeAddDoctorResponse = await eadResponse.json();
     console.log(employeeAddDoctorResponse);
 
+    spinner.addClass('hidden');
+
     // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('doktorProfil');
     window.location.href = "/doktor/mitarbeiter.html";
@@ -349,6 +354,9 @@ async function approveEmployee(employeeId) {
  */
 async function withdrawEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
+
+    let spinner = $('#spinner');
+    spinner.removeClass('hidden');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDDEObject = new Object();
@@ -390,6 +398,8 @@ async function withdrawEmployee(employeeId) {
     });
     const employeeDeleteDoctorResponse = await ddeResponse.json();
     console.log(employeeDeleteDoctorResponse);
+
+    spinner.addClass('hidden');
 
     // Lösche das doktorProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('doktorProfil');
