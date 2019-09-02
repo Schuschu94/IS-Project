@@ -41,7 +41,7 @@
 </nav>
 
 <div class="container">
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
         Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
     </div>
     <div class="row">
@@ -104,6 +104,7 @@
         let participantType = sessionStorage.getItem("participantType");
 
         let spinner = $('#spinner');
+        let alertDiv = $('#alert');
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
@@ -116,6 +117,10 @@
             credentials: 'include'
         });
         let patientProfil = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+        }
 
         // Hole Textfelder als jquery Variable
         let vorname = $('#vorname');
