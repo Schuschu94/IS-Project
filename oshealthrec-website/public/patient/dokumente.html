@@ -41,6 +41,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -112,6 +115,7 @@
         let participantType = sessionStorage.getItem("participantType");
 
         let spinner = $('#spinner');
+        let alertDiv = $('#alert');
 
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Patienten handelt
         if (participantType != "Patient") {
@@ -128,6 +132,12 @@
         });
         const doctorArray = await doctorResponse.json();
 
+        if (doctorResponse.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(doctorResponse);
+        }
+
         /*
         Rest Aufruf um alle Reports des Patienten zu erhalten.
         Aufgrund der Regeln in der Blockchain werden hier nur die Reports zurückgegeben, die dem Aufrufer zugeordnet sind.
@@ -136,7 +146,13 @@
             method: 'GET',
             credentials: 'include'
         });
-        const reportArray = await response.json(); //extract JSON from the http response
+        const reportArray = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(doctorResponse);
+        }
 
         // Gebe Informationen von allen Reports aus
         reportArray.forEach(function (report) {
