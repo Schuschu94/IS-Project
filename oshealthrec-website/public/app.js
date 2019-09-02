@@ -413,6 +413,8 @@ async function approveDoctor(doctorId) {
     let patientId = sessionStorage.getItem('participantId');
 
     let spinner = $('#spinner');
+    let alertDiv = $('#alert');
+
     spinner.removeClass('hidden');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
@@ -422,7 +424,6 @@ async function approveDoctor(doctorId) {
     bodyPADObject.patient = "resource:org.oshealthrec.network.Patient#" + patientId;
 
     let bodyPADJSON = JSON.stringify(bodyPADObject);
-    console.log(bodyPADJSON);
 
     // Füge den Doktor zum Doktor-Array des Patienten hinzu
     const response = await fetch(serverIp + "/api/org.oshealthrec.network.patient_add_doctor", {
@@ -434,8 +435,12 @@ async function approveDoctor(doctorId) {
         body: bodyPADJSON
     });
     const patientAddDoctorResponse = await response.json();
-    console.log(patientAddDoctorResponse);
 
+    if (response.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(response);
+    }
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDAPObject = new Object();
     bodyDAPObject.$class = "org.oshealthrec.network.doctor_add_patient";
@@ -455,7 +460,12 @@ async function approveDoctor(doctorId) {
         body: bodyDAPJson
     });
     const doctorAddPatientResponse = await dapResponse.json();
-    console.log(doctorAddPatientResponse);
+
+    if (dapResponse.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(dapResponse);
+    }
 
     spinner.addClass('hidden');
 
@@ -474,6 +484,8 @@ async function withdrawDoctor(doctorId) {
     let patientId = sessionStorage.getItem('participantId');
 
     let spinner = $('#spinner');
+    let alertDiv = $('#alert');
+
     spinner.removeClass('hidden');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
@@ -495,7 +507,12 @@ async function withdrawDoctor(doctorId) {
         body: bodyPDDJson
     });
     const patientDeleteDoctorResponse = await response.json();
-    console.log(patientDeleteDoctorResponse);
+
+    if (response.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(response);
+    }
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDDPObject = new Object();
@@ -516,8 +533,12 @@ async function withdrawDoctor(doctorId) {
         body: bodyDDPJson
     });
     const doctorDeletePatientResponse = await ddpResponse.json();
-    console.log(doctorDeletePatientResponse);
 
+    if (ddpResponse.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(ddpResponse);
+    }
     spinner.addClass('hidden');
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
