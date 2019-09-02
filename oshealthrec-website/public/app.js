@@ -405,6 +405,9 @@ async function withdrawEmployee(employeeId) {
 async function approveDoctor(doctorId) {
     let patientId = sessionStorage.getItem('participantId');
 
+    let spinner = $('#spinner');
+    spinner.removeClass('hidden');
+
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyPADObject = new Object();
     bodyPADObject.$class = "org.oshealthrec.network.patient_add_doctor";
@@ -446,6 +449,8 @@ async function approveDoctor(doctorId) {
     });
     const doctorAddPatientResponse = await dapResponse.json();
     console.log(doctorAddPatientResponse);
+
+    spinner.addClass('hidden');
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('patientProfil');
