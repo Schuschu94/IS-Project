@@ -189,11 +189,11 @@
             filterString += "%5D%7D%7D";
 
             // Hole Profile aller Patienten mit einer Freigabe aus der Blockchain
-            const patientRespone = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+            const patientResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let patientProfileArray = await patientRespone.json();
+            let patientProfileArray = await patientResponse.json();
 
             if (patientResponse.status != 200) {
                 alertDiv.removeClass('hidden');
