@@ -461,6 +461,9 @@ async function approveDoctor(doctorId) {
 async function withdrawDoctor(doctorId) {
     let patientId = sessionStorage.getItem('participantId');
 
+    let spinner = $('#spinner');
+    spinner.removeClass('hidden');
+
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyPDDObject = new Object();
     bodyPDDObject.$class = "org.oshealthrec.network.patient_delete_doctor";
@@ -502,6 +505,8 @@ async function withdrawDoctor(doctorId) {
     });
     const doctorDeletePatientResponse = await ddpResponse.json();
     console.log(doctorDeletePatientResponse);
+
+    spinner.addClass('hidden');
 
     // Lösche das patientProfil aus dem SessionStorage, damit dieses nach dem Reload aktualisiert wird.
     sessionStorage.removeItem('patientProfil');
