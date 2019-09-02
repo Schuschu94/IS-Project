@@ -173,7 +173,7 @@
         let reportTabelle = $('#reportTabelle');
 
         let intolerancesString = "";
-        let firstIntolerance = true;
+        let firstIntolerance = new Boolean(true);
         patient.intolerances.forEach(function (intolerance) {
             if (firstIntolerance != true) {
                 intolerancesString += ", ";

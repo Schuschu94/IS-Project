@@ -51,8 +51,6 @@
         let searchParams = new URLSearchParams(window.location.search);
         let loggedIn = searchParams.get('loggedIn');
 
-        console.log(loggedIn);
-
         if (loggedIn) {
             $('#github').prop("disabled",true);
 
