@@ -38,6 +38,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -102,6 +105,9 @@
         let doctorProfileArrayJSON = sessionStorage.getItem("doctorProfileArray");
         let doctorProfileArray = JSON.parse(doctorProfileArrayJSON);
 
+        let alertDiv = $('#alert');
+        let spinner = $('#spinner');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Mitarbeiter handelt
         if (participantType != "Employee") {
             window.location.href = "../index.html";
@@ -133,6 +139,12 @@
                 credentials: 'include'
             });
             let patientProfileArray = await response.json();
+
+            if (response.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(response);
+            }
 
             // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
             let patientProfileArrayJson = JSON.stringify(patientProfileArray);
@@ -175,6 +187,12 @@
             });
             let patientProfileArray = await response.json();
 
+            if (response.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(response);
+            }
+
             // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
             let patientProfileArrayJson = JSON.stringify(patientProfileArray);
             sessionStorage.setItem("patientProfileArray", patientProfileArrayJson);
@@ -190,7 +208,6 @@
             })
         }
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
 
         // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen

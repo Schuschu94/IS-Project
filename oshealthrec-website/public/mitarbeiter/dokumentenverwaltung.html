@@ -38,6 +38,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -91,6 +94,9 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let alertDiv = $('#alert');
+        let spinner = $('#spinner');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Mitarbeiter handelt
         if (participantType != "Employee") {
             window.location.href = "../index.html";
@@ -102,6 +108,12 @@
             credentials: 'include'
         });
         let mitarbeiterProfil = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(response);
+        }
 
         // Hole Ärzte, denen der Mitarbeiter zugeteilt ist
         let doctorArray = mitarbeiterProfil.doctors;
@@ -116,11 +128,17 @@
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + doctorId + "%22%7D%7D";
 
             // Hole Doktor aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+            const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorProfileArray = await response.json();
+            let doctorProfileArray = await doctorResponse.json();
+
+            if (doctorResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(doctorResponse);
+            }
 
             // Schreibe Array mit allen Ärzten des Mitarbeiters in den SessionStorage
             let doctorProfileArrayJson = JSON.stringify(doctorProfileArray);
@@ -158,11 +176,17 @@
             filterString += "%5D%7D%7D";
 
             // Hole Profile aller Ärzte, denen der Mitarbeiter zugeteilt ist, aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+            const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let doctorProfileArray = await response.json();
+            let doctorProfileArray = await doctorResponse.json();
+
+            if (doctorResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(doctorResponse);
+            }
 
             // Schreibe Array mit allen Ärzten des Mitarbeiters in den SessionStorage
             let doctorProfileArrayJson = JSON.stringify(doctorProfileArray);
@@ -180,7 +204,6 @@
             })
         }
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
 
         // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen
