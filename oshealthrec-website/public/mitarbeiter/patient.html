@@ -167,14 +167,15 @@
         let notfallkontakt = $('#notfallkontakt');
         let reportTabelle = $('#reportTabelle')
 
+        // Auflisten der einzelnen Intolerances in einem String
         let intolerancesString = "";
         let firstIntolerance = true;
         patient.intolerances.forEach(function (intolerance) {
-            if (firstIntolerance != true) {
+            if (!firstIntolerance) {
                 intolerancesString += ", ";
-                firstIntolerance = false;
             }
             intolerancesString += intolerance;
+            firstIntolerance = false;
         });
 
         // Setz Werte der Textfelder
