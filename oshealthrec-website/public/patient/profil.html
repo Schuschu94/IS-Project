@@ -123,14 +123,15 @@
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
 
+        // Auflisten der einzelnen Intolerances in einem String
         let intolerancesString = "";
         let firstIntolerance = true;
-        patientProfil.intolerances.forEach(function (intolerance) {
+        patient.intolerances.forEach(function (intolerance) {
             if (!firstIntolerance) {
                 intolerancesString += ", ";
-                firstIntolerance = false;
             }
             intolerancesString += intolerance;
+            firstIntolerance = false;
         });
 
         // Setz Werte der Textfelder
