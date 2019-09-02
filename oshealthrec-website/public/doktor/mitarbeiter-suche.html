@@ -44,6 +44,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -106,6 +109,11 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+        let alertDiv = $('#alert');
+
+
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Doktor handelt
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
@@ -119,7 +127,13 @@
             method: 'GET',
             credentials: 'include'
         });
-        const employeeArray = await response.json(); //extract JSON from the http response
+        const employeeArray = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(response);
+        }
 
         // Gebe Informationen von allen Mitarbeitern aus
         employeeArray.forEach(function (employee) {
@@ -132,7 +146,6 @@
             mitarbeiterTabelle.append(appendString);
         });
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
     });
 </script>

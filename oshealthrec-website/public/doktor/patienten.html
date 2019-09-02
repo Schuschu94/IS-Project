@@ -44,6 +44,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -105,6 +108,9 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+        let alertDiv = $('#alert');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
@@ -116,6 +122,12 @@
             credentials: 'include'
         });
         let doktorProfil = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(response);
+        }
 
         // Hole PatientenIDs des Doktors
         let patientArray = doktorProfil.patients;
@@ -130,11 +142,17 @@
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + patientId + "%22%7D%7D";
 
             // Hole Patienten aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+            const patientResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let patientProfileArray = await response.json();
+            let patientProfileArray = await patientResponse.json();
+
+            if (patientResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(patientResponse);
+            }
 
             // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
             let patientProfileArrayJson = JSON.stringify(patientProfileArray);
@@ -171,11 +189,17 @@
             filterString += "%5D%7D%7D";
 
             // Hole Profile aller Patienten mit einer Freigabe aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
+            const patientRespone = await fetch(serverIp + "/api/org.oshealthrec.network.Patient" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let patientProfileArray = await response.json();
+            let patientProfileArray = await patientRespone.json();
+
+            if (patientResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(patientResponse);
+            }
 
             // Schreibe Array mit allen Patienten des Doktors in den SessionStorage
             let patientProfileArrayJson = JSON.stringify(patientProfileArray);
@@ -192,7 +216,6 @@
             })
         }
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
 
         // Funktion um ganze Reihe einer Tabelle als Link klickbar zu machen

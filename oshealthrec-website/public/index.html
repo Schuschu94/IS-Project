@@ -17,6 +17,9 @@
 
 </nav>
 <div class="container">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -55,6 +58,8 @@
             $('#github').prop("disabled",true);
 
             let spinner = $('#spinner');
+            let alertDiv = $('#alert');
+
             spinner.removeClass('hidden');
 
             // Ping Aufruf, um als Antwort den aufrufenden Participant zu erhalten
@@ -64,6 +69,12 @@
             });
             let participantJson = await response.json();
             let participantPath = participantJson.participant;
+
+            if (response.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(response);
+            }
 
             // Hole Typ und Id des Participants aus dem gesamten Pfad
             let participantType = participantPath.split("network.")[1].split("#")[0];

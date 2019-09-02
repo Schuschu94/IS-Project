@@ -44,6 +44,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="alert alert-danger hidden" role="alert" id="alert">
+        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="text-center">
@@ -102,6 +105,9 @@
         let participantId = sessionStorage.getItem("participantId");
         let participantType = sessionStorage.getItem("participantType");
 
+        let spinner = $('#spinner');
+        let alertDiv = $('#alert');
+
         // Leite Nutzer zurück auf die Startseite, wenn es sich nicht um einen Arzt handelt
         if (participantType != "Doctor") {
             window.location.href = "../index.html";
@@ -113,6 +119,12 @@
             credentials: 'include'
         });
         let doktorProfil = await response.json();
+
+        if (response.status != 200) {
+            alertDiv.removeClass('hidden');
+            spinner.addClass('hidden');
+            console.log(response);
+        }
 
         // Hole MitarbeiterIDs des Doktors
         let employeeArray = doktorProfil.employees;
@@ -127,12 +139,18 @@
             let filterString = "?filter=%7B%22where%22%3A%7B%22personID%22%3A%22" + employeeId + "%22%7D%7D";
 
             // Hole Mitarbeiter aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+            const employeeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let employeeProfileArray = await response.json();
+            let employeeProfileArray = await employeeResponse.json();
             let employee = employeeProfileArray[0];
+
+            if (employeeResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(employeeResponse);
+            }
 
             // Gebe Informationen des Doktors aus
             let appendString = "<tr>" +
@@ -164,11 +182,17 @@
             filterString += "%5D%7D%7D";
 
             // Hole Profile aller Mitarbeiter mit einer Freigabe aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
+            const employeeResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Employee" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
-            let employeeProfileArray = await response.json();
+            let employeeProfileArray = await employeeResponse.json();
+
+            if (employeeResponse.status != 200) {
+                alertDiv.removeClass('hidden');
+                spinner.addClass('hidden');
+                console.log(employeeResponse);
+            }
 
             // Gebe Daten für alle Mitarbeiter aus
             employeeProfileArray.forEach(function (employee) {
@@ -183,7 +207,6 @@
 
         }
 
-        let spinner = $('#spinner');
         spinner.addClass('hidden');
     });
 </script>

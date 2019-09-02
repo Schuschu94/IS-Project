@@ -151,6 +151,8 @@ function uploadReport() {
     let titelInput = document.getElementById('titel');
     let beschreibungInput = document.getElementById('beschreibung');
 
+    let alertDiv = $('#alert');
+
     if (fileInput.files.length == 0 || titelInput.value === "" || beschreibungInput.value === "") {
         alert("Bitte alle Felder ausfüllen!")
     } else {
@@ -226,6 +228,11 @@ function uploadReport() {
                 });
                 const doctorCreateReportResponse = await response.json();
 
+                if (response.status != 200) {
+                    alertDiv.removeClass('hidden');
+                    console.log(response);
+                }
+
                 innerProgressbar.css('width', '75%').attr('aria-valuenow', "75");
 
                 // Erstelle JSON Objekt für die Transaktion add_report_for_patient
@@ -246,7 +253,11 @@ function uploadReport() {
                     body: bodyARFPJson
                 });
                 const addReportForPatientResponse = await arfpResponse.json();
-                console.log(addReportForPatientResponse);
+
+                if (arfpResponse.status != 200) {
+                    alertDiv.removeClass('hidden');
+                    console.log(arfpResponse);
+                }
 
                 innerProgressbar.css('width', '100%').attr('aria-valuenow', "100");
 
@@ -293,6 +304,8 @@ async function approveEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
 
     let spinner = $('#spinner');
+    let alertDiv = $('#alert');
+
     spinner.removeClass('hidden');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
@@ -314,7 +327,12 @@ async function approveEmployee(employeeId) {
         body: bodyDAEJson
     });
     const doctorAddEmployeeResponse = await response.json();
-    console.log(doctorAddEmployeeResponse);
+
+    if (response.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(response);
+    }
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyEADObject = new Object();
@@ -334,7 +352,12 @@ async function approveEmployee(employeeId) {
         body: bodyEADJson
     });
     const employeeAddDoctorResponse = await eadResponse.json();
-    console.log(employeeAddDoctorResponse);
+
+    if (eadResponse.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(eadResponse);
+    }
 
     spinner.addClass('hidden');
 
@@ -353,6 +376,8 @@ async function withdrawEmployee(employeeId) {
     let doctorId = sessionStorage.getItem('participantId');
 
     let spinner = $('#spinner');
+    let alertDiv = $('#alert');
+
     spinner.removeClass('hidden');
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
@@ -374,7 +399,12 @@ async function withdrawEmployee(employeeId) {
         body: bodyDDEJson
     });
     const doctorDeleteEmployeeResponse = await response.json();
-    console.log(doctorDeleteEmployeeResponse);
+
+    if (response.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(response);
+    }
 
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyEDDObject = new Object();
@@ -394,7 +424,12 @@ async function withdrawEmployee(employeeId) {
         body: bodyEDDJson
     });
     const employeeDeleteDoctorResponse = await ddeResponse.json();
-    console.log(employeeDeleteDoctorResponse);
+
+    if (ddeResponse.status != 200) {
+        alertDiv.removeClass('hidden');
+        spinner.addClass('hidden');
+        console.log(ddeResponse);
+    }
 
     spinner.addClass('hidden');
 
@@ -441,6 +476,7 @@ async function approveDoctor(doctorId) {
         spinner.addClass('hidden');
         console.log(response);
     }
+
     // Erstelle JSON Objekt, dass an den Rest Server übertragen wird
     let bodyDAPObject = new Object();
     bodyDAPObject.$class = "org.oshealthrec.network.doctor_add_patient";
