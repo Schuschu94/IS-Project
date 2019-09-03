@@ -38,6 +38,7 @@ function filterDoctorTable() {
     // Rufe die einzelnen Filter-Funktionen auf
     filterTable("arztTabelle", "inputName", 0);
     filterTable("arztTabelle", "inputAdresse", 1);
+    filterTable("arztTabelle", "inputArztbezeichnung", 2);
 }
 
 /**
