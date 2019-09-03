@@ -194,7 +194,7 @@
             filterString += "%5D%7D%7D";
 
             // Hole Profile aller Doktoren mit einer Freigabe aus der Blockchain
-            const response = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
+            const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor" + filterString, {
                 method: 'GET',
                 credentials: 'include'
             });
