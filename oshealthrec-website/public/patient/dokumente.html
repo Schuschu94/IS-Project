@@ -159,30 +159,31 @@
 
         console.log(reportArray);
 
-        var $table = $('#reportTabelle');
-        $table.bootstrapTable('load', reportArray);
+        // var $table = $('#reportTabelle');
+        // $table.bootstrapTable('load', reportArray);
 
         // Gebe Informationen von allen Reports aus
-        // reportArray.forEach(function (report) {
-        //     // Hole Id des Doktors, der den Report hochgeladen hat
-        //     let doctorId = report.uploadedForDr.split('Doctor#')[1];
-        //
-        //     // Hole Doktor mit der übergebenen Id aus dem DoktorArray
-        //     let doctor = doctorArray.find(d => d.personID === doctorId);
-        //
-        //     let date = report.date.split('T')[0];
-        //
-        //     let appendString = "<tr>" +
-        //         "<td>" + report.reportID + "</td>" +
-        //         "<td>" + report.title + "</td>" +
-        //         "<td>" + report.description + "</td>" +
-        //         "<td>" + date + "</td>" +
-        //         "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
-        //         "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>" +
-        //         "</tr>";
-        //
-        //     reportTabelle.append(appendString);
-        // });
+        reportArray.forEach(function (report) {
+            // Hole Id des Doktors, der den Report hochgeladen hat
+            let doctorId = report.uploadedForDr.split('Doctor#')[1];
+
+            // Hole Doktor mit der übergebenen Id aus dem DoktorArray
+            let doctor = doctorArray.find(d => d.personID === doctorId);
+
+            let date = report.date.split('T')[0];
+
+            let appendString = "<tr>" +
+                "<td>" + report.reportID + "</td>" +
+                "<td>" + report.title + "</td>" +
+                "<td>" + report.description + "</td>" +
+                "<td>" + date + "</td>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>" +
+                "</tr>";
+
+            reportTabelle.bootstrapTable('append', appendString);
+            // reportTabelle.append(appendString);
+        });
 
         spinner.addClass('hidden');
     });
