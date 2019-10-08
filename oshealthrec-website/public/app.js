@@ -1,4 +1,4 @@
-const serverIp = "https://35.192.104.75:3000";
+const serverIp = "https://35.236.13.28:3000";
 
 /**
  * Loggt den aktuellen Nutzer aus.
