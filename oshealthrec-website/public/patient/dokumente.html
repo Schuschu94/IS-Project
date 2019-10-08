@@ -160,7 +160,7 @@
         console.log(reportArray);
 
         var $table = $('#reportTabelle');
-        $table.bootstrapTable({data: reportArray});
+        $table.bootstrapTable('load', reportArray);
 
         // Gebe Informationen von allen Reports aus
         // reportArray.forEach(function (report) {
