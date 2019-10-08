@@ -143,10 +143,9 @@
                 arztbezeichnung: doctor.medical_specialty,
                 button: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctor.personID + "\")'>Berechtigung entziehen</button>"
             });
-
-            arztTabelle.bootstrapTable('load', tableData);
         });
 
+        arztTabelle.bootstrapTable('load', tableData);
 
         spinner.addClass('hidden');
     });
