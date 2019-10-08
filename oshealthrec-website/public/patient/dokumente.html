@@ -79,7 +79,7 @@
                     <th scope="col" data-field="description" data-sortable="true">Beschreibung</th>
                     <th scope="col" data-field="date" data-sortable="true">Datum</th>
                     <th scope="col" data-field="uploadedForDr" data-sortable="true">Hochgeladen von</th>
-                    <th scope="col"></th>
+                    <th scope="col" data-field="download"></th>
                 </tr>
                 </thead>
 <!--                <tbody id="reportTabelle">-->
@@ -162,6 +162,8 @@
         // var $table = $('#reportTabelle');
         // $table.bootstrapTable('load', reportArray);
 
+        let tableData = [];
+
         // Gebe Informationen von allen Reports aus
         reportArray.forEach(function (report) {
             // Hole Id des Doktors, der den Report hochgeladen hat
@@ -172,18 +174,28 @@
 
             let date = report.date.split('T')[0];
 
-            let appendString = "<tr>" +
-                "<td>" + report.reportID + "</td>" +
-                "<td>" + report.title + "</td>" +
-                "<td>" + report.description + "</td>" +
-                "<td>" + date + "</td>" +
-                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>" +
-                "</tr>";
+            tableData.push({
+                reportID: report.reportID,
+                title: report.title,
+                description: report.description,
+                date: date,
+                uploadedForDr: doctor.title + " " + doctor.givenname + " " + doctor.surname,
+                download: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button>"
+            });
 
-            reportTabelle.bootstrapTable('append', appendString);
+            // let appendString = "<tr>" +
+            //     "<td>" + report.reportID + "</td>" +
+            //     "<td>" + report.title + "</td>" +
+            //     "<td>" + report.description + "</td>" +
+            //     "<td>" + date + "</td>" +
+            //     "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
+            //     "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='downloadReport(\"" + report.ref_location + "\")'>Herunterladen</button></td>" +
+            //     "</tr>";
+
+
             // reportTabelle.append(appendString);
         });
+        reportTabelle.bootstrapTable('load', tableData);
 
         spinner.addClass('hidden');
     });
