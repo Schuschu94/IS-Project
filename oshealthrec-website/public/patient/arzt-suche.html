@@ -141,7 +141,7 @@
                 name: doctor.givenname + " " + doctor.surname,
                 anschrift: doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country,
                 arztbezeichnung: doctor.medical_specialty,
-                button: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawDoctor(\"" + doctor.personID + "\")'>Berechtigung entziehen</button>"
+                button: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='approveDoctor(\"" + doctor.personID + "\")'>Hinzufügen</button>"
             });
         });
 

@@ -138,10 +138,11 @@
 
         // Gebe Informationen von allen Mitarbeitern aus
         employeeArray.forEach(function (employee) {
+
             tableData.push({
                 name: employee.givenname + " " + employee.surname,
                 geburtsdatum: employee.birthday,
-                button: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employee.personID + "\")'>Berechtigung entziehen</button>"
+                button: "<button type=\"button\" class=\"btn btn-outline-primary\" onclick='approveEmployee(\"" + employee.personID + "\")'>Hinzufügen</button>"
             });
         });
 
