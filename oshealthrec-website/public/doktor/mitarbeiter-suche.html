@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/oshealthrec.css">
@@ -73,17 +74,14 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <table class="table table-hover mt-5">
+            <table id="mitarbeiterTabelle" class="table table-hover mt-5" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Geburtsdatum</th>
-                    <th scope="col"></th>
+                    <th scope="col" data-field="name" data-sortable="true">Name</th>
+                    <th scope="col" data-field="geburtsdatum" data-sortable="true">Geburtsdatum</th>
+                    <th scope="col" data-field="button"></th>
                 </tr>
                 </thead>
-                <tbody id="mitarbeiterTabelle">
-
-                </tbody>
             </table>
         </div>
     </div>
@@ -100,6 +98,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
 <script src="../app.js"></script>
 
@@ -135,16 +134,18 @@
             console.log(response);
         }
 
+        let tableData = [];
+
         // Gebe Informationen von allen Mitarbeitern aus
         employeeArray.forEach(function (employee) {
-            let appendString = "<tr>" +
-                "<td>" + employee.givenname + " " + employee.surname + "</td>" +
-                "<td>" + employee.birthday + "</td>" +
-                "<td align='right'><button type=\"button\" class=\"btn btn-outline-primary\" onclick='approveEmployee(\"" + employee.personID + "\")'>Hinzufügen</button></td>" +
-                "</tr>";
-
-            mitarbeiterTabelle.append(appendString);
+            tableData.push({
+                name: employee.givenname + " " + employee.surname,
+                geburtsdatum: employee.birthday,
+                button: "<button type=\"button\" class=\"btn btn-outline-primary btn-block button-table\" onclick='withdrawEmployee(\"" + employee.personID + "\")'>Berechtigung entziehen</button>"
+            });
         });
+
+        mitarbeiterTabelle.bootstrapTable('load', tableData);
 
         spinner.addClass('hidden');
     });
