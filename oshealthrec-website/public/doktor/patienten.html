@@ -74,7 +74,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <table id="patientenTabelle" class="table table-hover mt-5" data-toggle="table" data-sortable="true">
+            <table id="patientenTabelle" class="table table-hover mt-5" data-toggle="table" data-sortable="true" data-row-attributes="rowAttributes">
                 <thead>
                 <tr>
                     <th scope="col" data-field="name" data-sortable="true">Name</th>
@@ -102,6 +102,7 @@
 <script src="../app.js"></script>
 
 <script>
+    let patientIDs = [];
     $(document).ready(async function () {
         // Hole ID des Nutzers aus dem Session Storage
         let participantId = sessionStorage.getItem("participantId");
@@ -205,6 +206,7 @@
             sessionStorage.setItem("patientProfileArray", patientProfileArrayJson);
 
             let tableData = [];
+            let i = 0;
 
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
@@ -212,9 +214,18 @@
                     name: patient.givenname + " " + patient.surname,
                     geburtsdatum: patient.birthday,
                 });
-            })
+                patientIDs[i] = patient.personID;
+                i++;
 
-            patientenTabelle.bootstrapTable('load', tableData);
+                // let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID + "'>" +
+                //     "<td>" + patient.givenname + " " + patient.surname + "</td>" +
+                //     "<td>" + patient.birthday + "</td>" +
+                //     "</tr>";
+                //
+                // patientenTabelle.append(appendString);
+            });
+
+            mitarbeiterTabelle.bootstrapTable('load', tableData);
         }
 
         spinner.addClass('hidden');
@@ -223,6 +234,13 @@
         $(".clickable-row").click(function () {
             window.location = $(this).data("href");
         })
+
+        function rowAttributes(row, index) {
+            return {
+                'class': 'clickable-row',
+                'data-href': '/doktor/patient.html?Id=' + patientIDs[index]
+            };
+        }
     });
 </script>
 </body>
