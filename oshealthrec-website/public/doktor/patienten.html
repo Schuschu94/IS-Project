@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/oshealthrec.css">
@@ -73,16 +74,13 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <table class="table table-hover mt-5">
+            <table id="patientenTabelle" class="table table-hover mt-5" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Geburtsdatum</th>
+                    <th scope="col" data-field="name" data-sortable="true">Name</th>
+                    <th scope="col" data-field="geburtsdatum" data-sortable="true">Geburtsdatum</th>
                 </tr>
                 </thead>
-                <tbody id="patientenTabelle">
-
-                </tbody>
             </table>
         </div>
     </div>
@@ -99,6 +97,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
 <script src="../app.js"></script>
 
@@ -205,15 +204,17 @@
             let patientProfileArrayJson = JSON.stringify(patientProfileArray);
             sessionStorage.setItem("patientProfileArray", patientProfileArrayJson);
 
+            let tableData = [];
+
             // Gebe Daten für alle Patienten aus
             patientProfileArray.forEach(function (patient) {
-                let appendString = "<tr class='clickable-row' data-href='/doktor/patient.html?Id=" + patient.personID + "'>" +
-                    "<td>" + patient.givenname + " " + patient.surname + "</td>" +
-                    "<td>" + patient.birthday + "</td>" +
-                    "</tr>";
-
-                patientenTabelle.append(appendString);
+                tableData.push({
+                    name: patient.givenname + " " + patient.surname,
+                    geburtsdatum: patient.birthday,
+                });
             })
+
+            patientenTabelle.bootstrapTable('load', tableData);
         }
 
         spinner.addClass('hidden');
