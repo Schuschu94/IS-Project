@@ -20,6 +20,13 @@ function logout() {
  */
 
 /**
+ * Blendet die Felder zum Filtern ein bzw. aus
+ */
+function toggleSearch() {
+    document.getElementById("searchCard").classList.toggle("hidden");
+}
+
+/**
  * Filtert die Ärzte auf der Seite patient/arzt-suche.html
  * Zeigt zunächst alle Ärzte in der Tabelle an.
  * Anschließend werden die einzelnen Filter-Funktionen aufgerufen, um alle nicht gesuchten Ärzte auszublenden.

@@ -54,20 +54,30 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col">
             <h3>Arztsuche</h3>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-5">
-            <form>
-                <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterDoctorTable()"
-                       placeholder="Name">
-                <input type="text" class="form-control mb-2" id="inputAdresse" onkeyup="filterDoctorTable()"
-                       placeholder="Adresse">
-                <input type="text" class="form-control mb-2" id="inputArztbezeichnung" onkeyup="filterDoctorTable()"
-                       placeholder="Arztbezeichnung">
-            </form>
+            <div class="card bg-light mb-3 hidden" id="searchCard">
+                <div class="card-body">
+                    <form>
+                        <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterDoctorTable()"
+                               placeholder="Name">
+                        <input type="text" class="form-control mb-2" id="inputAdresse" onkeyup="filterDoctorTable()"
+                               placeholder="Adresse">
+                        <input type="text" class="form-control mb-2" id="inputArztbezeichnung"
+                               onkeyup="filterDoctorTable()"
+                               placeholder="Arztbezeichnung">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
