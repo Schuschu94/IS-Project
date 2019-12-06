@@ -44,4 +44,5 @@ i.big {
 
 div.card {
     border-color: #0090d3;
+    box-shadow: 1px 1px 5px grey;
 }
