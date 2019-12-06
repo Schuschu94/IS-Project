@@ -13,3 +13,31 @@ input.bigger-checkbox {
 div.hidden {
     display: none;
 }
+
+nav.navbar div.collapse ul.navbar-nav li a.nav-link {
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 200%;
+}
+
+nav.navbar div.collapse ul.navbar-nav li.active a.nav-link {
+    color: #0090d3;
+    font-weight: bold;
+}
+
+nav.navbar div.collapse ul.navbar-nav li.nav-item a.nav-link:hover {
+    color: #0090d3;
+}
+
+button.material-icons {
+    font-size: 36px;
+}
+
+button.material-icons:hover {
+    color: #0090d3;
+}
+
+i.bi {
+    font-size: 36px;
+}
