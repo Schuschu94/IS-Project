@@ -38,6 +38,10 @@ button.material-icons:hover {
     color: #0090d3;
 }
 
-i.bi {
+i.big {
     font-size: 36px;
+}
+
+div.card {
+    border-color: #0090d3;
 }
