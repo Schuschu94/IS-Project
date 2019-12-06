@@ -58,6 +58,9 @@ th {
     color: #0090d3;
 }
 
+.btn-primary {
+    background-color: #0090d3;;
+}
 .btn-outline-primary {
     border-color: #0090d3;
     color: #0090d3;
