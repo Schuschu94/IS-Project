@@ -55,20 +55,26 @@
     </div>
     <div class="row">
         <div class="col-sm-5">
-            <form>
-                <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
-                       placeholder="Titel">
-                <input type="text" class="form-control mb-2" id="inputBeschreibung" onkeyup="filterReportTable()"
-                       placeholder="Beschreibung">
-                <input type="text" class="form-control mb-2" id="inputDatum" onkeyup="filterReportTable()"
-                       placeholder="Datum">
-                <input type="text" class="form-control mb-2" id="inputHochgeladenVon" onkeyup="filterReportTable()"
-                       placeholder="Hochgeladen von">
-            </form>
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <form>
+                        <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
+                               placeholder="Titel">
+                        <input type="text" class="form-control mb-2" id="inputBeschreibung"
+                               onkeyup="filterReportTable()"
+                               placeholder="Beschreibung">
+                        <input type="text" class="form-control mb-2" id="inputDatum" onkeyup="filterReportTable()"
+                               placeholder="Datum">
+                        <input type="text" class="form-control mb-2" id="inputHochgeladenVon"
+                               onkeyup="filterReportTable()"
+                               placeholder="Hochgeladen von">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-12">
             <table id="reportTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
@@ -80,6 +86,14 @@
                     <th scope="col" data-field="download"></th>
                 </tr>
                 </thead>
+                <tbody>
+                <td scope="col" data-field="reportID" data-sortable="true">ID</td>
+                <td scope="col" data-field="title" data-sortable="true">Titel</td>
+                <td scope="col" data-field="description" data-sortable="true">Beschreibung</td>
+                <td scope="col" data-field="date" data-sortable="true">Datum</td>
+                <td scope="col" data-field="uploadedForDr" data-sortable="true">Hochgeladen von</td>
+                <td scope="col" data-field="download"><button type="button" class="btn btn-outline-primary btn-block button-table" onclick=''>Herunterladen</button></td>
+                </tbody>
             </table>
         </div>
     </div>

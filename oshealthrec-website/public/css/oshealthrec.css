@@ -32,6 +32,7 @@ nav.navbar div.collapse ul.navbar-nav li.nav-item a.nav-link:hover {
 
 button.material-icons {
     font-size: 36px;
+    color: grey;
 }
 
 button.material-icons:hover {
@@ -45,4 +46,18 @@ i.big {
 div.card {
     border-color: #0090d3;
     box-shadow: 1px 1px 5px grey;
+}
+
+th {
+    color: #0090d3;
+}
+
+.btn-outline-primary {
+    border-color: #0090d3;
+    color: #0090d3;
+
+}.btn-outline-primary:hover {
+    border-color: #0090d3;
+    color: #ffffff;
+    background-color: #0090d3;
 }
