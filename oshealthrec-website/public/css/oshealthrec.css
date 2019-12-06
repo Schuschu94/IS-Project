@@ -70,6 +70,10 @@ th {
     background-color: #0090d3;
 }
 
+button.icon-inline{
+    color: grey;
+}
+
 button.icon-inline:hover{
     color: #0090d3;
 }
