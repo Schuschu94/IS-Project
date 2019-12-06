@@ -62,19 +62,29 @@
             <h3>Mitarbeitersuche</h3>
         </div>
     </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-5">
-            <form>
-                <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterEmployeeTable()"
-                       placeholder="Name">
-                <input type="text" class="form-control mb-2" id="inputGeburtsdatum" onkeyup="filterEmployeeTable()"
-                       placeholder="Gebutsdatum">
-            </form>
+            <div class="card bg-light mb-3 hidden" id="searchCard">
+                <div class="card-body">
+                    <form>
+                        <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterEmployeeTable()"
+                               placeholder="Name">
+                        <input type="text" class="form-control mb-2" id="inputGeburtsdatum"
+                               onkeyup="filterEmployeeTable()"
+                               placeholder="Gebutsdatum">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <table id="mitarbeiterTabelle" class="table table-hover mt-5" data-toggle="table" data-sortable="true">
+            <table id="mitarbeiterTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
                     <th scope="col" data-field="name" data-sortable="true">Name</th>
