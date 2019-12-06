@@ -53,9 +53,14 @@
             </div>
         </div>
     </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-5">
-            <div class="card bg-light mb-3">
+            <div class="card bg-light mb-3 hidden" id="searchCard">
                 <div class="card-body">
                     <form>
                         <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
@@ -86,14 +91,6 @@
                     <th scope="col" data-field="download"></th>
                 </tr>
                 </thead>
-                <tbody>
-                <td scope="col" data-field="reportID" data-sortable="true">ID</td>
-                <td scope="col" data-field="title" data-sortable="true">Titel</td>
-                <td scope="col" data-field="description" data-sortable="true">Beschreibung</td>
-                <td scope="col" data-field="date" data-sortable="true">Datum</td>
-                <td scope="col" data-field="uploadedForDr" data-sortable="true">Hochgeladen von</td>
-                <td scope="col" data-field="download"><button type="button" class="btn btn-outline-primary btn-block button-table" onclick=''>Herunterladen</button></td>
-                </tbody>
             </table>
         </div>
     </div>
@@ -192,6 +189,10 @@
 
         spinner.addClass('hidden');
     });
+
+    function toggleSearch() {
+        document.getElementById("searchCard").classList.toggle("hidden");
+    }
 </script>
 </body>
 </html>

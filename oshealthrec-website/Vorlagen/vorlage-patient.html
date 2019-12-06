@@ -54,9 +54,14 @@
             </div>
         </div>
     </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-5">
-            <div class="card bg-light mb-3">
+            <div class="card bg-light mb-3 hidden" id="searchCard">
                 <div class="card-body">
                     <form>
                         <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
@@ -114,5 +119,10 @@
         crossorigin="anonymous"></script>
 
 <script src="../public/app.js"></script>
+<script>
+    function toggleSearch() {
+        document.getElementById("searchCard").classList.toggle("hidden");
+    }
+</script>
 </body>
 </html>

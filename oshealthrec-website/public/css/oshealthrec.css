@@ -14,6 +14,12 @@ div.hidden {
     display: none;
 }
 
+.icon-inline {
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 200%;
+}
 nav.navbar div.collapse ul.navbar-nav li a.nav-link {
     display: inline-flex;
     vertical-align: middle;
@@ -56,8 +62,14 @@ th {
     border-color: #0090d3;
     color: #0090d3;
 
-}.btn-outline-primary:hover {
+}
+
+.btn-outline-primary:hover {
     border-color: #0090d3;
     color: #ffffff;
     background-color: #0090d3;
+}
+
+button.icon-inline:hover{
+    color: #0090d3;
 }
