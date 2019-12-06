@@ -57,56 +57,73 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-10">
-            <dl class="row">
-                <dt class="col-sm-2">Vorname</dt>
-                <dd class="col-sm-10" id="vorname"></dd>
+    <div class="row mb-3">
+        <div class="col-auto">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <dl class="">
+                        <dt class="">Vorname</dt>
+                        <dd class="" id="vorname"></dd>
 
-                <dt class="col-sm-2">Nachname</dt>
-                <dd class="col-sm-10" id="nachname"></dd>
+                        <dt class="">Nachname</dt>
+                        <dd class="" id="nachname"></dd>
 
-                <dt class="col-sm-2">Geschlecht</dt>
-                <dd class="col-sm-10" id="geschlecht"></dd>
+                        <dt class="">Geschlecht</dt>
+                        <dd class="" id="geschlecht"></dd>
 
-                <dt class="col-sm-2">Geburtsdatum</dt>
-                <dd class="col-sm-10" id="geburtsdatum"></dd>
+                        <dt class="">Geburtsdatum</dt>
+                        <dd class="" id="geburtsdatum"></dd>
 
-                <dt class="col-sm-2">Intoleranzen</dt>
-                <dd class="col-sm-10" id="intoleranzen"></dd>
+                        <dt class="">Intoleranzen</dt>
+                        <dd class="" id="intoleranzen"></dd>
 
-                <dt class="col-sm-2">Blutgruppe</dt>
-                <dd class="col-sm-10" id="blutgruppe"></dd>
+                        <dt class="">Blutgruppe</dt>
+                        <dd class="" id="blutgruppe"></dd>
 
-                <dt class="col-sm-2">Notfallkontakt</dt>
-                <dd class="col-sm-10" id="notfallkontakt"></dd>
-            </dl>
+                        <dt class="">Notfallkontakt</dt>
+                        <dd class="" id="notfallkontakt"></dd>
+                    </dl>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col"></div>
+        <div class="col-2">
             <form class="form-group">
-                <button type="button" class="btn btn-primary btn-block freigaben-button"
+                <button type="button" class="btn btn-primary btn-block"
                         onclick="window.location.href='/doktor/hochladen.html'">Hochladen
                 </button>
             </form>
         </div>
     </div>
+
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-sm-4">
-            <form>
-                <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
-                       placeholder="Titel">
-                <input type="text" class="form-control mb-2 mr-5" id="inputBeschreibung" onkeyup="filterReportTable()"
-                       placeholder="Beschreibung">
-                <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()"
-                       placeholder="Datum">
-                <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon" onkeyup="filterReportTable()"
-                       placeholder="Arzt">
-            </form>
+        <div class="col-5">
+            <div class="card bg-light mb-3 hidden" id="searchCard">
+                <div class="card-body">
+                    <form>
+                        <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
+                               placeholder="Titel">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputBeschreibung"
+                               onkeyup="filterReportTable()"
+                               placeholder="Beschreibung">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()"
+                               placeholder="Datum">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon"
+                               onkeyup="filterReportTable()"
+                               placeholder="Arzt">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table id="reportTabelle" class="table table-hover mt-3" data-toggle="table" data-sortable="true">
+            <table id="reportTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
                     <th scope="col" data-field="reportID" data-sortable="true">ID</th>

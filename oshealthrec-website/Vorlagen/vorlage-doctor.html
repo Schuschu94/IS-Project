@@ -46,43 +46,83 @@
 </nav>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>Patientensuche</h3>
+    <div class="row mb-3">
+        <div class="col-auto">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <dl class="">
+                        <dt class="">Vorname</dt>
+                        <dd class="" id="vorname">Ole</dd>
+
+                        <dt class="">Nachname</dt>
+                        <dd class="" id="nachname">Kohl</dd>
+
+                        <dt class="">Geschlecht</dt>
+                        <dd class="" id="geschlecht">Männlich</dd>
+
+                        <dt class="">Geburtsdatum</dt>
+                        <dd class="" id="geburtsdatum">05.03.1997</dd>
+
+                        <dt class="">Intoleranzen</dt>
+                        <dd class="" id="intoleranzen">Nikotinallergie, Allergische Rhinitis</dd>
+
+                        <dt class="">Blutgruppe</dt>
+                        <dd class="" id="blutgruppe">AB Rh pos</dd>
+
+                        <dt class="">Notfallkontakt</dt>
+                        <dd class="" id="notfallkontakt">01764379124</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col-2">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary btn-block"
+                        onclick="window.location.href='/doktor/hochladen.html'">Hochladen
+                </button>
+            </form>
         </div>
     </div>
+
     <div class="row mb-1">
         <div class="col">
-            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...
-            </button>
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-5">
             <div class="card bg-light mb-3 hidden" id="searchCard">
                 <div class="card-body">
                     <form>
-                        <input type="text" class="form-control mb-2" id="inputName"
-                               onkeyup="filterPatientTable()"
-                               placeholder="Name">
-                        <input type="text" class="form-control mb-2" id="inputGeburtsdatum"
-                               onkeyup="filterPatientTable()"
-                               placeholder="Geburtsdatum">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputTitel" onkeyup="filterReportTable()"
+                               placeholder="Titel">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputBeschreibung"
+                               onkeyup="filterReportTable()"
+                               placeholder="Beschreibung">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputDatum" onkeyup="filterReportTable()"
+                               placeholder="Datum">
+                        <input type="text" class="form-control mb-2 mr-5" id="inputHochgeladenVon"
+                               onkeyup="filterReportTable()"
+                               placeholder="Arzt">
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-hover">
+        <div class="col-12">
+            <table id="reportTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Geburtsdatum</th>
+                    <th scope="col" data-field="reportID" data-sortable="true">ID</th>
+                    <th scope="col" data-field="title" data-sortable="true">Titel</th>
+                    <th scope="col" data-field="description" data-sortable="true">Beschreibung</th>
+                    <th scope="col" data-field="date" data-sortable="true">Datum</th>
+                    <th scope="col" data-field="uploadedForDr" data-sortable="true">Arzt</th>
+                    <th scope="col" data-field="uploadedBy" data-sortable="true">Hochgeladen von</th>
+                    <th scope="col" data-field="download"></th>
                 </tr>
-                <tbody id="patientenTabelle">
-                </tbody>
                 </thead>
             </table>
         </div>
