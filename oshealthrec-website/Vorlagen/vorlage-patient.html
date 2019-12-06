@@ -42,66 +42,44 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="alert alert-danger hidden" role="alert" id="alert">
-        Ein Fehler ist aufgetreten. Bitte laden Sie die Seite erneut!
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="text-center">
-                <div class="spinner-border text-primary" role="status" id="spinner">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
+    <div class="row justify-content-end">
+        <div class="col-sm-8 d-flex align-items-center">
+            <h3>Liste aller berechtigten Ärzte</h3>
         </div>
-    </div>
-    <div class="row mb-1">
-        <div class="col">
-            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...</button>
+        <div class="col-auto">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary btn-block "
+                        onclick="window.location.href='/patient/arzt-suche.html'">
+                    <i class="material-icons icon-inline">search</i> Arzt suchen
+                </button>
+            </form>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="card bg-light mb-3 hidden" id="searchCard">
-                <div class="card-body">
-                    <form>
-                        <input type="text" class="form-control mb-2" id="inputTitel" onkeyup="filterReportTable()"
-                               placeholder="Titel">
-                        <input type="text" class="form-control mb-2" id="inputBeschreibung"
-                               onkeyup="filterReportTable()"
-                               placeholder="Beschreibung">
-                        <input type="text" class="form-control mb-2" id="inputDatum" onkeyup="filterReportTable()"
-                               placeholder="Datum">
-                        <input type="text" class="form-control mb-2" id="inputHochgeladenVon"
-                               onkeyup="filterReportTable()"
-                               placeholder="Hochgeladen von">
-                    </form>
-                </div>
-            </div>
+        <div class="col-auto">
+            <form class="form-group">
+                <button type="button" class="btn btn-primary btn-block "
+                        onclick="window.location.href='/patient/scan-qr.html'">
+                    <i class="material-icons icon-inline">camera_alt</i> Freigabescan
+                </button>
+            </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <table id="reportTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="arztTabelle" class="table table-hover mt-3" data-toggle="table" data-sortable="true">
                 <thead>
                 <tr>
-                    <th scope="col" data-field="reportID" data-sortable="true">ID</th>
-                    <th scope="col" data-field="title" data-sortable="true">Titel</th>
-                    <th scope="col" data-field="description" data-sortable="true">Beschreibung</th>
-                    <th scope="col" data-field="date" data-sortable="true">Datum</th>
-                    <th scope="col" data-field="uploadedForDr" data-sortable="true">Hochgeladen von</th>
-                    <th scope="col" data-field="download"></th>
+                    <th scope="col" data-field="name" data-sortable="true">Name</th>
+                    <th scope="col" data-field="anschrift" data-sortable="true">Anschrift</th>
+                    <th scope="col" data-field="arztbezeichnung" data-sortable="true">Arztbezeichnung</th>
+                    <th data-field="button"></th>
                 </tr>
                 </thead>
-                <tbody>
-                <td scope="col" data-field="reportID" data-sortable="true">ID</td>
-                <td scope="col" data-field="title" data-sortable="true">Titel</td>
-                <td scope="col" data-field="description" data-sortable="true">Beschreibung</td>
-                <td scope="col" data-field="date" data-sortable="true">Datum</td>
-                <td scope="col" data-field="uploadedForDr" data-sortable="true">Hochgeladen von</td>
-                <td scope="col" data-field="download"><button type="button" class="btn btn-outline-primary btn-block button-table" onclick=''>Herunterladen</button></td>
-                </tbody>
             </table>
         </div>
+
     </div>
 </div>
 
