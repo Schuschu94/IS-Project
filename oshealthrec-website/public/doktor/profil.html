@@ -27,7 +27,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active ml-5">
-                <a class="nav-link" href="profil.html"><i class="material-icons big">account_circle</i> Profil <span class="sr-only">(current)</span> </a>
+                <a class="nav-link" href="profil.html"><i class="material-icons big">account_circle</i> Profil <span
+                        class="sr-only">(current)</span> </a>
             </li>
             <li class="nav-item ml-5">
                 <a class="nav-link" href="mitarbeiter.html"><i class="material-icons big">people_alt</i> Mitarbeiter</a>
@@ -53,27 +54,31 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <dl class="row">
-                <dt class="col-sm-2">Vorname</dt>
-                <dd class="col-sm-10" id="vorname"></dd>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <dl class="">
+                        <dt class="">Vorname</dt>
+                        <dd class="" id="vorname"></dd>
 
-                <dt class="col-sm-2">Nachname</dt>
-                <dd class="col-sm-10" id="nachname"></dd>
+                        <dt class="">Nachname</dt>
+                        <dd class="" id="nachname"></dd>
 
-                <dt class="col-sm-2">Fachbereich</dt>
-                <dd class="col-sm-10" id="fachbereich"></dd>
+                        <dt class="">Fachbereich</dt>
+                        <dd class="" id="fachbereich"></dd>
 
-                <dt class="col-sm-2">Geschlecht</dt>
-                <dd class="col-sm-10" id="geschlecht"></dd>
+                        <dt class="">Geschlecht</dt>
+                        <dd class="" id="geschlecht"></dd>
 
-                <dt class="col-sm-2">Geburtsdatum</dt>
-                <dd class="col-sm-10" id="geburtsdatum"></dd>
+                        <dt class="">Geburtsdatum</dt>
+                        <dd class="" id="geburtsdatum"></dd>
 
-                <dt class="col-sm-2">Anschrift</dt>
-                <dd class="col-sm-10" id="anschrift"></dd>
-            </dl>
+                        <dt class="">Anschrift</dt>
+                        <dd class="" id="anschrift"></dd>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -125,7 +130,7 @@
         let geschlecht = $('#geschlecht');
         let geburtsdatum = $('#geburtsdatum');
         let anschrift = $('#anschrift');
-        let fachbereich =$('#fachbereich');
+        let fachbereich = $('#fachbereich');
 
         // Setz Werte der Textfelder
         vorname.text(doktorProfil.givenname);
