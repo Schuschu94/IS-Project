@@ -48,41 +48,65 @@
 </nav>
 
 <div class="container">
-
-    <div class="row justify-content-center">
-        <div class="col-5">
-            <div class="card bg-light mb-3">
-                <h5 class="card-header">QR-Code zur Freigabe für den Patienten</h5>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Mitarbeitersuche</h3>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleSearch()"><i class="material-icons big">search</i> Suche...
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card bg-light mb-3 hidden overlay" id="searchCard">
                 <div class="card-body">
-                    <p class="card-text>"> Diesen QR-Code können Patienten mittels ihres Smartphones einscannen.
-                        Dies vereinfacht es Ihren Patienten Sie als Arzt hinzuzufügen und Ihnen damit die Freigabe über
-                        die Krankenakte zu erteilen.</br>
-                        </br>
-                        Sie können den Code über den Button ausdrucken.</p>
-                    <button type="button" class="btn btn-primary btn-block"
-                            onclick="printJS({printable: 'qrcode', type: 'html', header: 'Scannen, um die Freigabe zu erteilen:'})">
-                        <i class="material-icons icon-inline">print</i> Drucken
-                    </button>
+                    <form>
+                        <input type="text" class="form-control mb-2" id="inputName" onkeyup="filterEmployeeTable()"
+                               placeholder="Name">
+                        <input type="text" class="form-control mb-2" id="inputGeburtsdatum"
+                               onkeyup="filterEmployeeTable()"
+                               placeholder="Gebutsdatum">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-auto">
-            <div class="card bg-light mb-3">
-                <div class="card-body">
-                    <div id="qrcode"></div>
-                    <script type="text/javascript">
-                        // let participantId = sessionStorage.getItem('participantId');
-                        let qrcode = new QRCode(document.getElementById('qrcode'), {
-                            text: 'participantId',
-                            width: 300,
-                            height: 300,
-                        });
-                    </script>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="mitarbeiterTabelle" class="table table-hover" data-toggle="table" data-sortable="true">
+                <thead>
+                <tr>
+                    <th scope="col" data-field="name" data-sortable="true">Name</th>
+                    <th scope="col" data-field="geburtsdatum" data-sortable="true">Geburtsdatum</th>
+                    <th scope="col" data-field="button"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                <tr>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                <tr>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                <tr>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td>Test</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -101,5 +125,6 @@
 
 <script src="../public/app.js"></script>
 
+</script>
 </body>
 </html>
