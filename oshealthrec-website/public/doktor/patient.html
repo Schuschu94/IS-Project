@@ -263,12 +263,12 @@
         // Gebe Daten für alle Reports aus
         reportArray.forEach(function (report) {
 
-            // Hole Ids des Arztes und des Doktors des Reports
+            // Hole Ids des Arztes und des Uploaders des Reports
             let doctorId = report.uploadedForDr.split("#")[1];
             let uploadedById = report.uploadedby.split('#')[1];
             let uploadedBy;
 
-            // Hole Doktor und Employee, für den der Report hochgeladen wurde, aus dem Arrays
+            // Hole Doktor und Employee, der den Report hochgeladen hat, aus den Arrays
             let doctor = doctorArray.find(d => d.personID === doctorId);
             if (doctorId != uploadedById) {
                 uploadedBy = employeeArray.find(e => e.personID === uploadedById);
