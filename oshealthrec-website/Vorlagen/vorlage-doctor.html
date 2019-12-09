@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>OSHealthRec</title>
+    <script type="text/javascript" src="../public/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="../public/js/print.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
@@ -47,6 +49,42 @@
 
 <div class="container">
 
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="card bg-light mb-3">
+                <h5 class="card-header">QR-Code zur Freigabe für den Patienten</h5>
+                <div class="card-body">
+                    <p class="card-text>"> Diesen QR-Code können Patienten mittels ihres Smartphones einscannen.
+                        Dies vereinfacht es Ihren Patienten Sie als Arzt hinzuzufügen und Ihnen damit die Freigabe über
+                        die Krankenakte zu erteilen.</br>
+                        </br>
+                        Sie können den Code über den Button ausdrucken.</p>
+                    <button type="button" class="btn btn-primary btn-block"
+                            onclick="printJS({printable: 'qrcode', type: 'html', header: 'Scannen, um die Freigabe zu erteilen:'})">
+                        Drucken
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <div id="qrcode"></div>
+                    <script type="text/javascript">
+                        // let participantId = sessionStorage.getItem('participantId');
+                        let qrcode = new QRCode(document.getElementById('qrcode'), {
+                            text: 'participantId',
+                            width: 300,
+                            height: 300,
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
@@ -62,5 +100,6 @@
         crossorigin="anonymous"></script>
 
 <script src="../public/app.js"></script>
+
 </body>
 </html>
