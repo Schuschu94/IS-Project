@@ -147,7 +147,7 @@
 
             // Gebe Informationen des Doktors aus
             let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
-                "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                 "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                 "<td>" + doctor.medical_specialty + "</td>" +
                 "</tr>";
@@ -194,7 +194,7 @@
             // Gebe Daten für alle Ärzte aus
             doctorProfileArray.forEach(function (doctor) {
                 let appendString = "<tr class='clickable-row' data-href='/mitarbeiter/patienten-suche.html?Id=" + doctor.personID + "'>" +
-                    "<td>" + doctor.givenname + " " + doctor.surname + "</td>" +
+                    "<td>" + doctor.title + " " + doctor.givenname + " " + doctor.surname + "</td>" +
                     "<td>" + doctor.street + "<br />" + doctor.zipcode + " " + doctor.city + "<br />" + doctor.country + "</td>" +
                     "<td>" + doctor.medical_specialty + "</td>" +
                     "</tr>";
