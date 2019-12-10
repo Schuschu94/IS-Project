@@ -207,6 +207,7 @@
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
         let reportTabelle = $('#reportTabelle');
+        let heading = $('#heading');
 
         // Auflisten der einzelnen Intolerances in einem String
         let intolerancesString = "";
@@ -227,6 +228,7 @@
         intoleranzen.text(intolerancesString);
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
+        heading.text(patient.givenname + ' ' + patient.surname);
 
         // Rest Aufruf um alle Doktoren zu erhalten
         const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
