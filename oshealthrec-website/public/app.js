@@ -20,10 +20,10 @@ function logout() {
  */
 
 /**
- * Blendet die Felder zum Filtern ein bzw. aus
+ * Blendet das Objekt mit der ID "elementId" ein bzw. aus.
  */
-function toggleSearch() {
-    document.getElementById("searchCard").classList.toggle("hidden");
+function toggleVisibility(elementId) {
+    document.getElementById(elementId).classList.toggle("hidden");
 }
 
 /**
