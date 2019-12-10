@@ -53,8 +53,27 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 id="heading"></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn icon-inline"
+                    onclick="window.location.href='/mitarbeiter/hochladen.html'"><i class="material-icons big">attach_file</i>
+                Hochladen
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn icon-inline" onclick="toggleVisibility('profilCard')"><i class="material-icons big">person</i>
+                Profil anzeigen
+            </button>
+        </div>
+    </div>
+    <div class="row mt-1 hidden" id="profilCard">
         <div class="col-auto">
             <div class="card bg-light">
                 <div class="card-body">
@@ -83,19 +102,12 @@
                 </div>
             </div>
         </div>
-        <div class="col"></div>
-        <div class="col-2">
-            <form class="form-group">
-                <button type="button" class="btn btn-primary btn-block"
-                        onclick="window.location.href='/mitarbeiter/hochladen.html'">Hochladen
-                </button>
-            </form>
-        </div>
     </div>
 
     <div class="row mb-1">
         <div class="col">
-            <button class="btn icon-inline" onclick="toggleVisibility('searchCard')"><i class="material-icons big">search</i> Suche...
+            <button class="btn icon-inline" onclick="toggleVisibility('searchCard')"><i class="material-icons big">search</i>
+                Suche...
             </button>
         </div>
     </div>
@@ -191,7 +203,8 @@
         let intoleranzen = $('#intoleranzen');
         let blutgruppe = $('#blutgruppe');
         let notfallkontakt = $('#notfallkontakt');
-        let reportTabelle = $('#reportTabelle')
+        let reportTabelle = $('#reportTabelle');
+        let heading = $('#heading');
 
         // Auflisten der einzelnen Intolerances in einem String
         let intolerancesString = "";
@@ -212,6 +225,7 @@
         intoleranzen.text(intolerancesString);
         blutgruppe.text(patient.bloodType);
         notfallkontakt.text(patient.emergency_contact);
+        heading.text(patient.givenname + ' ' + patient.surname);
 
         // Rest Aufruf um alle Doktoren zu erhalten
         const doctorResponse = await fetch(serverIp + "/api/org.oshealthrec.network.Doctor", {
